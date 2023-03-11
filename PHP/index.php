@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../CSS/style.css">
+    <link rel="stylesheet" href="../CSS/styles.css">
     <title>Home - PokeBuilding</title>
 </head>
 <body>
     <!-- HEADER -->
     <?php
         session_start();
-        if(isset($_SESSION["user"])){ 
+        if(isset($_SESSION["user"])){
     ?>
     <header>
         <div class="header-options">
@@ -23,8 +23,10 @@
             <div class="create-team"><a href="create_team.php">Battle</a></div>
         </div>
         <div class="header-login">
-            <div class="welcome-message"><?php echo "Welcome, ".$user ?></div>
-            <img src='<?php echo "lo que sea" ?>' alt="pfp_icon">
+            <div class="welcome-message"><?php echo "Welcome, ".$_SESSION["user"] ?></div>
+            <?php 
+                echo `<a href="profile.php"><img src="../img/".$_SESSION[user]."/image.png" alt="pfp_icon"></a>`;
+            ?>
         </div>
     </header>
     <?php
@@ -38,8 +40,8 @@
             </div>
         </div>
         <div class="header-login">
-            <div class="sign-in"><a href="login.php">Sign in</a></div>
-            <div class="sign-up"><a href="reister.php">Sign up</a></div>
+            <div class="sign-in"><a href="checkLogin.php">Sign in</a></div>
+            <div class="sign-up"><a href="checkRegister.php">Sign up</a></div>
         </div>
     </header>
     <?php } ?>

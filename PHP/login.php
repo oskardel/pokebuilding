@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../CSS/styles.css">
     <title>Sign in - PokéBuilding</title>
 </head>
 <body>
@@ -15,8 +16,8 @@
             </div>
         </div>
         <div class="header-login">
-            <div class="sign-in"><a href="login.php">Sign in</a></div>
-            <div class="sign-up"><a href="reister.php">Sign up</a></div>
+            <div class="sign-in"><a href="checkLogin.php">Sign in</a></div>
+            <div class="sign-up"><a href="checkRegister.php">Sign up</a></div>
         </div>
     </header>
     
@@ -25,11 +26,11 @@
             <form action="" method="post">
                 <input type="text" class="login-username" name="login-username" placeholder="Username">
                 <?php
-                    echo (isset($errorArray["userEmpty"])) ? "<div class='error-message'>$errorArray['userEmpty']</div>" : "";
+                    echo (isset($errorArray["userEmpty"])) ? "<div class='error-message'>$errorArray[userEmpty]</div>" : "";
                 ?>
                 <input type="password" class="login-password" name="login-password" placeholder="Password">
                 <?php
-                    echo (isset($errorArray["passwordEmpty"])) ? "<div class='error-message'>$errorArray['passwordEmpty']</div>" : "";
+                    echo (isset($errorArray["passwordEmpty"])) ? "<div class='error-message'>$errorArray[passwordEmpty]</div>" : "";
                 ?>
                 <input type="submit" class="login-button" name="login-button" value="Sign in">
 

@@ -1,5 +1,8 @@
 <?php
     require("functions.php");
+    require("model/modelClass.php");
+    require("model/userClass.php");
+    require("../DB/config.php");
     $errorArray = [];
 
     if(isset($_SESSION["user"])){
@@ -22,7 +25,12 @@
 
         if(count($errorArray) === 0){
             try{
-                //LOGIN AND DATABASE CODE
+                $database = new User();
+                if($userBD=$database->checkPassword($username, $password)){
+                    session_start();
+                    $_SESSION["user"] = $username;
+                    header("Location:index.php");
+                }
             } catch(PDOException $e){
                 error_log($e->getMessage() . "##Código: " . $e->getCode() . "  " . microtime() . PHP_EOL, 3, "../logBD.txt");
                 $errores['datos'] = "There was an error <br>";
