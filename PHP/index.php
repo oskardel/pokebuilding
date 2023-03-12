@@ -19,7 +19,7 @@
                 <img src="../img/pokeball_icon.png" alt="pokeball_icon">
                 <div class="icon-text">PokéBuilding</div>
             </div>
-            <div class="create-team"><a href="create_team.php">Create Teams</a></div>
+            <div class="create-team"><a href="createTeams.php">Create Teams</a></div>
             <div class="create-team"><a href="create_team.php">Battle</a></div>
         </div>
         <div class="header-login">
@@ -55,7 +55,7 @@
                 <div class="tutorial-card-content">Create your own Pokémon teams to fight against other. 
                     With PokéBuilding you will be able to fight up to 6vs6 Pokémon, creating your own Pokémon teams. 
                     You can remove, edit and create up to 5 teams per user. 
-                    <a href="register.php">Create an account</a> or <a href="login.php">log in</a> to get started!</div>
+                    <a href="checkRegister.php">Create an account</a> or <a href="checkLogin.php">log in</a> to get started!</div>
             </div>
 
             <div class="teams-card">

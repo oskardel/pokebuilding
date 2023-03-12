@@ -1,0 +1,109 @@
+<?php
+    session_start();
+    if(!isset($_SESSION["user"])){
+        header("Location:index.php");
+    }
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../CSS/styles.css">
+    <title>Home - PokeBuilding</title>
+</head>
+<body>
+    <header>
+        <div class="header-options">
+            <div class="icon-parts">
+                <img src="../img/pokeball_icon.png" alt="pokeball_icon">
+                <div class="icon-text">PokéBuilding</div>
+            </div>
+            <div class="create-team"><a href="createTeams.php">Create Teams</a></div>
+            <div class="create-team"><a href="create_team.php">Battle</a></div>
+        </div>
+        <div class="header-login">
+            <div class="welcome-message"><?php echo "Welcome, ".$_SESSION["user"] ?></div>
+            <?php 
+                echo `<a href="profile.php"><img src="../img/".$_SESSION[user]."/image.png" alt="pfp_icon"></a>`;
+            ?>
+        </div>
+    </header>
+
+    <div class="main-content">
+        <!--Section to see your Pokémon team and search options-->
+        <div class="pokemon-search">
+            <div class="pokemon-team">
+                <div class="pokemon-item">
+                    <img src="../img/nopokemon.png" alt="pokemon-img">
+                    <div class="pokemon-name"></div>
+                    <div class="pokemon-types">
+                        <div class="pokemon-type-1"></div>
+                        <div class="pokemon-type-2"></div>
+                    </div>
+                </div>
+                <div class="pokemon-item">
+                    <img src="../img/nopokemon.png" alt="pokemon-img">
+                    <div class="pokemon-name"></div>
+                    <div class="pokemon-types">
+                        <div class="pokemon-type-1"></div>
+                        <div class="pokemon-type-2"></div>
+                    </div>
+                </div>
+                <div class="pokemon-item">
+                    <img src="../img/nopokemon.png" alt="pokemon-img">
+                    <div class="pokemon-name"></div>
+                    <div class="pokemon-types">
+                        <div class="pokemon-type-1"></div>
+                        <div class="pokemon-type-2"></div>
+                    </div>
+                </div>
+                <div class="pokemon-item">
+                    <img src="../img/nopokemon.png" alt="pokemon-img">
+                    <div class="pokemon-name"></div>
+                    <div class="pokemon-types">
+                        <div class="pokemon-type-1"></div>
+                        <div class="pokemon-type-2"></div>
+                    </div>
+                </div>
+                <div class="pokemon-item">
+                    <img src="../img/nopokemon.png" alt="pokemon-img">
+                    <div class="pokemon-name"></div>
+                    <div class="pokemon-types">
+                        <div class="pokemon-type-1"></div>
+                        <div class="pokemon-type-2"></div>
+                    </div>
+                </div>
+                <div class="pokemon-item">
+                    <img src="../img/nopokemon.png" alt="pokemon-img">
+                    <div class="pokemon-name"></div>
+                    <div class="pokemon-types">
+                        <div class="pokemon-type-1"></div>
+                        <div class="pokemon-type-2"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="search-options">
+                <input type="text" id="search-options-name" name="search-options-name" placeholder="Enter a Pokémon">
+                <select name="search-options-type" id="search-options-type">
+                    <option value="all">All</option>
+                </select>
+                <select name="search-options-generation" id="search-options-generation">
+                    <option value="all">All</option>
+                </select>
+                <input type="submit" class="submit-button" id="search-button" value="Search" onclick="addFilters();">
+                <input type="submit" class="random-button" id="random-button" value="Random team">
+            </div>
+            <div class="save-team">
+                <input type="text" class="save-team-name" name="save-team-name" placeholder="Team name">
+                <input type="submit" class="submit-button" name="save-button" value="Save team">
+            </div>
+        </div>
+        <!-- Section to see all the Pokémon -->
+        <div id="pokedex-container"></div>
+    </div>
+    <script src="../JS/index.js"></script>
+</body>
+</html>

@@ -32,7 +32,7 @@
                 <?php
                     echo (isset($errorArray["passwordEmpty"])) ? "<div class='error-message'>$errorArray[passwordEmpty]</div>" : "";
                 ?>
-                <input type="submit" class="login-button" name="login-button" value="Sign in">
+                <input type="submit" class="submit-button" name="login-button" value="Sign in">
 
                 <div class="message-login">Don't have an account?<a href="checkRegister.php">Sign up</a></div>
             </form>

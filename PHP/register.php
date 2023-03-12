@@ -49,7 +49,7 @@
                 echo (isset($errorArray["pictureEmpty"])) ? "<div class='error-message'>$errorArray[pictureEmpty]</div>" : "";
             ?>
 
-            <input type="submit" class="register-button" name="register-button" value="Sign up">
+            <input type="submit" class="submit-button" name="register-button" value="Sign up">
 
             <div class="message-login">Already have an account?<a href="checkLogin.php">Sign in</a></div>
             </form>
