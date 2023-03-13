@@ -8,6 +8,10 @@ const nameSelector = document.getElementById('search-options-name');
 const typeValue = document.getElementById('search-options-type').value;
 const genValue = document.getElementById('search-options-generation').value;
 
+var nameFilter = false;
+var typeFilter = false;
+var genFilter =  false;
+
 
 /* ADDING ALL POKEMON */
 const fetchAllPokemon = async() => {
@@ -128,19 +132,38 @@ nameSelector.addEventListener('input', (e) =>{
     pokemonCards.forEach(card =>{
         if(pokemonSearchName != ""){
             if(card.querySelector('.name').innerHTML.toLowerCase().includes(pokemonSearchName)) {
-                //CAMBIAR (NO SE ELIMINA LA CLASE HIDEFILTER AL BORRAR CARACTERES)
-                if(!card.classList.contains('hidefilter')){
+                if(typeFilter || genFilter){ //Si hay un filtro activado
+                    if(typeFilter){ //Si es el de tipos
+                        if(card.classList.contains('typefilter')){ //Si la carta tiene la clase de tipos activala
+                            card.style.display = "block";
+                            card.classList.add('namefilter');
+                            nameFilter = true;
+                        } else{ //Si no la tiene no la actives
+                            card.style.display = "none";
+                        }
+                    } 
+                    if(genFilter) { 
+                        if(card.classList.contains('genfilter')){ //Si la carta tiene la clase de generaciones activala
+                            card.style.display = "block";
+                            card.classList.add('namefilter');
+                            nameFilter = true;
+                        } else{ //Si no la tiene no la actives
+                            card.style.display = "none";
+                        }
+                    }    
+                } else{ //Si no tiene filtros, activa la carta directamente
                     card.style.display = "block";
-                } else{
-                    card.style.display = "none";
+                    card.classList.add('namefilter');
+                    nameFilter = true;
                 }
-            } else{
+            } else{ //Si no coincide con el nombre, no actives la carta
                 card.style.display = "none";
-                card.classList.add('hidefilter');
+                card.classList.remove('namefilter');
             }
-        } else{
+        } else{ //Si no hay nombre, activa todas las cartas
             card.style.display = "block";
-            card.classList.remove('hidefilter');
+            card.classList.remove('namefilter');
+            nameFilter = false;
         }
     });
 })
@@ -151,12 +174,39 @@ typeSelector.addEventListener('input', (e) => {
     pokemonCards.forEach(card =>{
         if(typeChanged.toLowerCase() != "all"){
             if(card.querySelector('.types').classList.contains(typeChanged.toLowerCase())){
-                card.style.display = "block";
-            } else{
+                if(nameFilter || genFilter){ //Si hay un filtro activado
+                    if(nameFilter){ //Si es el de nombre
+                        if(card.classList.contains('namefilter')){ //Si la carta tiene la clase de tipos activala
+                            card.style.display = "block";
+                            card.classList.add('typefilter');
+                            typeFilter = true;
+                        } else{ //Si no la tiene no la actives
+                            card.style.display = "none";
+                        }
+                    } 
+                    if(genFilter){ 
+                        if(card.classList.contains('genfilter')){ //Si la carta tiene la clase de generaciones activala
+                            card.style.display = "block";
+                            card.classList.add('typefilter');
+                            typeFilter = true;
+                        } else{ //Si no la tiene no la actives
+                            card.style.display = "none";
+                        }
+                    }    
+                } else{ //Si no tiene filtros, activa la carta directamente
+                    card.style.display = "block";
+                    card.classList.add('typefilter');
+                    typeFilter = true;
+                }
+            } else{ //Si no coincide con el nombre, no actives la carta
                 card.style.display = "none";
+                card.classList.remove('typefilter');
+                
             }
-        } else{
+        } else{ //Si no hay nombre, activa todas las cartas
             card.style.display = "block";
+            card.classList.remove('typefilter');
+            typeFilter = false;
         }
     });
 })
@@ -167,15 +217,44 @@ generationSelector.addEventListener('input', (e) => {
     pokemonCards.forEach(card =>{
         if(genChanged.toLowerCase() != "all"){
             if(card.classList.contains(genChanged.toLowerCase())){
-                card.style.display = "block";
-            } else{
+                if(nameFilter || typeFilter){ //Si hay un filtro activado
+                    if(nameFilter){ //Si es el de nombre
+                        if(card.classList.contains('namefilter')){ //Si la carta tiene la clase de tipos activala
+                            card.style.display = "block";
+                            card.classList.add('genfilter');
+                            genFilter = true;
+                        } else{ //Si no la tiene no la actives
+                            card.style.display = "none";
+                        }
+                    } 
+                    if(typeFilter){ 
+                        if(card.classList.contains('typefilter')){ //Si la carta tiene la clase de generaciones activala
+                            card.style.display = "block";
+                            card.classList.add('genfilter');
+                            genFilter = true;
+                        } else{ //Si no la tiene no la actives
+                            card.style.display = "none";
+                        }
+                    }    
+                } else{ //Si no tiene filtros, activa la carta directamente
+                    card.style.display = "block";
+                    card.classList.add('genfilter');
+                    genFilter = true;
+                }
+            } else{ //Si no coincide con el nombre, no actives la carta
                 card.style.display = "none";
+                card.classList.remove('genfilter');
+                
             }
-        } else{
+        } else{ //Si no hay nombre, activa todas las cartas
             card.style.display = "block";
+            card.classList.remove('genfilter');
+            genFilter = false;
         }
     });
 })
+
+//FALLA AL CAMBIAR DE GENERACIÓN (CUANDO YA HAY TIPO SELECCIONADO)
 
 
 /* LOADING FOR THE FIRST TIME */
