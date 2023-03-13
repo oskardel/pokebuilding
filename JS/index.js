@@ -10,18 +10,16 @@ const genValue = document.getElementById('search-options-generation').value;
 
 
 /* ADDING ALL POKEMON */
-function fetchAllPokemon() {
+const fetchAllPokemon = async() => {
     for(let i = 1; i <= 1008; i++){
-        loadPokemonInfo(i);
+        await loadPokemonInfo(i);
     }
 }
 
-function loadPokemonInfo(id) {
-    fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
-    .then(result => result.json())
-    .then(data => {
-        createPokemonCard(data);
-    })
+const loadPokemonInfo = async(id) => {
+    const rest = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
+    const data = await rest.json();
+    createPokemonCard(data);
 }
 
 function createPokemonCard(pokemon) {
@@ -38,7 +36,7 @@ function createPokemonCard(pokemon) {
     spriteContainer.appendChild(sprite);
 
     const pokemonId = document.createElement('p');
-    pokemonId.textContent = `${pokemon.id.toString()}`;
+    pokemonId.textContent = `${pokemon.id.toString().padStart(3, 0)}`;
     
     const types = document.createElement('div');
     types.classList.add('types');
@@ -56,6 +54,7 @@ function createPokemonCard(pokemon) {
     const name = document.createElement('p');
     name.classList.add('name');
     name.textContent = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
+    fetchPokemonGeneration(pokemon.id);
 
     card.appendChild(spriteContainer);
     card.appendChild(pokemonId);
@@ -90,6 +89,15 @@ function createTypeSelector(type) {
 
 
 /* ADDING ALL GENERATIONS*/
+function fetchPokemonGeneration(id) {
+    fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`)
+    .then(response => response.json())
+    .then(data => {
+        const pokemonClass = pokedexContainer.children[id - 1];
+        pokemonClass.classList.add(data.generation.name);
+    })
+}
+
 function fetchAllGenerations() {
     for(let i = 1; i <= 9; i++){
         loadPokemonGenerations(i);
@@ -113,19 +121,23 @@ function createGenerationSelector(gen) {
 
 
 /* APPLY ALL THE FILTERS*/
+// ALL THREE FILTERS NEED TO WORK TOGETHER (BE ABLE TO HIDE AND SHOW CARDS)
 nameSelector.addEventListener('input', (e) =>{
     const pokemonSearchName = e.target.value.toLowerCase().replace(/ /g,'');
     const pokemonCards = document.querySelectorAll('.pokemon-block');
     pokemonCards.forEach(card =>{
-        if(card.querySelector('.name').innerHTML.toLowerCase().includes(pokemonSearchName)) {
-            card.style.display = "block";
+        if(pokemonSearchName != ""){
+            if(card.querySelector('.name').innerHTML.toLowerCase().includes(pokemonSearchName)) {
+                card.style.display = "block";
+            } else{
+                card.style.display = "none";
+            }
         } else{
-            card.style.display = "none";
+            card.style.display = "block";
         }
     });
 })
 
-// NEEDS FIX (BE ABLE TO HIDE AND SHOW CARDS)
 typeSelector.addEventListener('input', (e) => {
     const typeChanged = e.target.value;
     const pokemonCards = document.querySelectorAll('.pokemon-block');
@@ -142,25 +154,24 @@ typeSelector.addEventListener('input', (e) => {
     });
 })
 
-// NEEDS FIX (NOT WORKING)
-generationSelector.addEventListener("change", (e) => {
+generationSelector.addEventListener('input', (e) => {
     const genChanged = e.target.value;
     const pokemonCards = document.querySelectorAll('.pokemon-block');
     pokemonCards.forEach(card =>{
-        fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`)
-        .then(result => result.json())
-        .then(data => {
-            if(data.generation.name === genChanged.toLowerCase()){
+        if(genChanged.toLowerCase() != "all"){
+            if(card.classList.contains(genChanged.toLowerCase())){
                 card.style.display = "block";
             } else{
                 card.style.display = "none";
             }
-        })
+        } else{
+            card.style.display = "block";
+        }
     });
 })
 
 
 /* LOADING FOR THE FIRST TIME */
+fetchAllPokemon();
 fetchAllTypes();
 fetchAllGenerations();
-fetchAllPokemon();
