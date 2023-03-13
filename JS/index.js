@@ -128,12 +128,19 @@ nameSelector.addEventListener('input', (e) =>{
     pokemonCards.forEach(card =>{
         if(pokemonSearchName != ""){
             if(card.querySelector('.name').innerHTML.toLowerCase().includes(pokemonSearchName)) {
-                card.style.display = "block";
+                //CAMBIAR (NO SE ELIMINA LA CLASE HIDEFILTER AL BORRAR CARACTERES)
+                if(!card.classList.contains('hidefilter')){
+                    card.style.display = "block";
+                } else{
+                    card.style.display = "none";
+                }
             } else{
                 card.style.display = "none";
+                card.classList.add('hidefilter');
             }
         } else{
             card.style.display = "block";
+            card.classList.remove('hidefilter');
         }
     });
 })
