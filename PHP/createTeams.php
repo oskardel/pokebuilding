@@ -93,7 +93,8 @@
                 <select name="search-options-generation" id="search-options-generation">
                     <option value="all">All</option>
                 </select>
-                <input type="submit" class="submit-button" id="search-button" value="Search" onclick="addFilters();">
+                <label><input type="checkbox" class="legendary-checkbox" id="legendary-checkbox">Legendary</label>
+                <input type="submit" class="submit-button" id="search-button" value="Search">
                 <input type="submit" class="random-button" id="random-button" value="Random team">
             </div>
             <div class="save-team">

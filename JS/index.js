@@ -5,8 +5,10 @@ const pokedexContainer = document.getElementById('pokedex-container');
 const typeSelector = document.getElementById('search-options-type');
 const generationSelector = document.getElementById('search-options-generation');
 const nameSelector = document.getElementById('search-options-name');
-const typeValue = document.getElementById('search-options-type').value;
-const genValue = document.getElementById('search-options-generation').value;
+const typeValue = document.getElementById('search-options-type');
+const genValue = document.getElementById('search-options-generation');
+const legendaryValue = document.getElementById('legendary-checkbox');
+const searchButton = document.getElementById('search-button');
 
 var nameFilter = false;
 var typeFilter = false;
@@ -59,6 +61,7 @@ function createPokemonCard(pokemon) {
     name.classList.add('name');
     name.textContent = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
     fetchPokemonGeneration(pokemon.id);
+    checkLegendaryStatus(pokemon.id);
 
     card.appendChild(spriteContainer);
     card.appendChild(pokemonId);
@@ -66,6 +69,17 @@ function createPokemonCard(pokemon) {
     card.appendChild(types);
 
     pokedexContainer.appendChild(card);
+}
+
+function checkLegendaryStatus(id) {
+    fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`)
+    .then(response => response.json())
+    .then(data => {
+        const pokemonClass = pokedexContainer.children[id - 1];
+        if(data.is_legendary == true || data.is_mythical == true){
+            pokemonClass.classList.add("legendary");
+        }
+    })
 }
 
 
@@ -126,189 +140,39 @@ function createGenerationSelector(gen) {
 
 
 /* APPLY ALL THE FILTERS*/
-// ALL THREE FILTERS NEED TO WORK TOGETHER (BE ABLE TO HIDE AND SHOW CARDS)
-nameSelector.addEventListener('input', (e) =>{
-    const pokemonSearchName = e.target.value.toLowerCase().replace(/ /g,'');
+searchButton.addEventListener('click', (e) => {
     const pokemonCards = document.querySelectorAll('.pokemon-block');
-    pokemonCards.forEach(card =>{
-        if(pokemonSearchName !== ""){
-            if(card.querySelector('.name').innerHTML.toLowerCase().includes(pokemonSearchName)) {
-                if(typeFilter || genFilter){ //Si hay un filtro activado
-                    if(typeFilter){ //Si es el de tipos
-                        if(card.classList.contains('typefilter')){ //Si la carta tiene la clase de tipos activala
-                            card.style.display = "block";
-                            card.classList.add('namefilter');
-                            nameFilter = true;
-                        } else{ //Si no la tiene no la actives
-                            card.style.display = "none";
-                        }
-                    } 
-                    if(genFilter) {
-                        if(card.classList.contains('genfilter')){ //Si la carta tiene la clase de generaciones activala
-                            card.style.display = "block";
-                            card.classList.add('namefilter');
-                            nameFilter = true;
-                        } else{ //Si no la tiene no la actives
-                            card.style.display = "none";
-                        }
-                    }    
-                } else{ //Si no tiene filtros, activa la carta directamente
-                    card.style.display = "block";
-                    card.classList.add('namefilter');
-                    nameFilter = true;
-                }
-            } else{ //Si no coincide con el nombre, no actives la carta
-                card.style.display = "none";
-                card.classList.remove('namefilter');
+    pokemonCards.forEach(card => {
+        let isCardVisible = true;
+
+        if(typeValue.value !== "all"){
+            if(!card.querySelector('.types').classList.contains(typeValue.value.toLowerCase())){
+                isCardVisible = false;
             }
-        } else{ //Si no hay nombre, activa todas las cartas
-            card.classList.remove('namefilter');
-            if(typeFilter || genFilter){ //Si hay un filtro activado
-                if(typeFilter){ //Si es el de tipos
-                    if(card.classList.contains('typefilter')){ //Si la carta tiene la clase de tipos activala
-                        card.style.display = "block";
-                    } else{ //Si no la tiene no la actives
-                        card.style.display = "none";
-                    }
-                }
-                if(genFilter) { 
-                    if(card.classList.contains('genfilter')){ //Si la carta tiene la clase de generaciones activala
-                        card.style.display = "block";
-                    } else{ //Si no la tiene no la actives
-                        card.style.display = "none";
-                    }
-                }
-            } else{
-                card.style.display = "block";
-                nameFilter = false;
+        } 
+        if(nameSelector.value !== ""){
+            if(!card.querySelector('.name').innerHTML.toLowerCase().includes(nameSelector.value)){
+                isCardVisible = false;
             }
         }
-    });
-})
-
-typeSelector.addEventListener('input', (e) => {
-    const typeChanged = e.target.value;
-    const pokemonCards = document.querySelectorAll('.pokemon-block');
-    pokemonCards.forEach(card =>{
-        if(typeChanged.toLowerCase() !== "all"){
-            if(card.querySelector('.types').classList.contains(typeChanged.toLowerCase())){
-                if(nameFilter || genFilter){ //Si hay un filtro activado
-                    if(nameFilter){ //Si es el de nombre
-                        if(card.classList.contains('namefilter')){ //Si la carta tiene la clase de tipos activala
-                            card.style.display = "block";
-                            card.classList.add('typefilter');
-                            typeFilter = true;
-                        } else{ //Si no la tiene no la actives
-                            card.style.display = "none";
-                        }
-                    } 
-                    if(genFilter){ 
-                        if(card.classList.contains('genfilter')){ //Si la carta tiene la clase de generaciones activala
-                            card.style.display = "block";
-                            card.classList.add('typefilter');
-                            typeFilter = true;
-                        } else{ //Si no la tiene no la actives
-                            card.style.display = "none";
-                        }
-                    }    
-                } else{ //Si no tiene filtros, activa la carta directamente
-                    card.style.display = "block";
-                    card.classList.add('typefilter');
-                    typeFilter = true;
-                }
-            } else{ //Si no coincide con el nombre, no actives la carta
-                card.style.display = "none";
-                card.classList.remove('typefilter');
-            }
-        } else{ //Si no hay nombre, activa todas las cartas
-            card.classList.remove('typefilter');
-            if(nameFilter || genFilter){ //Si hay un filtro activado
-                if(nameFilter){ //Si es el de tipos
-                    if(card.classList.contains('namefilter')){ //Si la carta tiene la clase de tipos activala
-                        card.style.display = "block";
-                    } else{ //Si no la tiene no la actives
-                        card.style.display = "none";
-                    }
-                }
-                if(genFilter) { 
-                    if(card.classList.contains('genfilter')){ //Si la carta tiene la clase de generaciones activala
-                        card.style.display = "block";
-                    } else{ //Si no la tiene no la actives
-                        card.style.display = "none";
-                    }
-                }
-            } else{
-                card.style.display = "block";
-                typeFilter = false;
+        if(genValue.value !== "all"){
+            if(!card.classList.contains(genValue.value.toLowerCase())){
+                isCardVisible = false;
             }
         }
-    });
-    typeSelector.disabled = true;
-})
-
-generationSelector.addEventListener('input', (e) => {
-    const genChanged = e.target.value;
-    const pokemonCards = document.querySelectorAll('.pokemon-block');
-    pokemonCards.forEach(card =>{
-        if(genChanged.toLowerCase() !== "all"){
-            if(card.classList.contains(genChanged.toLowerCase())){
-                if(nameFilter || typeFilter){ //Si hay un filtro activado
-                    if(nameFilter){ //Si es el de nombre
-                        if(card.classList.contains('namefilter')){ //Si la carta tiene la clase de tipos activala
-                            card.style.display = "block";
-                            card.classList.add('genfilter');
-                            genFilter = true;
-                        } else{ //Si no la tiene no la actives
-                            card.style.display = "none";
-                        }
-                    } 
-                    if(typeFilter){ 
-                        if(card.classList.contains('typefilter')){ //Si la carta tiene la clase de generaciones activala
-                            card.style.display = "block";
-                            card.classList.add('genfilter');
-                            genFilter = true;
-                        } else{ //Si no la tiene no la actives
-                            card.style.display = "none";
-                        }
-                    }    
-                } else{ //Si no tiene filtros, activa la carta directamente
-                    card.style.display = "block";
-                    card.classList.add('genfilter');
-                    genFilter = true;
-                }
-            } else{ //Si no coincide con el nombre, no actives la carta
-                card.style.display = "none";
-                card.classList.remove('genfilter');
-                
-            }
-        } else{ //Si no hay nombre, activa todas las cartas
-            card.classList.remove('genfilter');
-            if(nameFilter || typeFilter){ //Si hay un filtro activado
-                if(nameFilter){ //Si es el de tipos
-                    if(card.classList.contains('namefilter')){ //Si la carta tiene la clase de tipos activala
-                        card.style.display = "block";
-                    } else{ //Si no la tiene no la actives
-                        card.style.display = "none";
-                    }
-                }
-                if(typeFilter) { 
-                    if(card.classList.contains('typefilter')){ //Si la carta tiene la clase de generaciones activala
-                        card.style.display = "block";
-                    } else{ //Si no la tiene no la actives
-                        card.style.display = "none";
-                    }
-                }
-            } else{
-                card.style.display = "block";
-                genFilter = false;
+        if(legendaryValue.checked){
+            if(!card.classList.contains("legendary")){
+                isCardVisible = false;
             }
         }
-    });
-    generationSelector.disabled = true; //OPCION PARA ARREGLARLO (NO ES LA FINAL)
+
+        if(!isCardVisible){
+            card.style.display = "none";
+        } else{
+            card.style.display = "block";
+        }
+    })
 })
-
-//FALLA AL CAMBIAR DE GENERACIÓN (CUANDO YA HAY TIPO SELECCIONADO)
-
 
 /* LOADING FOR THE FIRST TIME */
 fetchAllPokemon();

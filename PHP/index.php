@@ -8,88 +8,66 @@
     <title>Home - PokeBuilding</title>
 </head>
 <body>
-    <!-- HEADER -->
-    <?php
-        session_start();
-        if(isset($_SESSION["user"])){
-    ?>
+    <!-- HEADER (NIGHT MODE ICON) -->
     <header>
-        <div class="header-options">
-            <div class="icon-parts">
-                <img src="../img/pokeball_icon.png" alt="pokeball_icon">
-                <div class="icon-text">PokéBuilding</div>
-            </div>
-            <div class="create-team"><a href="createTeams.php">Create Teams</a></div>
-            <div class="create-team"><a href="create_team.php">Battle</a></div>
-        </div>
-        <div class="header-login">
-            <div class="welcome-message"><?php echo "Welcome, ".$_SESSION["user"] ?></div>
-            <?php 
-                echo `<a href="profile.php"><img src="../img/".$_SESSION[user]."/image.png" alt="pfp_icon"></a>`;
-            ?>
-        </div>
+        <button class="night-mode-button" onclick="toggleDarkMode()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-moon" viewBox="0 0 16 16">
+        <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278zM4.858 1.311A7.269 7.269 0 0 0 1.025 7.71c0 4.02 3.279 7.276 7.319 7.276a7.316 7.316 0 0 0 5.205-2.162c-.337.042-.68.063-1.029.063-4.61 0-8.343-3.714-8.343-8.29 0-1.167.242-2.278.681-3.286z"/></svg>
+        </button>
+        <?php
+            session_start();
+            if(!isset($_SESSION["user"])){
+        ?>
+            <a href="checkLogin.php" class="profile-picture"><img src="../img/default-pfp.png" alt="no-login"></a>
+        <?php
+            } else{
+        ?>
+            <a href="profile.php" class="profile-picture"><img src="<?php echo "../img/".$_SESSION["user"]."/imgage.png" ?>" alt="profile-picture"></a>
+        <?php
+            }
+        ?>
     </header>
-    <?php
-        } else{ 
-    ?>
-    <header>
-        <div class="header-options">
-            <div class="icon-parts">
-                <img src="../img/pokeball_icon.png" alt="pokeball_icon">
-                <div class="icon-text">PokéBuilding</div>
-            </div>
-        </div>
-        <div class="header-login">
-            <div class="sign-in"><a href="checkLogin.php">Sign in</a></div>
-            <div class="sign-up"><a href="checkRegister.php">Sign up</a></div>
-        </div>
-    </header>
-    <?php } ?>
 
     <!-- BODY -->
     <div class="main-content">
         <div class="home-tittle">PokéBuilding</div>
-        <div class="home-cards">
-            <div class="tutorial-card">
-                <div class="tutorial-card-tittle">TUTORIAL</div>
-                <div class="tutorial-card-content">Create your own Pokémon teams to fight against other. 
-                    With PokéBuilding you will be able to fight up to 6vs6 Pokémon, creating your own Pokémon teams. 
-                    You can remove, edit and create up to 5 teams per user. 
-                    <a href="checkRegister.php">Create an account</a> or <a href="checkLogin.php">log in</a> to get started!</div>
+        <div class="home-text">A cool website to create your own teams and compare them with other!<br> Create an account or login to get started.</div>
+        <div class="home-options">
+            <?php
+                if(!isset($_SESSION["user"])){
+            ?>
+            <div class="home-login">
+                <a href="checkLogin.php">LOGIN</a>
             </div>
-
-            <div class="teams-card">
-                <div class="teams-card-tittle">TEAMS</div>
-                <div class="teams-card-content">When registered you will be able to create teams choosing your favorite teams. 
-                    Each team will have a maximum of 6 Pokémon with different attacks each. 
-                    You will be able to search Pokémon manually in a list or order by type. 
-                    You can also create team with random Pokémon and random attacks!</div>
+            <div class="home-register">
+                <a href="checkRegister.php">REGISTER <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/></svg></a>
             </div>
-
-            <div class="battle-card">
-                <div class="battle-card-tittle">BATTLE</div>
-                <div class="battle-card-content">Once created at least one team, you are able to engage in battle other team you have created. 
-                    You can also fight against a random team!</div>
-            </div>
+            <?php 
+                } else{
+            ?>
+            <div class="home-teams"><a href="createTeams.php">CREATE TEAM</a></div>
+            <?php
+                }
+            ?>
         </div>
     </div>
 
     <!-- FOOTER -->
     <footer>
         <div class="footer-options">
-            <div class="terms-conditions"><a href="terms_conditions.php">Terms and conditions</a></div>
-            <div class="about-us"><a href="about_us.php">About us</a></div>
+            <div class="terms-conditions"><a href="terms_conditions.php">PRIVACY POLICY</a></div>
+            <div class="about-us"><a href="about_us.php">ABOUT US</a></div>
         </div>
 
         <div class="social-media">
             <div class="youtube">
-                <a href="youtube.com"><img src="../img/youtube-logo.png" alt="youtube-logo"></a>
+                <a href="youtube.com">YOUTUBE</a>
             </div>
             <div class="twitter">
-                <a href="twitter.com"><img src="../img/twitter-logo.png" alt="twitter-logo"></a>
+                <a href="twitter.com">TWITTER</a>
             </div>
             <div class="instagram">
-                <a href="instagram.com"><img src="../img/insta-logo.png" alt="insta-logo"></a>
+                <a href="instagram.com">INSTAGRAM</a>
             </div>
         </div>
     </footer>

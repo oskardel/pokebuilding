@@ -41,19 +41,19 @@
 
     <footer>
         <div class="footer-options">
-            <div class="terms-conditions"><a href="terms_conditions.php">Terms and conditions</a></div>
-            <div class="about-us"><a href="about_us.php">About us</a></div>
+            <div class="terms-conditions"><a href="terms_conditions.php">PRIVACY POLICY</a></div>
+            <div class="about-us"><a href="about_us.php">ABOUT US</a></div>
         </div>
 
         <div class="social-media">
             <div class="youtube">
-                <a href="youtube.com"><img src="../img/youtube-logo.png" alt="youtube-logo"></a>
+                <a href="youtube.com">YOUTUBE</a>
             </div>
             <div class="twitter">
-                <a href="twitter.com"><img src="../img/twitter-logo.png" alt="twitter-logo"></a>
+                <a href="twitter.com">TWITTER</a>
             </div>
             <div class="instagram">
-                <a href="instagram.com"><img src="../img/insta-logo.png" alt="insta-logo"></a>
+                <a href="instagram.com">INSTAGRAM</a>
             </div>
         </div>
     </footer>
