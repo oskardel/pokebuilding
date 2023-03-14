@@ -119,7 +119,8 @@ function loadPokemonGenerations(id) {
 function createGenerationSelector(gen) {
     var newGeneration = document.createElement('option');
     newGeneration.value = gen.name.charAt(0).toUpperCase() + gen.name.slice(1);
-    newGeneration.innerHTML = gen.name.charAt(0).toUpperCase() + gen.name.slice(1);
+    let varNeGeneration = gen.name.charAt(0).toUpperCase() + gen.name.slice(1);
+    newGeneration.innerHTML = varNeGeneration.replace('-', ' ');
     generationSelector.appendChild(newGeneration);
 }
 
