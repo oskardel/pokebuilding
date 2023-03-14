@@ -130,7 +130,7 @@ nameSelector.addEventListener('input', (e) =>{
     const pokemonSearchName = e.target.value.toLowerCase().replace(/ /g,'');
     const pokemonCards = document.querySelectorAll('.pokemon-block');
     pokemonCards.forEach(card =>{
-        if(pokemonSearchName != ""){
+        if(pokemonSearchName !== ""){
             if(card.querySelector('.name').innerHTML.toLowerCase().includes(pokemonSearchName)) {
                 if(typeFilter || genFilter){ //Si hay un filtro activado
                     if(typeFilter){ //Si es el de tipos
@@ -142,7 +142,7 @@ nameSelector.addEventListener('input', (e) =>{
                             card.style.display = "none";
                         }
                     } 
-                    if(genFilter) { 
+                    if(genFilter) {
                         if(card.classList.contains('genfilter')){ //Si la carta tiene la clase de generaciones activala
                             card.style.display = "block";
                             card.classList.add('namefilter');
@@ -161,9 +161,26 @@ nameSelector.addEventListener('input', (e) =>{
                 card.classList.remove('namefilter');
             }
         } else{ //Si no hay nombre, activa todas las cartas
-            card.style.display = "block";
             card.classList.remove('namefilter');
-            nameFilter = false;
+            if(typeFilter || genFilter){ //Si hay un filtro activado
+                if(typeFilter){ //Si es el de tipos
+                    if(card.classList.contains('typefilter')){ //Si la carta tiene la clase de tipos activala
+                        card.style.display = "block";
+                    } else{ //Si no la tiene no la actives
+                        card.style.display = "none";
+                    }
+                }
+                if(genFilter) { 
+                    if(card.classList.contains('genfilter')){ //Si la carta tiene la clase de generaciones activala
+                        card.style.display = "block";
+                    } else{ //Si no la tiene no la actives
+                        card.style.display = "none";
+                    }
+                }
+            } else{
+                card.style.display = "block";
+                nameFilter = false;
+            }
         }
     });
 })
@@ -172,7 +189,7 @@ typeSelector.addEventListener('input', (e) => {
     const typeChanged = e.target.value;
     const pokemonCards = document.querySelectorAll('.pokemon-block');
     pokemonCards.forEach(card =>{
-        if(typeChanged.toLowerCase() != "all"){
+        if(typeChanged.toLowerCase() !== "all"){
             if(card.querySelector('.types').classList.contains(typeChanged.toLowerCase())){
                 if(nameFilter || genFilter){ //Si hay un filtro activado
                     if(nameFilter){ //Si es el de nombre
@@ -201,21 +218,38 @@ typeSelector.addEventListener('input', (e) => {
             } else{ //Si no coincide con el nombre, no actives la carta
                 card.style.display = "none";
                 card.classList.remove('typefilter');
-                
             }
         } else{ //Si no hay nombre, activa todas las cartas
-            card.style.display = "block";
             card.classList.remove('typefilter');
-            typeFilter = false;
+            if(nameFilter || genFilter){ //Si hay un filtro activado
+                if(nameFilter){ //Si es el de tipos
+                    if(card.classList.contains('namefilter')){ //Si la carta tiene la clase de tipos activala
+                        card.style.display = "block";
+                    } else{ //Si no la tiene no la actives
+                        card.style.display = "none";
+                    }
+                }
+                if(genFilter) { 
+                    if(card.classList.contains('genfilter')){ //Si la carta tiene la clase de generaciones activala
+                        card.style.display = "block";
+                    } else{ //Si no la tiene no la actives
+                        card.style.display = "none";
+                    }
+                }
+            } else{
+                card.style.display = "block";
+                typeFilter = false;
+            }
         }
     });
+    typeSelector.disabled = true;
 })
 
 generationSelector.addEventListener('input', (e) => {
     const genChanged = e.target.value;
     const pokemonCards = document.querySelectorAll('.pokemon-block');
     pokemonCards.forEach(card =>{
-        if(genChanged.toLowerCase() != "all"){
+        if(genChanged.toLowerCase() !== "all"){
             if(card.classList.contains(genChanged.toLowerCase())){
                 if(nameFilter || typeFilter){ //Si hay un filtro activado
                     if(nameFilter){ //Si es el de nombre
@@ -247,11 +281,29 @@ generationSelector.addEventListener('input', (e) => {
                 
             }
         } else{ //Si no hay nombre, activa todas las cartas
-            card.style.display = "block";
             card.classList.remove('genfilter');
-            genFilter = false;
+            if(nameFilter || typeFilter){ //Si hay un filtro activado
+                if(nameFilter){ //Si es el de tipos
+                    if(card.classList.contains('namefilter')){ //Si la carta tiene la clase de tipos activala
+                        card.style.display = "block";
+                    } else{ //Si no la tiene no la actives
+                        card.style.display = "none";
+                    }
+                }
+                if(typeFilter) { 
+                    if(card.classList.contains('typefilter')){ //Si la carta tiene la clase de generaciones activala
+                        card.style.display = "block";
+                    } else{ //Si no la tiene no la actives
+                        card.style.display = "none";
+                    }
+                }
+            } else{
+                card.style.display = "block";
+                genFilter = false;
+            }
         }
     });
+    generationSelector.disabled = true; //OPCION PARA ARREGLARLO (NO ES LA FINAL)
 })
 
 //FALLA AL CAMBIAR DE GENERACIÓN (CUANDO YA HAY TIPO SELECCIONADO)
