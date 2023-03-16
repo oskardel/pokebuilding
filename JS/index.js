@@ -151,7 +151,7 @@ searchButton.addEventListener('click', (e) => {
             }
         } 
         if(nameSelector.value !== ""){
-            if(!card.querySelector('.name').innerHTML.toLowerCase().includes(nameSelector.value)){
+            if(!card.querySelector('.name').innerHTML.toLowerCase().includes(nameSelector.value.toLowerCase().replace(/ /g,''))){
                 isCardVisible = false;
             }
         }

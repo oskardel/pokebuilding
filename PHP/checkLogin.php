@@ -29,7 +29,7 @@
                 if($userBD=$database->checkPassword($username, $password)){
                     session_start();
                     $_SESSION["user"] = $username;
-                    header("Location:index.php");
+                    header("Location:index.php?user=".$username."&method=login");
                 }
             } catch(PDOException $e){
                 error_log($e->getMessage() . "##Código: " . $e->getCode() . "  " . microtime() . PHP_EOL, 3, "../logBD.txt");

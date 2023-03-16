@@ -11,25 +11,23 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../CSS/styles.css">
+    <link rel="stylesheet" href="../CSS/team-creation.css">
     <title>Home - PokeBuilding</title>
 </head>
 <body>
     <header>
         <div class="header-options">
-            <div class="icon-parts">
+            <a href="index.php" class="icon-parts">
                 <img src="../img/pokeball_icon.png" alt="pokeball_icon">
-                <div class="icon-text">PokéBuilding</div>
-            </div>
-            <div class="create-team"><a href="createTeams.php">Create Teams</a></div>
-            <div class="create-team"><a href="create_team.php">Battle</a></div>
+                <h1 class="icon-text">PokéBuilding</h1>
+            </a>
+            <a href="createTeams.php" class="create-team">Create Teams</a>
+            <a href="compareTeams.php" class="create-team">Compare</a>
         </div>
-        <div class="header-login">
-            <div class="welcome-message"><?php echo "Welcome, ".$_SESSION["user"] ?></div>
-            <?php 
-                echo `<a href="profile.php"><img src="../img/".$_SESSION[user]."/image.png" alt="pfp_icon"></a>`;
-            ?>
-        </div>
+         <!-- "../img/".$_SESSION[user]."/image.png" -->
+        <a href="profile.php" class="profile-picture">
+            <img src="../img/option1.png" alt="pfp_icon">
+        </a>
     </header>
 
     <div class="main-content">

@@ -1,0 +1,70 @@
+html, body {
+  overflow: visible;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  height: 80px;
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #f6bd20;
+}
+header .profile-picture {
+  display: flex;
+  align-items: center;
+  padding-right: 15px;
+}
+header .profile-picture img {
+  width: 65px;
+  border-radius: 50%;
+  border: 5px solid transparent;
+}
+header .profile-picture img:hover {
+  border: 5px solid #ffce46;
+}
+header .header-options {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  left: 0;
+  padding-left: 15px;
+}
+header .header-options .create-team {
+  color: #18447d;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+}
+header .header-options .create-team:hover {
+  background-color: #ffce46;
+}
+header .header-options .icon-parts {
+  color: #18447d;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-right: 15px;
+  text-decoration: none;
+  height: 100%;
+}
+header .header-options .icon-parts:hover {
+  background-color: #ffce46;
+}
+header .header-options .icon-parts img {
+  height: 50px;
+  padding-right: 5px;
+}
+header .header-options .create-team {
+  padding-left: 15px;
+  padding-right: 15px;
+}/*# sourceMappingURL=team-creation.css.map */

@@ -67,7 +67,7 @@
                         copy("../img/".$profilePicture.".png", "../img/".$username."/image.png");
                         session_start();
                         $_SESSION["user"] = $username;
-                        header("Location:index.php");
+                        header("Location:index.php?user=".$username."&method=register");
                     }
                 }
                 
