@@ -1,6 +1,11 @@
 // VARIABLES AND FUNCTIONS
-$brightColor: #f6bd20;
-$footerBrightColor: #fff6a4;
+// $brightColor: #f6bd20;
+$brightColor: #f6f8fc;
+$footerBrightColor: rgb(172, 172, 172);
+
+*{
+    font-family: 'Montserrat', sans-serif;
+}
 
 body{
     padding: 0;
@@ -88,7 +93,7 @@ header, .main-content{
 }
 
 .home-button-1{
-    background-color: white;
+    background-color: #f6bd20;
     color: black;
 
     &:hover{
@@ -98,7 +103,7 @@ header, .main-content{
 }
 .home-button-2{
     background-color: #EE1515;
-    color: white;
+    color: #f6bd20;
 
     &:hover{
         background-color: #a61010;

@@ -1,19 +1,29 @@
-$brightColor: #f6bd20;
+$brightColor: #f6f8fc;
+$hoverButtonColor: #ee1515;
+$textColor: #6b6b6b;
+
+*{
+    font-family: 'Montserrat', sans-serif;
+}
 
 html, body{
     overflow:visible;
     margin: 0;
     padding: 0;
+    background-color: $brightColor;
 }
 
 header{
+    margin: 25px 100px 0 100px;
     height: 80px;
     position: sticky;
     top: 0;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    background-color: $brightColor;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px;
+    border-radius: 15px;
 
     .profile-picture{
         display: flex;
@@ -26,7 +36,7 @@ header{
             border: 5px solid transparent;
 
             &:hover{
-                border: 5px solid #ffce46;
+                border: 5px solid #ee1515;
             }
         }
     }
@@ -38,9 +48,9 @@ header{
         align-items: center;
         left: 0;
         padding-left: 15px;
-        
+             
         .create-team{
-            color:#18447d;
+            color: $textColor;
             text-decoration: none;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -49,24 +59,29 @@ header{
             justify-content: center;
             align-items: center;
             font-weight: 700;
+            border-bottom: 5px solid transparent;
+            transition: 0.2s;
 
             &:hover{
-                background-color: #ffce46;
+                border-bottom: 5px solid $hoverButtonColor;
+                color: $hoverButtonColor;
             }
         }
 
         .icon-parts{
-            color:#18447d;
+            color: $textColor;
             display: flex;
             flex-direction: row;
             align-items: center;
             padding-right: 15px;
             text-decoration: none;
             height: 100%;
+            border-bottom: 5px solid transparent;
+            transition: 0.2s;
 
             &:hover{
-                background-color: #ffce46;
-
+                border-bottom: 5px solid $hoverButtonColor;
+                color: $hoverButtonColor;
             }
 
             img{
@@ -80,4 +95,37 @@ header{
             padding-right: 15px;
         }
     }    
+}
+
+.main-content{
+    display: grid;
+    grid-template-columns: 3fr 7fr;
+    position: relative;
+}
+
+.pokemon-search{
+    display: flex;
+    flex-direction: column;
+    grid-area: 1/1;
+    position: sticky; //ARREGLAR (NO SE QUEDA ESTATICO)
+    top: 10px;
+
+    .pokemon-team{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 500px;
+        padding: 25px;
+    
+        .pokemon-item{
+            padding: 15px;
+            img{
+                width: 100px;
+            }
+        }
+    }
+}
+
+.pokedex-container{
+    grid-area: 1/2;
 }

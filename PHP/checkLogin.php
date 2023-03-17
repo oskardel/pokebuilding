@@ -30,6 +30,9 @@
                     session_start();
                     $_SESSION["user"] = $username;
                     header("Location:index.php?user=".$username."&method=login");
+                } else{
+                    $errorArray["userEmpty"] = "The email or password is incorrect";
+                    require("login.php");
                 }
             } catch(PDOException $e){
                 error_log($e->getMessage() . "##Código: " . $e->getCode() . "  " . microtime() . PHP_EOL, 3, "../logBD.txt");

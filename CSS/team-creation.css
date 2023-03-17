@@ -1,17 +1,25 @@
+* {
+  font-family: "Montserrat", sans-serif;
+}
+
 html, body {
   overflow: visible;
   margin: 0;
   padding: 0;
+  background-color: #f6f8fc;
 }
 
 header {
+  margin: 25px 100px 0 100px;
   height: 80px;
   position: sticky;
   top: 0;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  background-color: #f6bd20;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px;
+  border-radius: 15px;
 }
 header .profile-picture {
   display: flex;
@@ -24,7 +32,7 @@ header .profile-picture img {
   border: 5px solid transparent;
 }
 header .profile-picture img:hover {
-  border: 5px solid #ffce46;
+  border: 5px solid #ee1515;
 }
 header .header-options {
   position: relative;
@@ -35,7 +43,7 @@ header .header-options {
   padding-left: 15px;
 }
 header .header-options .create-team {
-  color: #18447d;
+  color: #6b6b6b;
   text-decoration: none;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -44,21 +52,27 @@ header .header-options .create-team {
   justify-content: center;
   align-items: center;
   font-weight: 700;
+  border-bottom: 5px solid transparent;
+  transition: 0.2s;
 }
 header .header-options .create-team:hover {
-  background-color: #ffce46;
+  border-bottom: 5px solid #ee1515;
+  color: #ee1515;
 }
 header .header-options .icon-parts {
-  color: #18447d;
+  color: #6b6b6b;
   display: flex;
   flex-direction: row;
   align-items: center;
   padding-right: 15px;
   text-decoration: none;
   height: 100%;
+  border-bottom: 5px solid transparent;
+  transition: 0.2s;
 }
 header .header-options .icon-parts:hover {
-  background-color: #ffce46;
+  border-bottom: 5px solid #ee1515;
+  color: #ee1515;
 }
 header .header-options .icon-parts img {
   height: 50px;
@@ -67,4 +81,35 @@ header .header-options .icon-parts img {
 header .header-options .create-team {
   padding-left: 15px;
   padding-right: 15px;
+}
+
+.main-content {
+  display: grid;
+  grid-template-columns: 3fr 7fr;
+  position: relative;
+}
+
+.pokemon-search {
+  display: flex;
+  flex-direction: column;
+  grid-area: 1/1;
+  position: sticky;
+  top: 10px;
+}
+.pokemon-search .pokemon-team {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 500px;
+  padding: 25px;
+}
+.pokemon-search .pokemon-team .pokemon-item {
+  padding: 15px;
+}
+.pokemon-search .pokemon-team .pokemon-item img {
+  width: 100px;
+}
+
+.pokedex-container {
+  grid-area: 1/2;
 }/*# sourceMappingURL=team-creation.css.map */

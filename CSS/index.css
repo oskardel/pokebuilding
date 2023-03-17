@@ -1,3 +1,7 @@
+* {
+  font-family: "Montserrat", sans-serif;
+}
+
 body {
   padding: 0;
   margin: 0;
@@ -8,7 +12,7 @@ body {
 }
 
 header, .main-content {
-  background-color: #f6bd20;
+  background-color: #f6f8fc;
   height: 100vh;
 }
 
@@ -77,7 +81,7 @@ header, .main-content {
 }
 
 .home-button-1 {
-  background-color: white;
+  background-color: #f6bd20;
   color: black;
 }
 .home-button-1:hover {
@@ -87,7 +91,7 @@ header, .main-content {
 
 .home-button-2 {
   background-color: #EE1515;
-  color: white;
+  color: #f6bd20;
 }
 .home-button-2:hover {
   background-color: #a61010;
@@ -95,7 +99,7 @@ header, .main-content {
 }
 
 footer {
-  background-color: #fff6a4;
+  background-color: rgb(172, 172, 172);
   display: flex;
   flex-direction: row;
   justify-content: center;
