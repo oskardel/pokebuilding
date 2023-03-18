@@ -25,7 +25,7 @@
             <?php
                 } else{
             ?>
-                <a href="profile.php" class="profile-picture"><img src="<?php echo "../img/".$_SESSION["user"]."/image.png" ?>" alt="profile-picture"></a>
+                <a href="profile.php" class="profile-picture"><img src="<?php echo "../img/".$_SESSION["user"]."/image.png" ?>" alt="pfp"></a>
             <?php
                 }
             ?>

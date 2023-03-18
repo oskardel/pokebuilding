@@ -4,6 +4,7 @@ $textColor: #6b6b6b;
 
 *{
     font-family: 'Montserrat', sans-serif;
+    color: $textColor;
 }
 
 html, body{
@@ -14,6 +15,7 @@ html, body{
 }
 
 header{
+    z-index: 5;
     margin: 25px 100px 0 100px;
     height: 80px;
     position: sticky;
@@ -34,9 +36,10 @@ header{
             width: 65px;
             border-radius: 50%;
             border: 5px solid transparent;
+            transition: 0.2s;
 
             &:hover{
-                border: 5px solid #ee1515;
+                border: 5px solid $hoverButtonColor;
             }
         }
     }
@@ -97,18 +100,17 @@ header{
     }    
 }
 
-.main-content{
-    display: grid;
-    grid-template-columns: 3fr 7fr;
-    position: relative;
-}
 
-.pokemon-search{
-    display: flex;
-    flex-direction: column;
-    grid-area: 1/1;
-    position: sticky; //ARREGLAR (NO SE QUEDA ESTATICO)
-    top: 10px;
+.pokemon-search{ //ARREGLAR (NO SE QUEDA ESTATICO)
+    padding-top: 10px;
+    height: 100%;
+    position: fixed;
+    z-index: 1;
+    width: 30%;
+
+    .shiny-button img{
+        width: 50px;
+    }
 
     .pokemon-team{
         display: flex;
@@ -126,6 +128,79 @@ header{
     }
 }
 
-.pokedex-container{
-    grid-area: 1/2;
+#pokedex-container{
+    padding-top: 30px;
+    padding-bottom: 30px;
+    margin-left: 30%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15.25rem, 1fr));
+    gap: 0.875em;
+
+    .pokemon-block{
+        align-items: center;
+        flex-direction: column;
+        width: 215px;
+        padding: 15px;
+        background-color: white;
+        border-radius: 15px;
+        box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px;
+        border-bottom: 5px solid transparent;
+        transition: 0.2s;
+
+        .name{
+            font-weight: 700;
+            font-size: larger;
+            color: black;
+            transition: 0.2s;
+        }
+
+        .pokemon-id{
+            display: flex;
+            justify-content: center;
+            width: 75px;
+            background-color: $brightColor;
+            border-radius: 25px;
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 10px;
+        }
+
+        .types{
+            display: flex;
+            flex-direction: row;
+
+            img{
+                width: 50px;
+            }
+        }
+
+        .img-container {
+            height: 175px;
+
+            img{
+                width: 200px;
+                position: relative;
+            }
+        }
+
+        &:hover{
+            border-bottom: 5px solid $hoverButtonColor;
+            cursor: pointer;
+
+            .name{
+                color: $hoverButtonColor;
+            }
+
+            .img-container img{
+                animation-name: floating;
+                animation-duration: 2s;
+                animation-iteration-count: infinite;
+                animation-timing-function: ease-in-out;
+            }
+        }
+    }
+}
+
+@keyframes floating {
+    0% { transform: translate(0,  0px); }
+    50%  { transform: translate(0, -15px); }
+    100%   { transform: translate(0, -0px); }
 }

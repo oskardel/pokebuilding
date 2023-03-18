@@ -20,6 +20,7 @@ const fetchAllPokemon = async() => {
     for(let i = 1; i <= 1008; i++){
         await loadPokemonInfo(i);
     }
+    onClick();
 }
 
 const loadPokemonInfo = async(id) => {
@@ -31,17 +32,21 @@ const loadPokemonInfo = async(id) => {
 function createPokemonCard(pokemon) {
     const card = document.createElement('div');
     card.classList.add('pokemon-block');
-    card.style.display = "block";
+    card.style.display = "flex";
 
     const spriteContainer = document.createElement('div');
     spriteContainer.classList.add('img-container');
 
     const sprite = document.createElement('img');
     sprite.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`;
+    // CHANGE SRC OF IMAGE TO ADD SHINY IMG
+    // const shinySprite = document.createElement('img');
+    // shinySprite.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/${pokemon.id}.png`;
 
     spriteContainer.appendChild(sprite);
 
     const pokemonId = document.createElement('p');
+    pokemonId.classList.add('pokemon-id');
     pokemonId.textContent = `${pokemon.id.toString().padStart(3, 0)}`;
     
     const types = document.createElement('div');
@@ -140,6 +145,11 @@ function createGenerationSelector(gen) {
 
 
 /* APPLY ALL THE FILTERS*/
+function trimZeros(num){ //Shiny id function
+    let newNumber = parseInt(num, 10);
+    return newNumber;
+}
+
 searchButton.addEventListener('click', (e) => {
     const pokemonCards = document.querySelectorAll('.pokemon-block');
     pokemonCards.forEach(card => {
@@ -169,10 +179,19 @@ searchButton.addEventListener('click', (e) => {
         if(!isCardVisible){
             card.style.display = "none";
         } else{
-            card.style.display = "block";
+            card.style.display = "flex";
         }
     })
 })
+
+function onClick() {
+    const pokemonCards = document.querySelectorAll('.pokemon-block');
+    pokemonCards.forEach(card => {
+        card.addEventListener('click', (e) => {
+            console.log(card.querySelector('.name'));
+        })
+    });
+}
 
 /* LOADING FOR THE FIRST TIME */
 fetchAllPokemon();
