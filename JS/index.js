@@ -9,10 +9,34 @@ const typeValue = document.getElementById('search-options-type');
 const genValue = document.getElementById('search-options-generation');
 const legendaryValue = document.getElementById('legendary-checkbox');
 const searchButton = document.getElementById('search-button');
+const overlayButton = document.getElementById('overlay');
+const pokemonCardDiv = document.getElementById('pokemon-card');
+const pokemonBlockCards = document.querySelectorAll('.pokemon-block');
 
 var nameFilter = false;
 var typeFilter = false;
 var genFilter =  false;
+
+const typeColours = {
+	normal: '#A8A77A',
+	fire: '#EE8130',
+	water: '#6390F0',
+	electric: '#F7D02C',
+	grass: '#7AC74C',
+	ice: '#96D9D6',
+	fighting: '#C22E28',
+	poison: '#A33EA1',
+	ground: '#E2BF65',
+	flying: '#A98FF3',
+	psychic: '#F95587',
+	bug: '#A6B91A',
+	rock: '#B6A136',
+	ghost: '#735797',
+	dragon: '#6F35FC',
+	dark: '#705746',
+	steel: '#B7B7CE',
+	fairy: '#D685AD',
+};
 
 
 /* ADDING ALL POKEMON */
@@ -20,7 +44,6 @@ const fetchAllPokemon = async() => {
     for(let i = 1; i <= 1008; i++){
         await loadPokemonInfo(i);
     }
-    onClick();
 }
 
 const loadPokemonInfo = async(id) => {
@@ -64,7 +87,7 @@ function createPokemonCard(pokemon) {
 
     const name = document.createElement('p');
     name.classList.add('name');
-    name.textContent = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
+    name.textContent = pokemon.species.name.charAt(0).toUpperCase() + pokemon.species.name.slice(1);
     fetchPokemonGeneration(pokemon.id);
     checkLegendaryStatus(pokemon.id);
 
@@ -184,14 +207,117 @@ searchButton.addEventListener('click', (e) => {
     })
 })
 
-function onClick() {
-    const pokemonCards = document.querySelectorAll('.pokemon-block');
-    pokemonCards.forEach(card => {
-        card.addEventListener('click', (e) => {
-            console.log(card.querySelector('.name'));
-        })
-    });
+/* ADD POKEMON CARD ATTRIBUTES */
+const pokemonCardName = document.querySelector('.pokemon-card-name');
+const pokemonCardId = document.querySelector('.pokemon-card-id');
+const pokemonCardGeneration = document.querySelector('.pokemon-card-genera');
+const pokemonCardHeight = document.querySelector('.height-info');
+const pokemonCardWeight = document.querySelector('.weight-info');
+const pokedexEntry = document.querySelector('.pokedex-entry-info');
+const pokemonAbilityName1 = document.querySelector('.ability-1-name');
+const pokemonAbilityName2 = document.querySelector('.ability-2-name');
+const pokemonAbility1 = document.querySelector('.ability-1-info');
+const pokemonAbility2 = document.querySelector('.ability-2-info');
+const pokemonAbility2Div = document.querySelector('.ability-2');
+
+
+function getGenrationPokemon(id) {
+    fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`)
+    .then(response => response.json())
+    .then(data => {
+        let genVal = data.generation.name;
+        let genValAfter = genVal.slice(genVal.indexOf('-') +1).toUpperCase();
+        pokemonCardGeneration.innerHTML = "Generation " + genValAfter;
+    })
 }
+
+function getAttributesPokemon(id) {
+    fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
+    .then(response => response.json())
+    .then(data => {
+        let pokemonHeight = data.height.toString();
+        var decimalCommaHeight = pokemonHeight.length - 1;
+        let pokemonWeight = data.weight.toString();
+        var decimalCommaWeight = pokemonWeight.length - 1;
+
+        if(data.height < 10){
+            pokemonCardHeight.innerHTML = "0,"+pokemonHeight+" m";
+        } else{
+            let pokemonHeightDecimal =  pokemonHeight.slice(0, decimalCommaHeight) + "," + pokemonHeight.slice(decimalCommaHeight);
+            pokemonCardHeight.innerHTML = pokemonHeightDecimal + " m";
+        }
+
+        if(data.weight < 10){
+            pokemonCardWeight.innerHTML = "0,"+pokemonWeight+" kg";
+        } else{
+            let pokemonWeightDecimal =  pokemonWeight.slice(0, decimalCommaWeight) + "," + pokemonWeight.slice(decimalCommaWeight);
+            pokemonCardWeight.innerHTML = pokemonWeightDecimal + " kg";
+        }
+    })
+}
+
+function getPokedexEntry(id) {
+    fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`)
+    .then(response => response.json())
+    .then(data => {
+        let flavor_text;
+        if(data.flavor_text_entries.length !== 0){
+            for(var i = 0; i <= 10; i++){
+                if(data.flavor_text_entries[i].language.name == "en"){
+                    flavor_text = data.flavor_text_entries[i].flavor_text;
+                    pokedexEntry.innerHTML = flavor_text;
+                    return;
+                }
+            }
+        } else{
+            flavor_text = "This Pokémon has no information.";
+            pokedexEntry.innerHTML = flavor_text;
+        }
+        
+    })
+}
+
+function getPokemonAbility(id) { //This function will only get the ability name (not the description)
+    fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
+    .then(response => response.json())
+    .then(data => {
+        pokemonAbilityName1.innerHTML = data.abilities[0].ability.name;
+        if(data.abilities.length > 1){
+            pokemonAbilityName2.innerHTML = data.abilities[1].ability.name;
+            pokemonAbility2Div.style.display = "block";
+        } else{
+            pokemonAbility2Div.style.display = "none";
+        }
+    })
+}
+
+/* EL EVENTLISTENER NO FUNCIONA (SI LO METO EN UNA FUNCIÓN SOLO LO HACE UNA VEZ) */
+/* ADEMÁS, AÑADIR MENÚ DE FORMAS (POR EJEMPLO FORMAS DEOXYS) */
+pokemonBlockCards.forEach(card => { 
+    card.addEventListener('click', () => {
+        let pokemonId = trimZeros(card.querySelector('.pokemon-id').innerHTML);
+        pokemonCardName.innerHTML = card.querySelector('.name').innerHTML; //pokemon card name
+        pokemonCardId.innerHTML = card.querySelector('.pokemon-id').innerHTML; //pokemon card id
+        getGenrationPokemon(pokemonId); //pokemon card generation
+        getAttributesPokemon(pokemonId); //pokemon card weight & height
+        getPokedexEntry(pokemonId); //card pokdex entry
+        getPokemonAbility(pokemonId);
+        
+        pokemonCardDiv.classList.add('active');
+        overlayButton.classList.add('active');
+        pokemonCardDiv.style.display = "block";
+        overlayButton.style.display = "block";
+    })
+});
+
+
+// SHOW OR HIDE POKEMON CARD INFO
+overlayButton.addEventListener('click', (e) => {
+    if(overlayButton.classList.contains('active')){
+        overlayButton.classList.remove('active');
+        pokemonCardDiv.classList.remove('active');
+    }
+})
 
 /* LOADING FOR THE FIRST TIME */
 fetchAllPokemon();

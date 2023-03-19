@@ -100,7 +100,117 @@
                 <input type="submit" class="submit-button" name="save-button" value="Save team">
             </div>
         </div>
+
+        <div id="overlay" class=""></div>
+
         <!-- Section to see all the Pokémon -->
+        <div class="pokemon-card" id="pokemon-card">
+            <div class="pokemon-card-info">
+                <div class="image-div">
+                    <div class="image-div-left">
+                        <div class="pokemon-card-name">Pokémon</div>
+                        <div class="pokemon-card-id">???</div>
+                        <div class="pokemon-card-genera">Generation</div>
+                        <div class="pokemon-card-types">
+                            <img src="../img/pokemon_types/bug.ico" alt="" class="type1">
+                            <img src="../img/pokemon_types/bug.ico" alt="" class="type2">
+                        </div>
+                    </div>
+                    <div class="image-div-right">
+                        <div class="pokemon-card-img">
+                            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/169.png" alt="" class="default-image">
+                            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/169.png" alt="" class="shiny-image hidden">
+                        </div>
+                        <div class="pokemon-info">
+                            <div class="pokemon-height">
+                                <div class="tittle">Height</div>
+                                <div class="height-info">???</div>
+                            </div>
+                            <div class="pokemon-weight">
+                                <div class="tittle">Weight</div>
+                                <div class="weight-info">???</div>
+                            </div>
+                        </div>
+                    </div>
+                    <img src="../img/pokeball-background.png" alt="" class="pokeball-background">
+                </div>
+
+                <div class="pokemon-info-div">
+                    <div class="pokedex-entry">
+                        <div class="tittle">Pokédex Entry</div>
+                        <div class="pokedex-entry-info">???</div>
+                    </div>
+
+                    <div class="pokemon-card-abilities">
+                        <div class="tittle">Abilities</div>
+                        <div class="abilities-info">
+                            <div class="ability-1">
+                                <div class="ability-1-name">Ability 1</div>
+                                <div class="ability-1-info">This ability does things</div>
+                            </div>
+                            <div class="ability-2">
+                                <div class="ability-2-name">Ability 2</div>
+                                <div class="ability-2-info">This ability does things</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pokemon-stats">
+                        <div class="tittle">Stats</div>
+                        <div class="stats-info">
+                            <div class="hp-stats">
+                                <div class="hp-tittle">HP</div>
+                                <div class="hp-info">???</div>
+                                <div class="hp-bar bar">
+                                    <div class="hp-progress progress"></div>
+                                </div>
+                            </div>
+                            <div class="atk-stats">
+                                <div class="atk-tittle">ATK</div>
+                                <div class="atk-info">???</div>
+                                <div class="atk-bar bar">
+                                    <div class="atk-progress progress"></div>
+                                </div>
+                            </div>
+                            <div class="def-stats">
+                                <div class="def-tittle">DEF</div>
+                                <div class="def-info">???</div>
+                                <div class="def-bar bar">
+                                    <div class="def-progress progress"></div>
+                                </div>
+                            </div>
+                            <div class="spatk-stats">
+                                <div class="spatk-tittle">SpA</div>
+                                <div class="spatk-info">???</div>
+                                <div class="spatk-bar bar">
+                                    <div class="spatk-progress progress"></div>
+                                </div>
+                            </div>
+                            <div class="spdef-stats">
+                                <div class="spdef-tittle">SpD</div>
+                                <div class="spdef-info">???</div>
+                                <div class="spdef-bar bar">
+                                    <div class="spdef-progress progress"></div>
+                                </div>
+                            </div>
+                            <div class="spd-stats">
+                                <div class="spd-tittle">SPD</div>
+                                <div class="spd-info">???</div>
+                                <div class="spd-bar bar">
+                                    <div class="spd-progress progress"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pokemon-moves">
+                        <div class="tittle">Moves</div>
+                        <table></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div id="pokedex-container"></div>
     </div>
     <script src="../JS/index.js"></script>
