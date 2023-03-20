@@ -44,6 +44,7 @@ const fetchAllPokemon = async() => {
     for(let i = 1; i <= 1008; i++){
         await loadPokemonInfo(i);
     }
+    listenerCard();
 }
 
 const loadPokemonInfo = async(id) => {
@@ -291,24 +292,26 @@ function getPokemonAbility(id) { //This function will only get the ability name 
     })
 }
 
-/* EL EVENTLISTENER NO FUNCIONA (SI LO METO EN UNA FUNCIÓN SOLO LO HACE UNA VEZ) */
 /* ADEMÁS, AÑADIR MENÚ DE FORMAS (POR EJEMPLO FORMAS DEOXYS) */
-pokemonBlockCards.forEach(card => { 
-    card.addEventListener('click', () => {
-        let pokemonId = trimZeros(card.querySelector('.pokemon-id').innerHTML);
-        pokemonCardName.innerHTML = card.querySelector('.name').innerHTML; //pokemon card name
-        pokemonCardId.innerHTML = card.querySelector('.pokemon-id').innerHTML; //pokemon card id
-        getGenrationPokemon(pokemonId); //pokemon card generation
-        getAttributesPokemon(pokemonId); //pokemon card weight & height
-        getPokedexEntry(pokemonId); //card pokdex entry
-        getPokemonAbility(pokemonId);
-        
-        pokemonCardDiv.classList.add('active');
-        overlayButton.classList.add('active');
-        pokemonCardDiv.style.display = "block";
-        overlayButton.style.display = "block";
+function listenerCard(){
+    const pokemonCards = document.querySelectorAll('.pokemon-block');
+    pokemonCards.forEach(card => {
+        card.addEventListener('click', (e) =>{
+            let pokemonId = trimZeros(card.querySelector('.pokemon-id').innerHTML);
+            pokemonCardName.innerHTML = card.querySelector('.name').innerHTML; //pokemon card name
+            pokemonCardId.innerHTML = card.querySelector('.pokemon-id').innerHTML; //pokemon card id
+            getGenrationPokemon(pokemonId); //pokemon card generation
+            getAttributesPokemon(pokemonId); //pokemon card weight & height
+            getPokedexEntry(pokemonId); //card pokdex entry
+            getPokemonAbility(pokemonId);
+            
+            pokemonCardDiv.classList.add('active');
+            overlayButton.classList.add('active');
+            pokemonCardDiv.style.display = "block";
+            overlayButton.style.display = "block";
+        })
     })
-});
+}
 
 
 // SHOW OR HIDE POKEMON CARD INFO
