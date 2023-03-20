@@ -106,6 +106,9 @@
         <!-- Section to see all the Pokémon -->
         <div class="pokemon-card" id="pokemon-card">
             <div class="pokemon-card-info">
+                <select id="pokemon-forms" class="pokemon-forms">
+                    
+                </select>
                 <div class="image-div">
                     <div class="image-div-left">
                         <div class="pokemon-card-name">Pokémon</div>
@@ -118,8 +121,7 @@
                     </div>
                     <div class="image-div-right">
                         <div class="pokemon-card-img">
-                            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/169.png" alt="" class="default-image">
-                            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/169.png" alt="" class="shiny-image hidden">
+                            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/169.png" alt="" id="default-sprite">
                         </div>
                         <div class="pokemon-info">
                             <div class="pokemon-height">
@@ -160,42 +162,42 @@
                         <div class="stats-info">
                             <div class="hp-stats">
                                 <div class="hp-tittle">HP</div>
-                                <div class="hp-info">???</div>
+                                <div class="hp-info stat">???</div>
                                 <div class="hp-bar bar">
                                     <div class="hp-progress progress"></div>
                                 </div>
                             </div>
                             <div class="atk-stats">
                                 <div class="atk-tittle">ATK</div>
-                                <div class="atk-info">???</div>
+                                <div class="atk-info stat">???</div>
                                 <div class="atk-bar bar">
                                     <div class="atk-progress progress"></div>
                                 </div>
                             </div>
                             <div class="def-stats">
                                 <div class="def-tittle">DEF</div>
-                                <div class="def-info">???</div>
+                                <div class="def-info stat">???</div>
                                 <div class="def-bar bar">
                                     <div class="def-progress progress"></div>
                                 </div>
                             </div>
                             <div class="spatk-stats">
                                 <div class="spatk-tittle">SpA</div>
-                                <div class="spatk-info">???</div>
+                                <div class="spatk-info stat">???</div>
                                 <div class="spatk-bar bar">
                                     <div class="spatk-progress progress"></div>
                                 </div>
                             </div>
                             <div class="spdef-stats">
                                 <div class="spdef-tittle">SpD</div>
-                                <div class="spdef-info">???</div>
+                                <div class="spdef-info stat">???</div>
                                 <div class="spdef-bar bar">
                                     <div class="spdef-progress progress"></div>
                                 </div>
                             </div>
                             <div class="spd-stats">
                                 <div class="spd-tittle">SPD</div>
-                                <div class="spd-info">???</div>
+                                <div class="spd-info stat">???</div>
                                 <div class="spd-bar bar">
                                     <div class="spd-progress progress"></div>
                                 </div>
