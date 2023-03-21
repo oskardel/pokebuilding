@@ -12,7 +12,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../CSS/team-creation.css">
-    <title>Home - PokeBuilding</title>
+    <title>Create team - PokeBuilding</title>
 </head>
 <body>
     <header>
@@ -115,8 +115,8 @@
                         <div class="pokemon-card-id">???</div>
                         <div class="pokemon-card-genera">Generation</div>
                         <div class="pokemon-card-types">
-                            <img src="../img/pokemon_types/bug.ico" alt="" class="type1">
-                            <img src="../img/pokemon_types/bug.ico" alt="" class="type2">
+                            <div class="card-type-1"></div>
+                            <div class="card-type-2"></div>
                         </div>
                     </div>
                     <div class="image-div-right">
@@ -207,7 +207,7 @@
 
                     <div class="pokemon-moves">
                         <div class="tittle">Moves</div>
-                        <table></table>
+                        <table id="moves-table"></table>
                     </div>
                 </div>
             </div>
@@ -216,5 +216,6 @@
         <div id="pokedex-container"></div>
     </div>
     <script src="../JS/index.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 </body>
 </html>

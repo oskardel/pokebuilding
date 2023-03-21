@@ -183,7 +183,7 @@ header .header-options .create-team {
   max-width: 80%;
   max-height: 80%;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px;
-  transition: 0.5 ease-in-out;
+  transition: 0.7 ease-in-out;
   overflow-x: hidden;
   overflow-y: scroll;
 }
@@ -254,6 +254,7 @@ header .header-options .create-team {
   margin-bottom: 25px;
 }
 #pokemon-card .pokemon-card-info .pokemon-info-div .pokedex-entry .pokedex-entry-info {
+  text-align: justify;
   padding-top: 5px;
 }
 #pokemon-card .pokemon-card-info .pokemon-info-div .pokemon-stats {
@@ -355,7 +356,6 @@ header .header-options .create-team {
 }
 .bar .progress {
   height: 10px;
-  width: 50%;
   background-color: #ee1515;
   border-radius: 15px;
 }
@@ -379,7 +379,7 @@ header .header-options .create-team {
   display: none;
   position: fixed;
   opacity: 0;
-  transition: 0.2s ease-in-out;
+  transition: 0.3s ease-in-out;
   top: 0;
   left: 0;
   right: 0;

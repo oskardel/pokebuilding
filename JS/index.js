@@ -221,7 +221,10 @@ const pokemonAbility1 = document.querySelector('.ability-1-info');
 const pokemonAbility2 = document.querySelector('.ability-2-info');
 const pokemonAbility2Div = document.querySelector('.ability-2');
 const pokemonForms = document.getElementById('pokemon-forms');
-const pokemonSprite = document.getElementById("default-sprite");
+const pokemonSprite = document.getElementById('default-sprite');
+const movesTable = document.getElementById('moves-table');
+const pokemonType1 = document.querySelector('.card-type-1');
+const pokemonType2 = document.querySelector('.card-type-2');
 
 
 function getGenrationPokemon(id) {
@@ -302,7 +305,7 @@ function getAbilityInfo1(ability) {
         if(data.effect_entries.length >= 1){
             for(var i = 0; i <= data.effect_entries.length; i++){
                 if(data.effect_entries[i].language.name == "en"){
-                    pokemonAbility1.innerHTML = data.effect_entries[i].effect;
+                    pokemonAbility1.innerHTML = data.effect_entries[i].short_effect;
                     return;
                 }
             }
@@ -319,7 +322,7 @@ function getAbilityInfo2(ability) {
         if(data.effect_entries.length > 1){
             for(var i = 0; i <= data.effect_entries.length; i++){
                 if(data.effect_entries[i].language.name == "en"){
-                    pokemonAbility2.innerHTML = data.effect_entries[i].effect;
+                    pokemonAbility2.innerHTML = data.effect_entries[i].short_effect;
                     return;
                 }
             }
@@ -365,6 +368,104 @@ function getPokemonStats(id) {
     })
 }
 
+function getPokemonMoves(id) {
+    fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
+    .then(response => response.json())
+    .then(data => {
+        movesTable.innerHTML = "";
+        // The moveset header is created
+        const headerTable = document.createElement('thead');
+        const headerTR = document.createElement('tr');
+        const nameHeader = document.createElement('th');
+        nameHeader.innerHTML = "Name";
+        const typeHeader = document.createElement('th');
+        typeHeader.innerHTML = "Type";
+        const categoryHeader = document.createElement('th');
+        categoryHeader.innerHTML = "Cat.";
+        const powerHeader = document.createElement('th');
+        powerHeader.innerHTML = "Power";
+        const accurancyHeader = document.createElement('th');
+        accurancyHeader.innerHTML = "Acc.";
+        const ppHeader = document.createElement('th');
+        ppHeader.innerHTML = "PP";
+        headerTR.appendChild(nameHeader);
+        headerTR.appendChild(typeHeader);
+        headerTR.appendChild(categoryHeader);
+        headerTR.appendChild(powerHeader);
+        headerTR.appendChild(accurancyHeader);
+        headerTR.appendChild(ppHeader);
+        headerTable.appendChild(headerTR);
+        movesTable.appendChild(headerTable);
+
+        for(var i = 0; i < data.moves.length; i++){
+            createMove(data.moves[i].move.name);
+        }
+    })
+}
+
+function createMove(move) {
+    fetch(`https://pokeapi.co/api/v2/move/${move}`)
+    .then(response => response.json())
+    .then(move => {
+        const newMove = document.createElement('tr');
+        const nameMove = document.createElement('td');
+        nameMove.innerHTML = move.name.charAt(0).toUpperCase() + move.name.slice(1);
+        const typeMove = document.createElement('td');
+        typeMove.innerHTML = move.type.name.charAt(0).toUpperCase() + move.type.name.slice(1);
+        const categoryMove = document.createElement('td');
+        if(move.damage_class.name === "physical"){
+            categoryMove.innerHTML = "Phs.";
+        } else{
+            if(move.damage_class.name === "special"){
+                categoryMove.innerHTML = "Sp."; 
+            } else{
+                categoryMove.innerHTML = "St."
+            }
+        }
+        const powerMove = document.createElement('td');
+        if(move.power === null){
+            powerMove.innerHTML = "-";
+        } else{
+            powerMove.innerHTML = move.power;
+        }
+        const accuracyMove = document.createElement('td');
+        if(move.accuracy === null){
+            accuracyMove.innerHTML = "-";
+        } else{
+            accuracyMove.innerHTML = move.accuracy;
+        }
+        const ppMove = document.createElement('td');
+        if(move.accurancy === null){
+            ppMove.innerHTML = "-";
+        } else{
+            ppMove.innerHTML = move.pp;
+        }
+        newMove.appendChild(nameMove);
+        newMove.appendChild(typeMove);
+        newMove.appendChild(categoryMove);
+        newMove.appendChild(powerMove);
+        newMove.appendChild(accuracyMove);
+        newMove.appendChild(ppMove);
+        movesTable.appendChild(newMove);
+    })
+}
+
+function getPokemonTypes(id) {
+    fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
+    .then(response => response.json())
+    .then(data => {
+        pokemonType1.innerHTML = "";
+        pokemonType2.innerHTML = "";
+        pokemonType1.innerHTML = (data.types[0].type.name).toUpperCase();
+        let color1 = data.types[0].type.name;
+        pokemonType1.style.backgroundColor = typeColours[color1];
+        if(data.types.length > 1){
+            pokemonType2.innerHTML = (data.types[1].type.name).toUpperCase();
+            let color2 = data.types[1].type.name;
+            pokemonType2.style.backgroundColor = typeColours[color2];
+        }
+    })
+}
 
 /* ADEMÁS, AÑADIR MENÚ DE FORMAS (POR EJEMPLO FORMAS DEOXYS) */
 function listenerCard(){
@@ -378,18 +479,27 @@ function listenerCard(){
             getGenrationPokemon(pokemonId); //pokemon card generation
             getAttributesPokemon(pokemonId); //pokemon card weight & height
             getPokedexEntry(pokemonId); //card pokdex entry
-            getPokemonAbility(pokemonId); /* CHANGE TO FLAVOR ENTRY (SHORTER VERSION) */
+            getPokemonAbility(pokemonId); //changes the ability and ability information
             getPokemonForms(pokemonId); //all the pokemon forms are created
-            getPokemonStats(pokemonId); //puts all the base stats on the card (not counting other forms of the same pokemon) 
+            getPokemonStats(pokemonId); //puts all the base stats on the card (not counting other forms of the same pokemon)
+            getPokemonMoves(pokemonId); //creates a table with all the moves the pokmeon learns
+            getPokemonTypes(pokemonId); //changes the starting type
             
             pokemonCardDiv.classList.add('active');
             overlayButton.classList.add('active');
             pokemonCardDiv.style.display = "block";
             overlayButton.style.display = "block";
+
+            changeForms(pokemonId);
         })
     })
 }
 
+function changeForms(id) { /* FINISH FUNCTION (WHEN FORM CHANGE, CHANGE SPRITE, NAME AND STATS) */
+    pokemonForms.addEventListener('change', (e) => {
+        
+    })
+}
 
 // SHOW OR HIDE POKEMON CARD INFO
 overlayButton.addEventListener('click', (e) => {
