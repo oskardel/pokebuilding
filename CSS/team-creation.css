@@ -285,6 +285,12 @@ header .header-options .create-team {
 }
 #pokemon-card .pokemon-card-info .pokemon-info-div .pokemon-moves {
   grid-area: 2/1;
+  height: fit-content-50%;
+  overflow-y: scroll;
+  background-color: white;
+  --tw-shadow: 0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -2px rgba(0,0,0,.1);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 rgba(0, 0, 0, 0)), var(--tw-ring-shadow, 0 0 rgba(0, 0, 0, 0)), var(--tw-shadow);
+  border-radius: 0.375rem;
 }
 #pokemon-card .pokemon-card-info .pokemon-info-div .pokemon-moves .tittle {
   padding-bottom: 5px;
@@ -313,8 +319,17 @@ header .header-options .create-team {
   padding-bottom: 15px;
   font-size: 15px;
 }
-#pokemon-card .pokemon-card-info .pokemon-card-types img {
-  width: 75px;
+#pokemon-card .pokemon-card-info .pokemon-card-types {
+  display: flex;
+  justify-content: center;
+}
+#pokemon-card .pokemon-card-info .pokemon-card-types .card-type-1, #pokemon-card .pokemon-card-info .pokemon-card-types .card-type-2 {
+  width: 85px;
+  color: white;
+  font-weight: 800;
+  padding: 5px 15px;
+  border-radius: 10px;
+  text-align: center;
 }
 #pokemon-card .pokemon-card-info .tittle {
   text-transform: uppercase;

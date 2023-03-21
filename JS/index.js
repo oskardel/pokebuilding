@@ -63,10 +63,6 @@ function createPokemonCard(pokemon) {
 
     const sprite = document.createElement('img');
     sprite.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`;
-    // CHANGE SRC OF IMAGE TO ADD SHINY IMG
-    // const shinySprite = document.createElement('img');
-    // shinySprite.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/${pokemon.id}.png`;
-
     spriteContainer.appendChild(sprite);
 
     const pokemonId = document.createElement('p');
@@ -343,7 +339,7 @@ function getPokemonForms(id) {
             if(i == 0){
                 newForm.innerHTML = "Default";
             } else{
-                newForm.innerHTML = (data.varieties[i].pokemon.name.split('-')[1]).charAt(0).toUpperCase() + (data.varieties[i].pokemon.name.split('-')[1]).slice(1);
+                newForm.innerHTML = (data.varieties[i].pokemon.name.split('-')[1]).charAt(0).toUpperCase() + (data.varieties[i].pokemon.name).substring((data.varieties[i].pokemon.name).indexOf('-') + 1).slice(1);
             }
             pokemonForms.appendChild(newForm);
         }
@@ -460,9 +456,12 @@ function getPokemonTypes(id) {
         let color1 = data.types[0].type.name;
         pokemonType1.style.backgroundColor = typeColours[color1];
         if(data.types.length > 1){
+            pokemonType2.style.display = "block";
             pokemonType2.innerHTML = (data.types[1].type.name).toUpperCase();
             let color2 = data.types[1].type.name;
             pokemonType2.style.backgroundColor = typeColours[color2];
+        } else{
+            pokemonType2.style.display = "none";
         }
     })
 }
@@ -472,7 +471,7 @@ function listenerCard(){
     const pokemonCards = document.querySelectorAll('.pokemon-block');
     pokemonCards.forEach(card => {
         card.addEventListener('click', (e) =>{
-            let pokemonId = trimZeros(card.querySelector('.pokemon-id').innerHTML);
+            var pokemonId = trimZeros(card.querySelector('.pokemon-id').innerHTML);
             pokemonSprite.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonId}.png`;//show the default sprite
             pokemonCardName.innerHTML = card.querySelector('.name').innerHTML; //pokemon card name
             pokemonCardId.innerHTML = card.querySelector('.pokemon-id').innerHTML; //pokemon card id
@@ -495,9 +494,48 @@ function listenerCard(){
     })
 }
 
-function changeForms(id) { /* FINISH FUNCTION (WHEN FORM CHANGE, CHANGE SPRITE, NAME AND STATS) */
+const changeForms = async(id) => { /* FINISH */
+    const rest = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
+    const data = await rest.json();
     pokemonForms.addEventListener('change', (e) => {
-        
+        if(pokemonForms.value === data.name){
+            pokemonCardName.innerHTML = data.name;
+            pokemonSprite.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${data.id}.png`;
+            getPokemonStats(id);
+            getPokemonMoves(id);
+            getPokemonTypes(id);
+            getPokemonStats(id);
+            getPokemonAbility(id);
+            getAttributesPokemon(id);
+        } else{
+            if(pokemonForms.value === "shiny"){
+                pokemonSprite.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/${data.id}.png`;
+                getPokemonStats(id);
+                getPokemonMoves(id);
+                getPokemonTypes(id);
+                getPokemonStats(id);
+                getPokemonAbility(id);
+                getAttributesPokemon(id);
+            } else{
+                getFormSprite(pokemonForms.value);
+            }
+        }
+    }) 
+}
+
+function getFormSprite(namePokemon) {
+    fetch(`https://pokeapi.co/api/v2/pokemon/${namePokemon}`)
+    .then(response => response.json())
+    .then(data => {
+        const formId = data.id;
+        pokemonSprite.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${formId}.png`;
+        if(data.moves.length > 1){
+            getPokemonMoves(formId);
+        }
+        getPokemonTypes(formId);
+        getPokemonStats(formId);
+        getPokemonAbility(formId);
+        getAttributesPokemon(formId);
     })
 }
 
@@ -506,6 +544,7 @@ overlayButton.addEventListener('click', (e) => {
     if(overlayButton.classList.contains('active')){
         overlayButton.classList.remove('active');
         pokemonCardDiv.classList.remove('active');
+        pokemonSprite.src = "";
     }
 })
 

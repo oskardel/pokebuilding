@@ -121,7 +121,7 @@
                     </div>
                     <div class="image-div-right">
                         <div class="pokemon-card-img">
-                            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/169.png" alt="" id="default-sprite">
+                            <img src="" alt="" id="default-sprite">
                         </div>
                         <div class="pokemon-info">
                             <div class="pokemon-height">

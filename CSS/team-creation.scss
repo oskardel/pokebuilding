@@ -324,6 +324,12 @@ header{
             }
             .pokemon-moves{
                 grid-area: 2/1;
+                height: fit-content - 50%;
+                overflow-y: scroll;
+                background-color: white;
+                --tw-shadow: 0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -2px rgba(0,0,0,.1);
+                box-shadow: var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow);
+                border-radius: .375rem;
 
                 .tittle{
                     padding-bottom: 5px;
@@ -359,8 +365,18 @@ header{
             font-size: 15px;
         }
 
-        .pokemon-card-types img{
-            width: 75px;
+        .pokemon-card-types {
+            display: flex;
+            justify-content: center;
+
+            .card-type-1, .card-type-2{
+                width: 85px;
+                color: white;
+                font-weight: 800;
+                padding: 5px 15px;
+                border-radius: 10px;
+                text-align: center;
+            }
         }
 
         .tittle{
