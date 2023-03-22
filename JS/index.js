@@ -9,9 +9,12 @@ const typeValue = document.getElementById('search-options-type');
 const genValue = document.getElementById('search-options-generation');
 const legendaryValue = document.getElementById('legendary-checkbox');
 const searchButton = document.getElementById('search-button');
+const randomButton = document.getElementById('random-button');
 const overlayButton = document.getElementById('overlay');
 const pokemonCardDiv = document.getElementById('pokemon-card');
 const pokemonBlockCards = document.querySelectorAll('.pokemon-block');
+const pokemonItem = document.querySelectorAll('.pokemon-item');
+const pokemonItemName = document.querySelectorAll('.pokemon-name');
 
 var nameFilter = false;
 var typeFilter = false;
@@ -221,6 +224,7 @@ const movesTable = document.getElementById('moves-table');
 const pokemonType1 = document.querySelector('.card-type-1');
 const pokemonType2 = document.querySelector('.card-type-2');
 const addButton = document.querySelector('.add-button');
+const pokemonTeamImg = document.querySelectorAll('.pokemon-img');
 
 
 function getGenrationPokemon(id) {
@@ -534,7 +538,43 @@ function getFormSprite(namePokemon) {
 }
 
 addButton.addEventListener('click', () => {
-    console.log("hola");
+    var cardImage = document.getElementById('default-sprite').src;
+    for(let i = 0; i < pokemonTeamImg.length; i++){
+        if(pokemonTeamImg[i].classList.contains('nopokemon')){
+            pokemonTeamImg[i].src = cardImage;
+            pokemonTeamImg[i].classList.remove('nopokemon');
+            pokemonItemName[i].innerHTML = pokemonCardName.innerHTML;
+            overlayButton.classList.remove('active');
+            pokemonCardDiv.classList.remove('active');
+            pokemonSprite.src = "";
+            return;
+        }
+    }
+})
+
+function getRandomPokemonName(id, index) {
+    fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
+    .then(response => response.json())
+    .then(data => {
+        pokemonItemName[index].innerHTML = (data.name.charAt(0).toUpperCase()) + data.name.slice(1);
+    })
+}
+
+randomButton.addEventListener('click', () => {
+    for(var i = 0; i < 6; i++){
+        var randNumber = Math.floor(Math.random()*1008 +1);
+        getRandomPokemonName(randNumber, i);
+        pokemonTeamImg[i].src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${randNumber}.png`;
+        pokemonTeamImg[i].classList.remove('nopokemon');
+    }
+})
+
+pokemonItem.forEach(pokemon => {
+    pokemon.addEventListener('click', () => {
+        pokemon.querySelector('.pokemon-img').src = "../img/nopokemon.png";
+        pokemon.querySelector('.pokemon-name').innerHTML = "";
+        pokemon.querySelector('.pokemon-img').classList.add('nopokemon');
+    })
 })
 
 // SHOW OR HIDE POKEMON CARD INFO

@@ -125,6 +125,10 @@ header{
             img{
                 width: 100px;
             }
+
+            &:hover{
+                cursor:not-allowed
+            }
         }
     }
 }

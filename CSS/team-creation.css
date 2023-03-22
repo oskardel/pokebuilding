@@ -109,6 +109,9 @@ header .header-options .create-team {
 .pokemon-search .pokemon-team .pokemon-item img {
   width: 100px;
 }
+.pokemon-search .pokemon-team .pokemon-item:hover {
+  cursor: not-allowed;
+}
 
 #pokedex-container {
   padding-top: 30px;
