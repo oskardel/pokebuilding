@@ -1,2 +1,0 @@
-SQLSTATE[42S01]: Base table or view already exists: 1050 Table 'users' already exists## Fichero: C:\xampp\htdocs\TFG\DB\createDB.php## Línea: 8##Código: 42S01##Instante: 0.57651000 1679320833
-SQLSTATE[42S01]: Base table or view already exists: 1050 Table 'users' already exists## Fichero: C:\xampp\htdocs\TFG\DB\createDB.php## Línea: 8##Código: 42S01##Instante: 0.03070600 1679408218

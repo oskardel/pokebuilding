@@ -216,6 +216,11 @@ header .header-options .create-team {
   align-items: center;
   z-index: 2;
 }
+#pokemon-card .pokemon-card-info .image-div .image-div-left .add-button {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+}
 #pokemon-card .pokemon-card-info .image-div .image-div-left .pokemon-card-types {
   padding-top: 25px;
 }
@@ -402,6 +407,10 @@ header .header-options .create-team {
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 9;
   pointer-events: none;
+}
+
+#hidden-id {
+  visibility: hidden;
 }
 
 #overlay.active {

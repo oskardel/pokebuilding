@@ -92,7 +92,6 @@ function createPokemonCard(pokemon) {
     card.appendChild(pokemonId);
     card.appendChild(name);
     card.appendChild(types);
-
     pokedexContainer.appendChild(card);
 }
 
@@ -221,6 +220,7 @@ const pokemonSprite = document.getElementById('default-sprite');
 const movesTable = document.getElementById('moves-table');
 const pokemonType1 = document.querySelector('.card-type-1');
 const pokemonType2 = document.querySelector('.card-type-2');
+const addButton = document.querySelector('.add-button');
 
 
 function getGenrationPokemon(id) {
@@ -346,6 +346,7 @@ function getPokemonForms(id) {
         var shinyForm = document.createElement('option');
         shinyForm.value = "shiny";
         shinyForm.innerHTML = "Shiny";
+        shinyForm.classList.add("shiny");
         pokemonForms.appendChild(shinyForm);
     })
 }
@@ -450,8 +451,6 @@ function getPokemonTypes(id) {
     fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
     .then(response => response.json())
     .then(data => {
-        pokemonType1.innerHTML = "";
-        pokemonType2.innerHTML = "";
         pokemonType1.innerHTML = (data.types[0].type.name).toUpperCase();
         let color1 = data.types[0].type.name;
         pokemonType1.style.backgroundColor = typeColours[color1];
@@ -461,20 +460,25 @@ function getPokemonTypes(id) {
             let color2 = data.types[1].type.name;
             pokemonType2.style.backgroundColor = typeColours[color2];
         } else{
+            pokemonType2.innerHTML = "";
             pokemonType2.style.display = "none";
         }
     })
 }
 
-/* ADEMÁS, AÑADIR MENÚ DE FORMAS (POR EJEMPLO FORMAS DEOXYS) */
-function listenerCard(){
-    const pokemonCards = document.querySelectorAll('.pokemon-block');
+/* GUARDA LA INFORMACIÓN DE CADA CARTA UNA VEZ CAMBIA DE FORMA (SI PRIMERO CLICAS EN CHARIZARD Y LUEGO EN BLASTOISE Y CAMBIAS A BLASTOISE SHINY, TE CAMBIA TODA LA INFO A CHARIZARD Y LUEGO A BLASTOISE => PASA A TIPO FUEGO Y LUEGO A TIPO AGUA, POR ESO SE BUGGEA) */
+const hiddenId = document.getElementById('hidden-id');
+
+function listenerCard() {
+    const pokemonCards = document.querySelectorAll('.pokemon-block'); 
     pokemonCards.forEach(card => {
-        card.addEventListener('click', (e) =>{
+        card.addEventListener('click', () =>{
             var pokemonId = trimZeros(card.querySelector('.pokemon-id').innerHTML);
-            pokemonSprite.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonId}.png`;//show the default sprite
+            hiddenId.innerHTML = pokemonId;
+            pokemonSprite.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonId}.png`;
             pokemonCardName.innerHTML = card.querySelector('.name').innerHTML; //pokemon card name
             pokemonCardId.innerHTML = card.querySelector('.pokemon-id').innerHTML; //pokemon card id
+            getPokemonTypes(pokemonId); //changes the starting type
             getGenrationPokemon(pokemonId); //pokemon card generation
             getAttributesPokemon(pokemonId); //pokemon card weight & height
             getPokedexEntry(pokemonId); //card pokdex entry
@@ -482,52 +486,41 @@ function listenerCard(){
             getPokemonForms(pokemonId); //all the pokemon forms are created
             getPokemonStats(pokemonId); //puts all the base stats on the card (not counting other forms of the same pokemon)
             getPokemonMoves(pokemonId); //creates a table with all the moves the pokmeon learns
-            getPokemonTypes(pokemonId); //changes the starting type
             
             pokemonCardDiv.classList.add('active');
             overlayButton.classList.add('active');
             pokemonCardDiv.style.display = "block";
             overlayButton.style.display = "block";
-
-            changeForms(pokemonId);
         })
     })
 }
 
-const changeForms = async(id) => { /* FINISH */
-    const rest = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
-    const data = await rest.json();
-    pokemonForms.addEventListener('change', (e) => {
-        if(pokemonForms.value === data.name){
-            pokemonCardName.innerHTML = data.name;
-            pokemonSprite.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${data.id}.png`;
-            getPokemonStats(id);
-            getPokemonMoves(id);
-            getPokemonTypes(id);
-            getPokemonStats(id);
-            getPokemonAbility(id);
-            getAttributesPokemon(id);
+/* EVENT LISTENER TO CHANGE FORMS OF THE POKEMON */
+pokemonForms.addEventListener('change', () => {
+    var pokemonId = hiddenId.innerHTML;
+    if(pokemonForms.value === "shiny" || pokemonForms.value === pokemonForms.options[0].value){
+        if(pokemonForms.value === "shiny"){
+            pokemonSprite.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/${pokemonId}.png`;
         } else{
-            if(pokemonForms.value === "shiny"){
-                pokemonSprite.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/${data.id}.png`;
-                getPokemonStats(id);
-                getPokemonMoves(id);
-                getPokemonTypes(id);
-                getPokemonStats(id);
-                getPokemonAbility(id);
-                getAttributesPokemon(id);
-            } else{
-                getFormSprite(pokemonForms.value);
-            }
+            pokemonSprite.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonId}.png`;
         }
-    }) 
-}
+        getPokemonTypes(pokemonId);
+        getAttributesPokemon(pokemonId);
+        getPokemonAbility(pokemonId);
+        getPokemonStats(pokemonId);
+        getPokemonMoves(pokemonId);
+        pokemonCardName.innerHTML = (pokemonForms.options[0].value.charAt(0).toUpperCase()) + (pokemonForms.options[0].value).slice(1);
+    } else{
+        getFormSprite(pokemonForms.value);
+    }
+})
 
 function getFormSprite(namePokemon) {
     fetch(`https://pokeapi.co/api/v2/pokemon/${namePokemon}`)
     .then(response => response.json())
     .then(data => {
         const formId = data.id;
+        pokemonCardName.innerHTML = data.name;
         pokemonSprite.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${formId}.png`;
         if(data.moves.length > 1){
             getPokemonMoves(formId);
@@ -536,8 +529,13 @@ function getFormSprite(namePokemon) {
         getPokemonStats(formId);
         getPokemonAbility(formId);
         getAttributesPokemon(formId);
+        pokemonCardName.innerHTML = ((pokemonForms.value.charAt(0).toUpperCase()) + (pokemonForms.value).slice(1)).replace('-', ' ');
     })
 }
+
+addButton.addEventListener('click', () => {
+    console.log("hola");
+})
 
 // SHOW OR HIDE POKEMON CARD INFO
 overlayButton.addEventListener('click', (e) => {

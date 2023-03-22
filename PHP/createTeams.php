@@ -35,7 +35,7 @@
         <div class="pokemon-search">
             <div class="pokemon-team">
                 <div class="pokemon-item">
-                    <img src="../img/nopokemon.png" alt="pokemon-img">
+                    <img src="../img/nopokemon.png" alt="pokemon-img" class="nopokemon">
                     <div class="pokemon-name"></div>
                     <div class="pokemon-types">
                         <div class="pokemon-type-1"></div>
@@ -43,7 +43,7 @@
                     </div>
                 </div>
                 <div class="pokemon-item">
-                    <img src="../img/nopokemon.png" alt="pokemon-img">
+                    <img src="../img/nopokemon.png" alt="pokemon-img" class="nopokemon">
                     <div class="pokemon-name"></div>
                     <div class="pokemon-types">
                         <div class="pokemon-type-1"></div>
@@ -51,7 +51,7 @@
                     </div>
                 </div>
                 <div class="pokemon-item">
-                    <img src="../img/nopokemon.png" alt="pokemon-img">
+                    <img src="../img/nopokemon.png" alt="pokemon-img" class="nopokemon">
                     <div class="pokemon-name"></div>
                     <div class="pokemon-types">
                         <div class="pokemon-type-1"></div>
@@ -59,7 +59,7 @@
                     </div>
                 </div>
                 <div class="pokemon-item">
-                    <img src="../img/nopokemon.png" alt="pokemon-img">
+                    <img src="../img/nopokemon.png" alt="pokemon-img" class="nopokemon">
                     <div class="pokemon-name"></div>
                     <div class="pokemon-types">
                         <div class="pokemon-type-1"></div>
@@ -67,7 +67,7 @@
                     </div>
                 </div>
                 <div class="pokemon-item">
-                    <img src="../img/nopokemon.png" alt="pokemon-img">
+                    <img src="../img/nopokemon.png" alt="pokemon-img" class="nopokemon">
                     <div class="pokemon-name"></div>
                     <div class="pokemon-types">
                         <div class="pokemon-type-1"></div>
@@ -75,7 +75,7 @@
                     </div>
                 </div>
                 <div class="pokemon-item">
-                    <img src="../img/nopokemon.png" alt="pokemon-img">
+                    <img src="../img/nopokemon.png" alt="pokemon-img" class="nopokemon">
                     <div class="pokemon-name"></div>
                     <div class="pokemon-types">
                         <div class="pokemon-type-1"></div>
@@ -104,11 +104,9 @@
         <div id="overlay" class=""></div>
 
         <!-- Section to see all the Pokémon -->
+        <div id="hidden-id"></div>
         <div class="pokemon-card" id="pokemon-card">
             <div class="pokemon-card-info">
-                <select id="pokemon-forms" class="pokemon-forms">
-                    
-                </select>
                 <div class="image-div">
                     <div class="image-div-left">
                         <div class="pokemon-card-name">Pokémon</div>
@@ -118,6 +116,8 @@
                             <div class="card-type-1"></div>
                             <div class="card-type-2"></div>
                         </div>
+                        <input type="submit" class="add-button" name="add-pokemon-button" value="ADD">
+                        <select id="pokemon-forms" class="pokemon-forms"></select>
                     </div>
                     <div class="image-div-right">
                         <div class="pokemon-card-img">
