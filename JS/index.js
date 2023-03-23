@@ -622,7 +622,7 @@ submitTeam.addEventListener('click', () => {
         document.querySelector('.error-team-name').innerHTML = "Add at least one Pokémon";
     } else{
         if(teamName === ""){
-            document.querySelector('.error-team-name').innerHTML = "The team name cannot be blank";
+            document.querySelector('.error-team-name').innerHTML = "Team name cannot be blank";
         } else{
             window.location.href = `createTeams.php?${hrefName}&n=${teamName}`;
         }

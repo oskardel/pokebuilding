@@ -45,7 +45,7 @@ header .header-options {
   left: 0;
   padding-left: 15px;
 }
-header .header-options .create-team {
+header .header-options .create-team:not(.clicked) {
   color: #6b6b6b;
   text-decoration: none;
   text-transform: uppercase;
@@ -58,7 +58,7 @@ header .header-options .create-team {
   border-bottom: 5px solid transparent;
   transition: 0.2s;
 }
-header .header-options .create-team:hover {
+header .header-options .create-team:not(.clicked):hover {
   border-bottom: 5px solid #ee1515;
   color: #ee1515;
 }
@@ -84,6 +84,19 @@ header .header-options .icon-parts img {
 header .header-options .create-team {
   padding-left: 15px;
   padding-right: 15px;
+}
+
+.clicked {
+  border-bottom: 5px solid #ee1515;
+  color: #ee1515;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
 }
 
 .pokemon-search {

@@ -21,7 +21,7 @@
                 <img src="../img/pokeball_icon.png" alt="pokeball_icon">
                 <h1 class="icon-text">PokéBuilding</h1>
             </a>
-            <a href="createTeams.php" class="create-team">Create Teams</a>
+            <a href="createTeams.php" class="create-team clicked">Create Teams</a>
             <a href="compareTeams.php" class="create-team">Compare</a>
         </div>
          <!-- "../img/".$_SESSION[user]."/image.png" -->
@@ -239,7 +239,7 @@
             $database = new User();
             if($userId=$database->getIdUser($_SESSION["user"]));
             if($nameCheck=$database->checkTeamName($teamName)){
-                $nameError = "The team name already exists";
+                $nameError = "Team name already exists";
             } else{
                 if($addTeam=$database->addTeam($teamName, $pokemonName, $userId));
             }

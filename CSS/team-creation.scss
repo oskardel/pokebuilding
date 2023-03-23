@@ -53,7 +53,7 @@ header{
         left: 0;
         padding-left: 15px;
              
-        .create-team{
+        .create-team:not(.clicked){
             color: $textColor;
             text-decoration: none;
             text-transform: uppercase;
@@ -99,6 +99,19 @@ header{
             padding-right: 15px;
         }
     }    
+}
+
+.clicked{
+    border-bottom: 5px solid $hoverButtonColor;
+    color: $hoverButtonColor;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
 }
 
 
