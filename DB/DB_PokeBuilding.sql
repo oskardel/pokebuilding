@@ -17,43 +17,30 @@ CREATE TABLE `users` (
 
 CREATE TABLE `teams` (
     `id` INT NOT NULL,
-    `pokemon1` INT,
-    `pokemon2` INT,
-    `pokemon3` INT,
-    `pokemon4` INT,
-    `pokemon5` INT,
-    `pokemon6` INT,
+    `teamName` VARCHAR(30),
+    `pokemon1` VARCHAR(25),
+    `pokemon2` VARCHAR(25),
+    `pokemon3` VARCHAR(25),
+    `pokemon4` VARCHAR(25),
+    `pokemon5` VARCHAR(25),
+    `pokemon6` VARCHAR(25),
     `userId` INT NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `pokemon` (
     `id` INT NOT NULL,
     `name` VARCHAR(15) NOT NULL,
+    `sprite` VARCHAR(120),
     `type1` VARCHAR(8) NOT NULL,
     `type2` VARCHAR(8),
     `hp` INT NOT NULL,
-    `speed` INT NOT NULL,
     `attack` INT NOT NULL,
     `defense` INT NOT NULL,
     `spAttack` INT NOT NULL,
     `spDefense` INT NOT NULL,
-    `move1` INT NOT NULL,
-    `move2` INT NOT NULL,
-    `move3` INT NOT NULL,
-    `move4` INT NOT NULL,
+    `speed` INT NOT NULL,
     `teamId` INT NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE `moves` (
-    `id` INT NOT NULL,
-    `name` VARCHAR(35) NOT NULL,
-    `type` VARCHAR(8) NOT NULL,
-    `damage_class` VARCHAR(8) NOT NULL,
-    `accurancy` INT NOT NULL,
-    `power` INT NOT NULL,
-    `pokemonId` INT NOT NULL 
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 INSERT INTO `users`(`id`, `username`, `cryptPassword`, `mail`, `teams`, `userLevel`) VALUES (1, 'root', '$2a$07$usesomesillystringforehg0dedj7L/iujhXGa/PYA4EZKm/yiEW', 'root@gmail.com', '0', '2');
 
@@ -67,8 +54,8 @@ ALTER TABLE `users`
 ALTER TABLE `teams`
     ADD PRIMARY KEY (`id`);
 
-ALTER TABLE `pokemon`
-    ADD PRIMARY KEY (`id`);
+ALTER TABLE `teams`
+    MODIFY `id` int(1) NOT NULL AUTO_INCREMENT;
 
-ALTER TABLE `moves`
+ALTER TABLE `pokemon`
     ADD PRIMARY KEY (`id`);

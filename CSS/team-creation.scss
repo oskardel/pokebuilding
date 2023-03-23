@@ -125,12 +125,17 @@ header{
             img{
                 width: 100px;
             }
-
-            &:hover{
-                cursor:not-allowed
-            }
         }
     }
+}
+
+.pokemon-item:has(.nopokemon):hover{
+    cursor:not-allowed;
+}
+
+.pokemon-img:not(.nopokemon):hover{
+    border-bottom: 1px solid $hoverButtonColor;
+    cursor: pointer;
 }
 
 #pokedex-container{
@@ -148,7 +153,7 @@ header{
         padding: 15px;
         background-color: white;
         border-radius: 15px;
-        box-shadow: shadow-box;
+        box-shadow: $shadow-box;
         border-bottom: 5px solid transparent;
         transition: 0.2s;
 

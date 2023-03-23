@@ -109,8 +109,14 @@ header .header-options .create-team {
 .pokemon-search .pokemon-team .pokemon-item img {
   width: 100px;
 }
-.pokemon-search .pokemon-team .pokemon-item:hover {
+
+.pokemon-item:has(.nopokemon):hover {
   cursor: not-allowed;
+}
+
+.pokemon-img:not(.nopokemon):hover {
+  border-bottom: 1px solid #ee1515;
+  cursor: pointer;
 }
 
 #pokedex-container {
@@ -128,7 +134,7 @@ header .header-options .create-team {
   padding: 15px;
   background-color: white;
   border-radius: 15px;
-  box-shadow: shadow-box;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px;
   border-bottom: 5px solid transparent;
   transition: 0.2s;
 }

@@ -225,6 +225,8 @@ const pokemonType1 = document.querySelector('.card-type-1');
 const pokemonType2 = document.querySelector('.card-type-2');
 const addButton = document.querySelector('.add-button');
 const pokemonTeamImg = document.querySelectorAll('.pokemon-img');
+const pokemonTeamType = document.querySelectorAll('.pokemon-types');
+const hiddenId = document.getElementById('hidden-id');
 
 
 function getGenrationPokemon(id) {
@@ -470,9 +472,6 @@ function getPokemonTypes(id) {
     })
 }
 
-/* GUARDA LA INFORMACIÓN DE CADA CARTA UNA VEZ CAMBIA DE FORMA (SI PRIMERO CLICAS EN CHARIZARD Y LUEGO EN BLASTOISE Y CAMBIAS A BLASTOISE SHINY, TE CAMBIA TODA LA INFO A CHARIZARD Y LUEGO A BLASTOISE => PASA A TIPO FUEGO Y LUEGO A TIPO AGUA, POR ESO SE BUGGEA) */
-const hiddenId = document.getElementById('hidden-id');
-
 function listenerCard() {
     const pokemonCards = document.querySelectorAll('.pokemon-block'); 
     pokemonCards.forEach(card => {
@@ -537,6 +536,7 @@ function getFormSprite(namePokemon) {
     })
 }
 
+/* ADD POKEMON TO THE TEAM */
 addButton.addEventListener('click', () => {
     var cardImage = document.getElementById('default-sprite').src;
     for(let i = 0; i < pokemonTeamImg.length; i++){
@@ -544,6 +544,10 @@ addButton.addEventListener('click', () => {
             pokemonTeamImg[i].src = cardImage;
             pokemonTeamImg[i].classList.remove('nopokemon');
             pokemonItemName[i].innerHTML = pokemonCardName.innerHTML;
+            pokemonTeamType[i].querySelector('.pokemon-type-1').innerHTML = pokemonType1.innerHTML;
+            if(pokemonType2.innerHTML != ""){
+                pokemonTeamType[i].querySelector('.pokemon-type-2').innerHTML = pokemonType2.innerHTML;
+            }
             overlayButton.classList.remove('active');
             pokemonCardDiv.classList.remove('active');
             pokemonSprite.src = "";
@@ -557,10 +561,19 @@ function getRandomPokemonName(id, index) {
     .then(response => response.json())
     .then(data => {
         pokemonItemName[index].innerHTML = (data.name.charAt(0).toUpperCase()) + data.name.slice(1);
+        pokemonTeamType[index].querySelector('.pokemon-type-1').innerHTML = data.types[0].type.name.toUpperCase();
+        if(data.types.length > 1){
+            pokemonTeamType[index].querySelector('.pokemon-type-2').innerHTML = data.types[1].type.name.toUpperCase();
+        }
     })
 }
 
+/* FULL RANDOM TEAM */
 randomButton.addEventListener('click', () => {
+    for(var j = 0; j < 6; j++){
+        pokemonTeamType[j].querySelector('.pokemon-type-1').innerHTML = "";
+        pokemonTeamType[j].querySelector('.pokemon-type-2').innerHTML = "";
+    }
     for(var i = 0; i < 6; i++){
         var randNumber = Math.floor(Math.random()*1008 +1);
         getRandomPokemonName(randNumber, i);
@@ -569,11 +582,14 @@ randomButton.addEventListener('click', () => {
     }
 })
 
+/* REMOVE POKEMON FROM THE TEAM SELECTION */
 pokemonItem.forEach(pokemon => {
     pokemon.addEventListener('click', () => {
         pokemon.querySelector('.pokemon-img').src = "../img/nopokemon.png";
         pokemon.querySelector('.pokemon-name').innerHTML = "";
         pokemon.querySelector('.pokemon-img').classList.add('nopokemon');
+        pokemon.querySelector('.pokemon-type-1').innerHTML = "";
+        pokemon.querySelector('.pokemon-type-2').innerHTML = "";
     })
 })
 
@@ -583,6 +599,33 @@ overlayButton.addEventListener('click', (e) => {
         overlayButton.classList.remove('active');
         pokemonCardDiv.classList.remove('active');
         pokemonSprite.src = "";
+    }
+})
+
+/* REDIRECTS YOU TO THE THE SAME PAGE (ADDS TO THE LINK THE POKEMON NAMES) */
+const submitTeam = document.querySelector('.save-team');
+submitTeam.addEventListener('click', () => {
+    var hrefName = "";
+    var teamName = document.querySelector('.save-team-name').value;
+    for(var i = 0; i < 6; i++) {
+        if(!pokemonTeamImg[i].classList.contains('nopokemon')){
+            if(hrefName != ""){
+                hrefName += `&p`+(i+1)+`=`+(pokemonItemName[i].innerHTML).toLowerCase();
+            } else{
+                hrefName += `p`+(i+1)+`=`+(pokemonItemName[i].innerHTML).toLowerCase();
+            }
+        }
+    }
+
+    // IF THERE IS AN ERROR, SHOW THE TEAM THAT WAS SELECTED PREVIOUSLY
+    if(hrefName == ""){
+        document.querySelector('.error-team-name').innerHTML = "Add at least one Pokémon";
+    } else{
+        if(teamName === ""){
+            document.querySelector('.error-team-name').innerHTML = "The team name cannot be blank";
+        } else{
+            window.location.href = `createTeams.php?${hrefName}&n=${teamName}`;
+        }
     }
 })
 

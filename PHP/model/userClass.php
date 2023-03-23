@@ -80,5 +80,37 @@
             }
         }
 
+        public function addTeam($name, $arrayPokemon, $userId) {
+            $prueba = null;
+            $query = "INSERT INTO teams(teamName, pokemon1, pokemon2, pokemon3, pokemon4, pokemon5, pokemon6, userId) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            $result = $this->prepare($query);
+
+            $result->bindParam(1, $name);
+            for($i = 1; $i <= 6; $i++){
+                if(isset($arrayPokemon[$i])){
+                    $result->bindParam(($i+1), $arrayPokemon[$i]);
+                } else{
+                    $result->bindParam(($i+1), $prueba);
+                }
+            }
+            $result->bindParam(8, $userId);
+
+            return $result->execute();
+        }
+
+        public function checkTeamName($team) {
+            $query = "SELECT * FROM teams WHERE teamName=:team";
+            $result = $this->prepare($query);
+            $result->bindParam(':team', $team);
+            $result->execute();
+
+            foreach($result as $res){
+                if($team === $res['teamName']){
+                    return true;
+                } else{
+                    return false;
+                }
+            }
+        }
     }
 ?>

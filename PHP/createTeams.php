@@ -95,10 +95,9 @@
                 <input type="submit" class="submit-button" id="search-button" value="Search">
                 <input type="submit" class="random-button" id="random-button" value="Random team">
             </div>
-            <div class="save-team">
-                <input type="text" class="save-team-name" name="save-team-name" placeholder="Team name">
-                <input type="submit" class="submit-button" name="save-button" value="Save team">
-            </div>
+            <input type="text" class="save-team-name" name="save-team-name" placeholder="Team name">
+            <input type="submit" class="save-team" name="save-button" value="Save team">
+            <div class="error-team-name"><?php $nameError = ""; echo $nameError; ?></div>
         </div>
 
         <div id="overlay" class=""></div>
@@ -219,3 +218,34 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 </body>
 </html>
+
+
+<?php
+/*  **IDEA** => LLEVAR ESTE CÓDIGO A LA PÁGINA DE TEAMS DEL PERFIL PARA QUE ASÍ NO PUEDA REFRESCAR Y CREAR OTRA VEZ EL MISMO TEAM  */
+    require("model/modelClass.php");
+    require("model/userClass.php");
+    require("../DB/config.php");
+
+    // IF THERE'S AT LEAST ONE POKEMON ON THE LINK, IT MEANS THAT THE TEAM HAS BEEN SUCCESSFULLY CHECKED AND CAN BE SAVED INTO THE DATABSE
+    if(isset($_GET["p1"]) || isset($_GET["p2"]) || isset($_GET["p3"]) || isset($_GET["p4"]) || isset($_GET["p5"]) || isset($_GET["p6"])){
+        $pokemonName = [];
+        $teamName = $_GET["n"];
+        for($i = 0; $i <= 6; $i++) {
+            if(isset($_GET["p".$i])){
+                $pokemonName[$i] = $_GET["p".$i];
+            }
+        }
+        try{
+            $database = new User();
+            if($userId=$database->getIdUser($_SESSION["user"]));
+            if($nameCheck=$database->checkTeamName($teamName)){
+                $nameError = "The team name already exists";
+            } else{
+                if($addTeam=$database->addTeam($teamName, $pokemonName, $userId));
+            }
+        } catch(PDOException $e){
+            error_log($e->getMessage() . "##Código: " . $e->getCode() . "  " . microtime() . PHP_EOL, 3, "../logBD.txt");
+            $errores['datos'] = "There was an error <br>";
+        }    
+    }
+?>

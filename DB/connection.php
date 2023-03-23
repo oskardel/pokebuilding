@@ -1,6 +1,6 @@
 <?php
     $db_hostname = "localhost";
-    $db_nombre = "DB_PokeBuilding"; //*********** NOMBRE DE BASE DE DATOS AQUÍ ***********//
+    $db_nombre = "DB_PokeBuilding"; 
     $db_usuario = "root";
     $db_clave = "";
 
