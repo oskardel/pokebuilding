@@ -17,8 +17,6 @@ html, body{
 
 header{
     z-index: 2;
-    margin: 25px 100px 0 100px;
-    height: 80px;
     position: sticky;
     top: 0;
     display: flex;
@@ -26,7 +24,7 @@ header{
     justify-content: space-between;
     background-color: white;
     box-shadow: $shadow-box;
-    border-radius: 15px;
+    // border-radius: 0px 0px 15px 15px;
 
     .profile-picture{
         display: flex;

@@ -12,8 +12,6 @@ html, body {
 
 header {
   z-index: 2;
-  margin: 25px 100px 0 100px;
-  height: 80px;
   position: sticky;
   top: 0;
   display: flex;
@@ -21,7 +19,6 @@ header {
   justify-content: space-between;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px;
-  border-radius: 15px;
 }
 header .profile-picture {
   display: flex;

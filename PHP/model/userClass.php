@@ -98,6 +98,13 @@
             return $result->execute();
         }
 
+        public function addNumberTeam($user) {
+            $query = "UPDATE users SET teams = teams + 1 WHERE id=:idUser";
+            $result=$this->prepare($query);
+            $result->bindParam(':idUser', $user);
+            $result->execute();
+        }
+
         public function checkTeamName($team) {
             $query = "SELECT * FROM teams WHERE teamName=:team";
             $result = $this->prepare($query);
@@ -111,6 +118,16 @@
                     return false;
                 }
             }
+        }
+
+        public function showTeams($idUser) {
+            $query = "SELECT * FROM teams WHERE userId=?";
+            $result=$this->prepare($query);
+            $result->bindParam(1, $idUser);
+            $result->execute();
+
+            $arrayTeams=$result->fetchAll();
+            return $arrayTeams;
         }
     }
 ?>

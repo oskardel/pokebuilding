@@ -435,7 +435,7 @@ function createMove(move) {
         if(move.accuracy === null){
             accuracyMove.innerHTML = "-";
         } else{
-            accuracyMove.innerHTML = move.accuracy;
+            accuracyMove.innerHTML = move.accuracy+"%";
         }
         const ppMove = document.createElement('td');
         if(move.accurancy === null){

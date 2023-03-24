@@ -17,7 +17,7 @@ body{
     justify-content: space-between;
 }
 
-header, .main-content{
+.index-header, .main-content-index{
     background-color: $brightColor;
     height: 100vh;
 }
@@ -44,7 +44,7 @@ header, .main-content{
     }
 }
 
-.main-content{
+.main-content-index{
     display: flex;
     align-items: center;
     flex-direction: column;

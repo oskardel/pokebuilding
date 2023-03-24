@@ -26,7 +26,7 @@
         </div>
          <!-- "../img/".$_SESSION[user]."/image.png" -->
         <a href="profile.php" class="profile-picture">
-            <img src="../img/option1.png" alt="pfp_icon">
+            <img src="<?php echo "../img/".$_SESSION["user"]."/image.png" ?>" alt="pfp">
         </a>
     </header>
 
@@ -241,7 +241,9 @@
             if($nameCheck=$database->checkTeamName($teamName)){
                 $nameError = "Team name already exists";
             } else{
-                if($addTeam=$database->addTeam($teamName, $pokemonName, $userId));
+                if($addTeam=$database->addTeam($teamName, $pokemonName, $userId)){
+                    if($plusNumber=$database->addNumberTeam($userId));
+                }
             }
         } catch(PDOException $e){
             error_log($e->getMessage() . "##Código: " . $e->getCode() . "  " . microtime() . PHP_EOL, 3, "../logBD.txt");
