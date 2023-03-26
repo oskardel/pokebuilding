@@ -1,3 +1,12 @@
+<?php
+    if(isset($_GET["so"])){
+        if($_GET["so"] === "true"){
+            session_start();
+            session_destroy();
+        }
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +20,6 @@
     <title>Home - PokeBuilding</title>
 </head>
 <body>
-    <!-- HEADER (NIGHT MODE ICON) -->
     <header class="index-header">
         <div class="home-header">
             <button class="night-mode-button" onclick="toggleDarkMode()"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-moon" viewBox="0 0 16 16">

@@ -1,18 +1,37 @@
 $brightColor: #f6f8fc;
 $hoverButtonColor: #ee1515;
-$textColor: #6b6b6b;
-$shadow-box: rgba(0, 0, 0, 0.15) 0px 5px 15px;
+$textColorBright: #6b6b6b;
+$brightShadow-box: rgba(0, 0, 0, 0.15) 0px 5px 15px;
+$darkColor: #212121;
+$textColorDark: #e6e6e6;
+$darkShadow-box: rgba(255, 255, 255, 0.15) 0px 5px 15px;
 
 *{
     font-family: 'Montserrat', sans-serif;
-    color: $textColor;
+    color: var(--text-color);
+}
+
+.light-theme{
+    --text-color: #{$textColorBright};
+    --background-color: #{$brightColor};
+    --shadow-box: #{$brightShadow-box};
+    --absolute-color: white;
+    --pokeball-background: brightness(3);
+}
+
+.dark-theme{
+    --text-color: #{$textColorDark};
+    --background-color: #{$darkColor};
+    --shadow-box: #{$darkShadow-box};
+    --absolute-color: #181818;
+    --pokeball-background: grayscale(-50%);
 }
 
 html, body{
     overflow:visible;
     margin: 0;
     padding: 0;
-    background-color: $brightColor;
+    background-color: var(--background-color);
 }
 
 header{
@@ -22,11 +41,12 @@ header{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    background-color: white;
-    box-shadow: $shadow-box;
+    background-color: var(--absolute-color);
+    box-shadow: var(--shadow-box);
     // border-radius: 0px 0px 15px 15px;
 
     .profile-picture{
+        cursor: pointer;
         display: flex;
         align-items: center;
         padding-right: 15px;
@@ -52,7 +72,7 @@ header{
         padding-left: 15px;
              
         .create-team:not(.clicked){
-            color: $textColor;
+            color: var(--text-color);
             text-decoration: none;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -71,7 +91,7 @@ header{
         }
 
         .icon-parts{
-            color: $textColor;
+            color: var(--text-color);
             display: flex;
             flex-direction: row;
             align-items: center;
@@ -162,17 +182,17 @@ header{
         flex-direction: column;
         width: 215px;
         padding: 15px;
-        background-color: white;
+        background-color: var(--absolute-color);
         border-radius: 15px;
-        box-shadow: $shadow-box;
+        box-shadow: var(--shadow-box);
         border-bottom: 5px solid transparent;
-        transition: 0.2s;
+        transition: 0.2s ease-in-out;
 
         .name{
             font-weight: 700;
             font-size: larger;
-            color: black;
-            transition: 0.2s;
+            color: var(--text-color);
+            transition: 0.2s ease-in-out;
         }
 
         .pokemon-id{
@@ -180,7 +200,7 @@ header{
             justify-content: center;
             width: 75px;
             font-weight: 700;
-            background-color: $brightColor;
+            background-color: var(--background-color);
             border-radius: 25px;
             box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 10px;
         }
@@ -213,7 +233,7 @@ header{
 
             .img-container img{
                 transform: scale(1.1);
-                transition: 0.2s;
+                transition: 0.2s ease-in-out;
             }
         }
     }
@@ -225,14 +245,13 @@ header{
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0);
-    transition: 0.2s ease-in-out;
-    background-color: $brightColor;
+    background-color: var(--background-color);
     border-radius: 15px;
     z-index: 10;
     max-width: 80%;
     max-height: 80%;
-    box-shadow: $shadow-box;
-    transition: 0.7 ease-in-out;
+    box-shadow: var(--shadow-box);
+    transition: 0.2s ease-in-out;
     overflow-x: hidden;
     overflow-y: scroll;
 
@@ -255,7 +274,7 @@ header{
                 top: -100px;
                 left: 500px;
                 transform: rotate(-20deg);
-                filter: brightness(3);
+                filter: var(--pokeball-background);
                 z-index: 1; 
             }
 
@@ -284,7 +303,7 @@ header{
                 z-index: 2;
 
                 .pokemon-info{
-                    background-color: white;
+                    background-color: var(--absolute-color);
                     position: relative;
                     top: -75px;
                     padding-left: 50px;
@@ -292,7 +311,7 @@ header{
                     padding-top: 10px;
                     padding-bottom: 10px;
                     border-radius: .375rem;
-                    box-shadow: $shadow-box;
+                    box-shadow: var(--shadow-box);
                 }
             }
         }
@@ -308,7 +327,7 @@ header{
 
             .pokedex-entry{
                 grid-area: 1/1;
-                background-color: white;
+                background-color: var(--absolute-color);
                 border-radius: .375rem;
                 --tw-shadow: 0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -2px rgba(0,0,0,.1);
                 box-shadow: var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow);
@@ -321,7 +340,7 @@ header{
             }
             .pokemon-stats{
                 grid-area: 1/2;
-                background-color: white;
+                background-color: var(--absolute-color);
                 border-radius: .375rem;
                 --tw-shadow: 0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -2px rgba(0,0,0,.1);
                 box-shadow: var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow);
@@ -352,7 +371,7 @@ header{
                 grid-area: 2/1;
                 height: fit-content - 50%;
                 overflow-y: scroll;
-                background-color: white;
+                background-color: var(--absolute-color);
                 --tw-shadow: 0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -2px rgba(0,0,0,.1);
                 box-shadow: var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow);
                 border-radius: .375rem;
@@ -363,7 +382,7 @@ header{
             }
             .pokemon-card-abilities{
                 grid-area: 2/2;
-                background-color: white;
+                background-color: var(--absolute-color);
                 --tw-shadow: 0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -2px rgba(0,0,0,.1);
                 box-shadow: var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow);
                 border-radius: .375rem;
@@ -380,7 +399,7 @@ header{
 
         .pokemon-card-name{
             font-size: 35px;
-            color: black;
+            color: var(--text-color);
             font-weight: 700;
             padding-top: 20px;
             padding-bottom: 5px;
@@ -397,7 +416,7 @@ header{
 
             .card-type-1, .card-type-2{
                 width: 85px;
-                color: white;
+                color: var(--absolute-color);
                 font-weight: 800;
                 padding: 5px 15px;
                 border-radius: 10px;
@@ -467,7 +486,7 @@ header{
     bottom: 0;
     z-index: 2;
     content: "";
-    border-left: 1px solid $textColor;
+    border-left: 1px solid var(--text-color);
     transform: translate(100px, 5px);
 }
 
@@ -496,3 +515,71 @@ header{
 #pokemon-card.active{
     transform: translate(-50%, -50%) scale(1);
 }
+
+
+/* DROPDOWN MENU */
+.drop-menu-wrap{
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 250px;
+    max-height: 0px;
+    overflow: hidden;
+    transition: 0.2s;
+}
+
+.drop-menu-wrap.open{
+    max-height: 400px;
+}
+
+.drop-menu{
+    background-color: var(--absolute-color);
+    padding: 20px;
+    margin: 10px;
+    box-shadow: var(--shadow-box);
+
+    .user-info{
+        text-align: left;
+    }
+
+    hr{
+        border: 0;
+        height: 1px;
+        width: 100%;
+        background-color: var(--text-color);
+    }
+
+    .drop-menu-link{
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        color: var(--text-color);
+        margin: 12px 0;
+        cursor: pointer;
+
+        p{
+            font-size: 15px;
+            width: 100%;
+        }
+
+        i{
+            width: 40px;
+            margin-right: 5px;
+        }
+
+        span{
+            font-size: 22px;
+            transition: 0.2s;
+        }
+    }
+}
+
+.drop-menu-link:hover{
+    span{
+        transform: translateX(5px);
+    }
+
+    p{
+        font-weight: 600;
+    }
+} 

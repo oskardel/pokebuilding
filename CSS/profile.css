@@ -1,4 +1,44 @@
-.team-item {
+* {
+  font-family: "Montserrat", sans-serif;
+  color: var(--text-color);
+}
+
+.light-theme {
+  --text-color: #6b6b6b;
+  --background-color: #f6f8fc;
+  --shadow-box: rgba(0, 0, 0, 0.15) 0px 5px 15px;
+  --absolute-color: white;
+  --pokeball-background: brightness(3);
+}
+
+.dark-theme {
+  --text-color: #e6e6e6;
+  --background-color: #212121;
+  --shadow-box: rgba(255, 255, 255, 0.15) 0px 5px 15px;
+  --absolute-color: #181818;
+  --pokeball-background: grayscale(-50%);
+}
+
+.profile-teams {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.profile-teams .team-item {
+  width: 50%;
+  background-color: var(--absolute-color);
   display: flex;
   flex-direction: row;
+  margin: 50px;
+  padding: 10px;
+  border-radius: 15px;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px;
+}
+.profile-teams .team-item .team-pokemon {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  align-items: center;
+  padding-left: 20px;
+  padding-right: 20px;
 }/*# sourceMappingURL=profile.css.map */

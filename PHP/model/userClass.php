@@ -120,6 +120,18 @@
             }
         }
 
+        public function getTeamId($team) {
+            $query = "SELECT * FROM teams WHERE teamName=:team";
+            $result=$this->prepare($query);
+            $result->bindParam(':team', $team);
+            $result->execute();
+
+            foreach ($result as $row) {
+                $teamId = $row['id'];
+            }
+            return $teamId;
+        }
+
         public function showTeams($idUser) {
             $query = "SELECT * FROM teams WHERE userId=?";
             $result=$this->prepare($query);

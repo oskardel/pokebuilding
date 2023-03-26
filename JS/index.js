@@ -44,7 +44,7 @@ const typeColours = {
 
 /* ADDING ALL POKEMON */
 const fetchAllPokemon = async() => {
-    for(let i = 1; i <= 1008; i++){
+    for(let i = 1; i <= 1010; i++){
         await loadPokemonInfo(i);
     }
     listenerCard();

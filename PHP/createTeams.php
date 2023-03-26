@@ -10,11 +10,12 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../CSS/team-creation.css">
     <title>Create team - PokeBuilding</title>
 </head>
-<body>
+<body class="body">
     <header>
         <div class="header-options">
             <a href="index.php" class="icon-parts">
@@ -24,10 +25,34 @@
             <a href="createTeams.php" class="create-team clicked">Create Teams</a>
             <a href="compareTeams.php" class="create-team">Compare</a>
         </div>
-         <!-- "../img/".$_SESSION[user]."/image.png" -->
-        <a href="profile.php" class="profile-picture">
+
+        <div href="" class="profile-picture" onclick="toggleMenu()">
             <img src="<?php echo "../img/".$_SESSION["user"]."/image.png" ?>" alt="pfp">
-        </a>
+        </div>
+        <div class="drop-menu-wrap">
+            <div class="drop-menu">
+                <div class="user-info"><?php echo "Welcome, ".$_SESSION["user"]; ?></div>
+                <hr>
+
+                <a href="profile.php" class="drop-menu-link">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                    <p>Edit Profile</p>
+                    <span>></span>
+                </a>
+
+                <div onclick='switchAppearance()' class="drop-menu-link">
+                    <i class="fa fa-moon-o"></i>
+                    <p>Switch appearance</p>
+                    <span>></span>
+                </div>
+
+                <a href="index.php?so=true" class="drop-menu-link">
+                    <i class="fa fa-sign-out" aria-hidden="true"></i>
+                    <p>Sign out</p>
+                    <span>></span>
+                </a>
+            </div>
+        </div>
     </header>
 
     <div class="main-content">
@@ -215,6 +240,7 @@
         <div id="pokedex-container"></div>
     </div>
     <script src="../JS/index.js"></script>
+    <script src="../JS/dark-mode.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 </body>
 </html>

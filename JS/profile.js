@@ -7,7 +7,7 @@ function getPokemonName() {
         if(pokemonNames[i].innerHTML === ""){
             // teamImages[i].src = "../img/nopokemon.png";
         } else{
-            getTeamImages((pokemonNames[i].innerHTML).replace(" ", "-"), i);
+            getTeamImages((pokemonNames[i].innerHTML).toLowerCase().replace(" ", "-"), i);
         }
     }
 }
@@ -16,12 +16,12 @@ function getTeamImages(name, index) {
     fetch(`https://pokeapi.co/api/v2/pokemon/${name}`)
     .then(response => response.json())
     .then(data => {
-        if(data.id < 650) {
-            teamImages[index].src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${data.id}.gif`;
-        } else{
-            teamImages[index].src = data.sprites.front_default;
-        }
+        teamImages[index].src = data.sprites.front_default;
     })
+}
+
+function editTeam() {
+    
 }
 
 /* LOAD FOR THE FIRST TIME */

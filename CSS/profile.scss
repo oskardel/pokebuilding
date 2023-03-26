@@ -1,4 +1,55 @@
-.team-item{
+$brightColor: #f6f8fc;
+$hoverButtonColor: #ee1515;
+$textColorBright: #6b6b6b;
+$brightShadow-box: rgba(0, 0, 0, 0.15) 0px 5px 15px;
+$darkColor: #212121;
+$textColorDark: #e6e6e6;
+$darkShadow-box: rgba(255, 255, 255, 0.15) 0px 5px 15px;
+
+*{
+    font-family: 'Montserrat', sans-serif;
+    color: var(--text-color);
+}
+
+.light-theme{
+    --text-color: #{$textColorBright};
+    --background-color: #{$brightColor};
+    --shadow-box: #{$brightShadow-box};
+    --absolute-color: white;
+    --pokeball-background: brightness(3);
+}
+
+.dark-theme{
+    --text-color: #{$textColorDark};
+    --background-color: #{$darkColor};
+    --shadow-box: #{$darkShadow-box};
+    --absolute-color: #181818;
+    --pokeball-background: grayscale(-50%);
+}
+
+
+.profile-teams{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
+
+    .team-item{
+        width: 50%;
+        background-color: var(--absolute-color);
+        display: flex;
+        flex-direction: row;
+        margin: 50px;
+        padding: 10px;
+        border-radius: 15px;
+        box-shadow: $brightShadow-box;
+    
+        .team-pokemon{
+            display: flex;
+            justify-content:space-around;
+            flex-direction: column;
+            align-items: center;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+    }
 }
