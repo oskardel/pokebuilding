@@ -603,8 +603,8 @@ overlayButton.addEventListener('click', (e) => {
 })
 
 /* REDIRECTS YOU TO THE THE SAME PAGE (ADDS TO THE LINK THE POKEMON NAMES) */
-const submitTeam = document.querySelector('.save-team');
-submitTeam.addEventListener('click', () => {
+const submitTeam = document.getElementById('save-team');
+submitTeam.addEventListener('click', (e) => {
     var hrefName = "";
     var teamName = document.querySelector('.save-team-name').value;
     for(var i = 0; i < 6; i++) {
@@ -617,19 +617,45 @@ submitTeam.addEventListener('click', () => {
         }
     }
 
-    // IF THERE IS AN ERROR, SHOW THE TEAM THAT WAS SELECTED PREVIOUSLY
     if(hrefName == ""){
         document.querySelector('.error-team-name').innerHTML = "Add at least one Pokémon";
     } else{
+        var teamId = document.querySelector('.team-id').innerHTML;
         if(teamName === ""){
             document.querySelector('.error-team-name').innerHTML = "Team name cannot be blank";
         } else{
-            window.location.href = `createTeams.php?${hrefName}&n=${teamName}`;
+            if(window.location.href.indexOf("edit") > -1){ 
+                console.log("aqui llega"); //LLEGA PERO NO ENTRA
+                window.location.href = `createTeams.php?${hrefName}&n=${teamName}&id=${teamId}&edit=true`;
+            } else{
+                window.location.href = `createTeams.php?${hrefName}&n=${teamName}`;
+            }
         }
     }
 })
 
+function getSpriteEditTeam(namePokemon, imageSrc) {
+    fetch(`https://pokeapi.co/api/v2/pokemon/${namePokemon}`)
+    .then(response => response.json())
+    .then(data => {
+        imageSrc.querySelector('.pokemon-img').src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${data.id}.png`;
+        imageSrc.querySelector('.pokemon-img').classList.remove('nopokemon');
+        const typesSelector = imageSrc.querySelector('.pokemon-types');
+        typesSelector.querySelector('.pokemon-type-1').innerHTML = (data.types[0].type.name).toUpperCase();
+        if(data.types.length > 1) {
+            typesSelector.querySelector('.pokemon-type-2').innerHTML = (data.types[1].type.name).toUpperCase();
+        }
+    })
+}
+
 /* LOADING FOR THE FIRST TIME */
+pokemonItem.forEach(name => {
+    if(name.querySelector('.pokemon-name').innerHTML !== "") {
+        var pokeNameHTML = (name.querySelector('.pokemon-name').innerHTML).toLowerCase().replace(" ", "-");
+        getSpriteEditTeam(pokeNameHTML, name);
+    }
+})
+
 fetchAllPokemon();
 fetchAllTypes();
 fetchAllGenerations();

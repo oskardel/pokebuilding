@@ -17,6 +17,7 @@
             return $result->execute();
         }
 
+        
         //Returns the ID of the username
         public function getIdUser($user) {
             $query = "SELECT * FROM users WHERE username=:user";
@@ -30,6 +31,7 @@
             }
             return $nameUser;
         }
+
 
         //Checks if the username exists or not in the DB
         public function checkUsername($username) {
@@ -47,9 +49,9 @@
             }
         }
 
+
         //Checks if the password is correct or not
-        public function checkPassword($username, $password)
-        {
+        public function checkPassword($username, $password) {
             $query = "SELECT * FROM users WHERE username=?";
             $result = $this->prepare($query);
             $result->bindParam(1, $username);
@@ -63,6 +65,7 @@
                 }
             }
         }
+
 
         //Checks if the email exists or not in the DB
         public function checkEmail($email) {
@@ -79,6 +82,7 @@
                 }
             }
         }
+
 
         public function addTeam($name, $arrayPokemon, $userId) {
             $prueba = null;
@@ -98,12 +102,33 @@
             return $result->execute();
         }
 
+
+        public function updateTeam($name, $arrayPokemon, $teamId) {
+            $prueba = null;
+            $query = "UPDATE teams SET teamName = ?, pokemon1 = ?, pokemon2 = ?, pokemon3 = ?, pokemon4 = ?, pokemon5 = ?, pokemon6 = ? WHERE id = ?";
+            $result = $this->prepare($query);
+
+            $result->bindParam(1, $name);
+            for($i = 1; $i <= 6; $i++){
+                if(isset($arrayPokemon[$i])){
+                    $result->bindParam(($i+1), $arrayPokemon[$i]);
+                } else{
+                    $result->bindParam(($i+1), $prueba);
+                }
+            }
+            $result->bindParam(8, $teamId);
+
+            return $result->execute();
+        }
+
+
         public function addNumberTeam($user) {
             $query = "UPDATE users SET teams = teams + 1 WHERE id=:idUser";
             $result=$this->prepare($query);
             $result->bindParam(':idUser', $user);
             $result->execute();
         }
+
 
         public function checkTeamName($team) {
             $query = "SELECT * FROM teams WHERE teamName=:team";
@@ -120,6 +145,7 @@
             }
         }
 
+
         public function getTeamId($team) {
             $query = "SELECT * FROM teams WHERE teamName=:team";
             $result=$this->prepare($query);
@@ -131,6 +157,7 @@
             }
             return $teamId;
         }
+
 
         public function showTeams($idUser) {
             $query = "SELECT * FROM teams WHERE userId=?";

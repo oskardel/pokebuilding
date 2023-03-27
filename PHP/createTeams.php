@@ -1,7 +1,19 @@
 <?php
+    require("model/modelClass.php");
+    require("model/userClass.php");
+    require("../DB/config.php");
+
     session_start();
     if(!isset($_SESSION["user"])){
         header("Location:index.php");
+    }
+
+    if(isset($_GET["p1"]) || isset($_GET["p2"]) || isset($_GET["p3"]) || isset($_GET["p4"]) || isset($_GET["p5"]) || isset($_GET["p6"])){
+        for($i = 0; $i <= 6; $i++) {
+            if(isset($_GET["p".$i])){
+                $pokemonEdit[$i-1] = $_GET["p".$i];
+            }
+        }
     }
 ?>
 
@@ -56,12 +68,41 @@
     </header>
 
     <div class="main-content">
-        <!--Section to see your Pokémon team and search options-->
+
         <div class="pokemon-search">
             <div class="pokemon-team">
+                <div class="team-id">
+                    <!-- PROBLEMA CON EL ID DEL EQUIPO -> COLOCA SIEMPRE ID= 1 AL DARLE AL BOTON DE EDITAR EQUIPO, POR ESO CUANDO LE DAS A EDITAR EL EQUIPO CAMBIA TODA LA INFORMACIÓN DEL EQUIPO QUE PRIMERO SE HA CREADO (COMO QUE SE GUARDA EL VALOR DE ID DE EQUIPO EN EL LINK DE LA PÁGINA) -->
+                    <?php
+                        if(isset($_GET["id"])){
+                            echo $_GET["id"];
+                        } else{
+                            try{
+                                $database = new User();
+                                if(isset($_GET["edit"])){
+                                    $nameTeam = $_GET["n"];
+    
+                                    if($teamId=$database->getTeamId($nameTeam));
+                                    echo $teamId;
+                                } else{
+                                    $teamId = "";
+                                    echo $teamId;
+                                }
+    
+                            } catch(PDOException $e){
+                                error_log($e->getMessage() . "##Código: " . $e->getCode() . "  " . microtime() . PHP_EOL, 3, "../logBD.txt");
+                                $errores['datos'] = "There was an error <br>";
+                            }
+                        }
+                        
+                    ?>
+                </div>
                 <div class="pokemon-item">
                     <img src="../img/nopokemon.png" alt="pokemon-img" class="pokemon-img nopokemon">
-                    <div class="pokemon-name"></div>
+                    <div class="pokemon-name"><?php 
+                        if(isset($pokemonEdit[0])){
+                            echo str_replace("-", " ", ucfirst($pokemonEdit[0]));
+                    } ?></div>
                     <div class="pokemon-types">
                         <div class="pokemon-type-1"></div>
                         <div class="pokemon-type-2"></div>
@@ -69,7 +110,10 @@
                 </div>
                 <div class="pokemon-item">
                     <img src="../img/nopokemon.png" alt="pokemon-img" class="pokemon-img nopokemon">
-                    <div class="pokemon-name"></div>
+                    <div class="pokemon-name"><?php 
+                        if(isset($pokemonEdit[1])){
+                            echo str_replace("-", " ", ucfirst($pokemonEdit[1]));
+                    } ?></div>
                     <div class="pokemon-types">
                         <div class="pokemon-type-1"></div>
                         <div class="pokemon-type-2"></div>
@@ -77,7 +121,10 @@
                 </div>
                 <div class="pokemon-item">
                     <img src="../img/nopokemon.png" alt="pokemon-img" class="pokemon-img nopokemon">
-                    <div class="pokemon-name"></div>
+                    <div class="pokemon-name"><?php 
+                        if(isset($pokemonEdit[2])){
+                            echo str_replace("-", " ", ucfirst($pokemonEdit[2]));
+                    } ?></div>
                     <div class="pokemon-types">
                         <div class="pokemon-type-1"></div>
                         <div class="pokemon-type-2"></div>
@@ -85,7 +132,10 @@
                 </div>
                 <div class="pokemon-item">
                     <img src="../img/nopokemon.png" alt="pokemon-img" class="pokemon-img nopokemon">
-                    <div class="pokemon-name"></div>
+                    <div class="pokemon-name"><?php 
+                        if(isset($pokemonEdit[3])){
+                            echo str_replace("-", " ", ucfirst($pokemonEdit[3]));
+                    } ?></div>
                     <div class="pokemon-types">
                         <div class="pokemon-type-1"></div>
                         <div class="pokemon-type-2"></div>
@@ -93,7 +143,10 @@
                 </div>
                 <div class="pokemon-item">
                     <img src="../img/nopokemon.png" alt="pokemon-img" class="pokemon-img nopokemon">
-                    <div class="pokemon-name"></div>
+                    <div class="pokemon-name"><?php 
+                        if(isset($pokemonEdit[4])){
+                            echo str_replace("-", " ", ucfirst($pokemonEdit[4]));
+                    } ?></div>
                     <div class="pokemon-types">
                         <div class="pokemon-type-1"></div>
                         <div class="pokemon-type-2"></div>
@@ -101,7 +154,10 @@
                 </div>
                 <div class="pokemon-item">
                     <img src="../img/nopokemon.png" alt="pokemon-img" class="pokemon-img nopokemon">
-                    <div class="pokemon-name"></div>
+                    <div class="pokemon-name"><?php 
+                        if(isset($pokemonEdit[5])){
+                            echo str_replace("-", " ", ucfirst($pokemonEdit[5]));
+                    } ?></div>
                     <div class="pokemon-types">
                         <div class="pokemon-type-1"></div>
                         <div class="pokemon-type-2"></div>
@@ -120,8 +176,14 @@
                 <input type="submit" class="submit-button" id="search-button" value="Search">
                 <input type="submit" class="random-button" id="random-button" value="Random team">
             </div>
-            <input type="text" class="save-team-name" name="save-team-name" placeholder="Team name">
-            <input type="submit" class="save-team" name="save-button" value="Save team">
+            <input type="text" class="save-team-name" name="save-team-name" placeholder="Team name" value="<?php if(isset($_GET["n"])){ echo $_GET["n"]; } ?>">
+            <input type="submit" class="save-team" id="save-team" value="<?php 
+                    if(isset($_GET["edit"])){
+                        echo "Update team";
+                    } else{
+                        echo "Save team";
+                    }
+                ?>">
             <div class="error-team-name"><?php $nameError = ""; echo $nameError; ?></div>
         </div>
 
@@ -248,32 +310,58 @@
 
 <?php
 /*  **IDEA** => LLEVAR ESTE CÓDIGO A LA PÁGINA DE TEAMS DEL PERFIL PARA QUE ASÍ NO PUEDA REFRESCAR Y CREAR OTRA VEZ EL MISMO TEAM  */
-    require("model/modelClass.php");
-    require("model/userClass.php");
-    require("../DB/config.php");
 
     // IF THERE'S AT LEAST ONE POKEMON ON THE LINK, IT MEANS THAT THE TEAM HAS BEEN SUCCESSFULLY CHECKED AND CAN BE SAVED INTO THE DATABSE
     if(isset($_GET["p1"]) || isset($_GET["p2"]) || isset($_GET["p3"]) || isset($_GET["p4"]) || isset($_GET["p5"]) || isset($_GET["p6"])){
-        $pokemonName = [];
-        $teamName = $_GET["n"];
-        for($i = 0; $i <= 6; $i++) {
-            if(isset($_GET["p".$i])){
-                $pokemonName[$i] = $_GET["p".$i];
-            }
-        }
-        try{
-            $database = new User();
-            if($userId=$database->getIdUser($_SESSION["user"]));
-            if($nameCheck=$database->checkTeamName($teamName)){
-                $nameError = "Team name already exists";
-            } else{
-                if($addTeam=$database->addTeam($teamName, $pokemonName, $userId)){
-                    if($plusNumber=$database->addNumberTeam($userId));
+        if(isset($_GET["edit"])){ //If user is editing team = UPDATE TEAM IN DATABASE
+            $pokemonArray = [];
+            $newName = $_GET["n"];
+            $idTeam = $_GET["id"];
+            
+            for($i = 0; $i <= 6; $i++) {
+                if(isset($_GET["p".$i])){
+                    $pokemonArray[$i] = $_GET["p".$i];
                 }
             }
-        } catch(PDOException $e){
-            error_log($e->getMessage() . "##Código: " . $e->getCode() . "  " . microtime() . PHP_EOL, 3, "../logBD.txt");
-            $errores['datos'] = "There was an error <br>";
-        }    
-    }
-?>
+
+            if($_GET["edit"] == "true"){
+                try{
+                    $database = new User();
+                    if($updateTeam=$database->updateTeam($newName, $pokemonArray, $idTeam)){
+                        $nameError = "Team updated";
+                    }
+                    
+                } catch(PDOException $e){
+                    error_log($e->getMessage() . "##Código: " . $e->getCode() . "  " . microtime() . PHP_EOL, 3, "../logBD.txt");
+                    $errores['datos'] = "There was an error <br>";
+                }
+            } else{
+                echo "hola vengo de perfil";
+            }
+            
+
+        } else{ //If user is creating team = CREATE TEAM IN DATABASE
+            $pokemonName = [];
+            $teamName = $_GET["n"];
+            for($i = 0; $i <= 6; $i++) {
+                if(isset($_GET["p".$i])){
+                    $pokemonName[$i] = $_GET["p".$i];
+                }
+            }
+            try{
+                $database = new User();
+                if($userId=$database->getIdUser($_SESSION["user"]));
+                if($nameCheck=$database->checkTeamName($teamName)){
+                    $nameError = "Team name already exists";
+                } else{
+                    if($addTeam=$database->addTeam($teamName, $pokemonName, $userId)){
+                        if($plusNumber=$database->addNumberTeam($userId));
+                    }
+                }
+            } catch(PDOException $e){
+                error_log($e->getMessage() . "##Código: " . $e->getCode() . "  " . microtime() . PHP_EOL, 3, "../logBD.txt");
+                $errores['datos'] = "There was an error <br>";
+            }
+        }
+    }   
+?>  
