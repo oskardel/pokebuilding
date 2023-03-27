@@ -64,7 +64,6 @@
     <div class="main-content">
         <div class="profile-data">
             <img src="<?php echo "../img/".$_SESSION["user"]."/image.png"?>" alt="pfp">
-            <input type="text" name="change-name" value="<?php echo $_SESSION["user"]; ?>">
             <div class="profile-name"><?php echo $_SESSION["user"]; ?></div>
         </div>
 
@@ -94,7 +93,7 @@
                                     echo '<div class="team-pokemon-name">'.$pokemonArray[$j].'</div>';
                                 echo '</div>';
                             }
-                            echo '<div class="edit-team" onclick="editTeam()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></div>';
+                            echo '<div class="edit-team" id="edit-'.$j.'"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></div>';
                             echo '<div class="team-id" style="display:none">'.$teamId.'</div>';
                         echo '</div>';
                     }
