@@ -77,25 +77,33 @@
                     <img src="<?php echo "../img/".$_SESSION["user"]."/image.png"?>" alt="pfp" class="image-edit-profile">
                     <i class="fa fa-picture-o" aria-hidden="true"></i>
                 </div>
-                <input type="text" name="form-name" value="<?php echo $_SESSION["user"]; ?>">
-                <input type="text" name="form-email" value="<?php 
-                    try{
-                        $database = new User();
-                        if($userEmail=$database->getEmail($_SESSION["user"])){
-                            echo $userEmail;
+                <div class="new-name-form">
+                    <input type="text" name="form-name" value="<?php echo $_SESSION["user"]; ?>">
+                    <span class="floating-label">Name</span>
+                </div>
+                <div class="new-email-form">
+                    <input type="text" name="form-email" value="<?php 
+                        try{
+                            $database = new User();
+                            if($userEmail=$database->getEmail($_SESSION["user"])){
+                                echo $userEmail;
+                            }
+                        } catch(PDOException $e){
+                            error_log($e->getMessage() . "##Código: " . $e->getCode() . "  " . microtime() . PHP_EOL, 3, "../logBD.txt");
+                            $errores['datos'] = "There was an error <br>";
                         }
-                    } catch(PDOException $e){
-                        error_log($e->getMessage() . "##Código: " . $e->getCode() . "  " . microtime() . PHP_EOL, 3, "../logBD.txt");
-                        $errores['datos'] = "There was an error <br>";
-                    }
-                ?>">
-                <input type="password" name="form-password" placeholder="Confirm password">
+                    ?>">
+                    <span class="floating-label">Email</span>
+                </div>
+                <div class="confirm-password-form">
+                    <input type="password" name="form-password">
+                    <span class="floating-label">Confirm password</span>
+                </div>
                 <input type="submit" name="form-submit" value="Save">
             </form>
         </div>
 
-        <div class="profile-teams">
-            <?php
+        <div class="profile-teams"><?php
                 try{
                     $database = new User();
                     $userId=$database->getIdUser($_SESSION["user"]);
@@ -172,29 +180,33 @@
         if(count($errorEdit) === 0) {
             try{
                 $database = new User();
-                if($userId=$database->getIdUser($_SESSION["user"]));
-                if($userGet = $database->checkUsername($newName)){
-                    $errorEdit["NoName"] = "The username is already taken";
-                }else{                   
-                    $cryptPassword = crypt_blowfish($confirmPass);
-                    if($checkPass=$database->checkPassword($_SESSION["user"], $cryptPassword)){
-                        echo "aqui llega 1";
-                        if($updateName=$database->updateUsername($newName, $userId)); //ARREGLAR (NO DETECTA EL CAMBIO DE NOMBRE, Y LUEGO NO GUARDA LA SESION CAMBIADA)
-                        if($updateEmail=$database->updateEmail($newEmail, $userId));
+                if($userId=$database->getIdUser($_SESSION["user"]));               
+                $cryptPassword = crypt_blowfish($confirmPass);
+                if($checkPass=$database->checkPassword($_SESSION["user"], $cryptPassword)){
+                    if(!$userGet = $database->checkUsername($newName)){
+                        if($updateName=$database->updateUsername($newName, $userId));
                         rename("../img/".$_SESSION["user"], "../img/".$newName);
                         $_SESSION["user"] = $newName;
-                        header("Refresh:0");
-                    } else{
-                        $errorEdit["NoPassword"] = "Password is incorrect";
                     }
+                    
+                    if(!$userEmail = $database->checkEmail($newEmail)){
+                        if($updateEmail=$database->updateEmail($newEmail, $userId)); //ERROR (NO CAMBIA EL MAIL)
+                    }
+                    ?>
+                        <script type="text/javascript">
+                            window.location.href = 'profile.php';
+                        </script>
+                    <?php
+                    
+                    
+                } else{
+                    $errorEdit["NoPassword"] = "Password is incorrect";
                 }
 
             } catch(PDOException $e){
                 error_log($e->getMessage() . "##Código: " . $e->getCode() . "  " . microtime() . PHP_EOL, 3, "../logBD.txt");
                 $errores['datos'] = "There was an error <br>";
             }    
-        } else{
-            echo '<pre>'; print_r($errorEdit); echo '</pre>';
         }
     }
 ?>

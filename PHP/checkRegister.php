@@ -57,9 +57,11 @@
                 //Check if the username/email is already registered
                 if($userGet = $database->checkUsername($username)){
                     $errorArray["usernameEmpty"] = "The username is already taken";
+                    require("register.php");
                 } else{
                     if($emailGet = $database->checkEmail($email)){
                         $errorArray["emailEmpty"] = "That mail is already registered";
+                        require("register.php");
                     } else{
                         $cryptPassword = crypt_blowfish($password);
                         $userDB = $database->insertUser($username, $cryptPassword, $email);
