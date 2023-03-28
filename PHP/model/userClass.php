@@ -37,7 +37,7 @@
         public function checkUsername($username) {
             $query = "SELECT * FROM users WHERE username=?";
             $result = $this->prepare($query);
-            $result->bindParam(1, $email);
+            $result->bindParam(1, $username);
             $result->execute();
 
             foreach($result as $res){
@@ -51,7 +51,7 @@
 
 
         //Checks if the password is correct or not
-        public function checkPassword($username, $password) {
+        public function checkLoginPassword($username, $password) {
             $query = "SELECT * FROM users WHERE username=?";
             $result = $this->prepare($query);
             $result->bindParam(1, $username);
@@ -59,6 +59,21 @@
             foreach($result as $res){
                 $checkPass = crypt($password, $res['cryptPassword']);
                 if($checkPass === $res['cryptPassword']){
+                    return true;
+                } else{
+                    return false;
+                }
+            }
+        }
+
+        public function checkPassword($username, $password) {
+            $query = "SELECT * FROM users WHERE username=?";
+            $result = $this->prepare($query);
+            $result->bindParam(1, $username);
+            $result->execute();
+
+            foreach($result as $res){
+                if($password === $res['cryptPassword']){
                     return true;
                 } else{
                     return false;
@@ -81,6 +96,43 @@
                     return false;
                 }
             }
+        }
+
+        public function getEmail($user) {
+            $query = "SELECT * FROM users WHERE username=:user";
+            $result=$this->prepare($query);
+            $result->bindParam(':user', $user);
+            $result->execute();
+
+            foreach ($result as $row) {
+                $email = $row['mail'];
+            }
+            return $email;
+        }
+
+
+        public function updateUsername($username, $userId) {
+            $query = "UPDATE users SET username=:user WHERE id=:id";
+            $result=$this->prepare($query);
+            $result->bindParam(':user', $username);
+            $result->bindParam(':id', $userId);
+            $result->execute();
+        }
+
+        public function updateEmail($email, $userId) {
+            $query = "UPDATE users SET mail=:mail WHERE id=:id";
+            $result=$this->prepare($query);
+            $result->bindParam(':mail', $email);
+            $result->bindParam(':id', $userId);
+            $result->execute();
+        }
+
+        public function updatePassword($password, $userId) {
+            $query = "UPDATE users SET cryptPassword=:pass WHERE id=:id";
+            $result=$this->prepare($query);
+            $result->bindParam(':pass', $password);
+            $result->bindParam(':id', $userId);
+            $result->execute();
         }
 
 

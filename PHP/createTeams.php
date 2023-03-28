@@ -7,6 +7,12 @@
     if(!isset($_SESSION["user"])){
         header("Location:index.php");
     }
+    
+    if(isset($_GET["edit"])) {
+        if($_GET["edit"] === "true") {
+            header("Location:profile.php");
+        }
+    }
 
     if(isset($_GET["p1"]) || isset($_GET["p2"]) || isset($_GET["p3"]) || isset($_GET["p4"]) || isset($_GET["p5"]) || isset($_GET["p6"])){
         for($i = 0; $i <= 6; $i++) {
@@ -72,11 +78,10 @@
         <div class="pokemon-search">
             <div class="pokemon-team">
                 <div class="team-id">
-                    <!-- PROBLEMA CON EL ID DEL EQUIPO -> COLOCA SIEMPRE ID= 1 AL DARLE AL BOTON DE EDITAR EQUIPO, POR ESO CUANDO LE DAS A EDITAR EL EQUIPO CAMBIA TODA LA INFORMACIÓN DEL EQUIPO QUE PRIMERO SE HA CREADO (COMO QUE SE GUARDA EL VALOR DE ID DE EQUIPO EN EL LINK DE LA PÁGINA) -->
                     <?php
-                        if(isset($_GET["id"])){
-                            echo $_GET["id"];
-                        } else{
+                        // if(isset($_GET["id"])){
+                        //     echo $_GET["id"];
+                        // } else{
                             try{
                                 $database = new User();
                                 if(isset($_GET["edit"])){
@@ -93,7 +98,7 @@
                                 error_log($e->getMessage() . "##Código: " . $e->getCode() . "  " . microtime() . PHP_EOL, 3, "../logBD.txt");
                                 $errores['datos'] = "There was an error <br>";
                             }
-                        }
+                        // }
                         
                     ?>
                 </div>
@@ -328,15 +333,13 @@
                 try{
                     $database = new User();
                     if($updateTeam=$database->updateTeam($newName, $pokemonArray, $idTeam)){
-                        $nameError = "Team updated";
+                        
                     }
                     
                 } catch(PDOException $e){
                     error_log($e->getMessage() . "##Código: " . $e->getCode() . "  " . microtime() . PHP_EOL, 3, "../logBD.txt");
                     $errores['datos'] = "There was an error <br>";
                 }
-            } else{
-                echo "hola vengo de perfil";
             }
             
 

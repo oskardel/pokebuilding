@@ -26,7 +26,7 @@
         if(count($errorArray) === 0){
             try{
                 $database = new User();
-                if($userBD=$database->checkPassword($username, $password)){
+                if($userBD=$database->checkLoginPassword($username, $password)){
                     session_start();
                     $_SESSION["user"] = $username;
                     header("Location:index.php?user=".$username."&method=login");

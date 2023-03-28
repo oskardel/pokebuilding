@@ -56,7 +56,7 @@
 
                 //Check if the username/email is already registered
                 if($userGet = $database->checkUsername($username)){
-                    $errorArray["usernameEmpty"] = "That username already exists";
+                    $errorArray["usernameEmpty"] = "The username is already taken";
                 } else{
                     if($emailGet = $database->checkEmail($email)){
                         $errorArray["emailEmpty"] = "That mail is already registered";

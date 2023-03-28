@@ -1,4 +1,5 @@
 <?php
+    require("functions.php");
     require("model/modelClass.php");
     require("model/userClass.php");
     require("../DB/config.php");
@@ -19,7 +20,7 @@
     <link rel="stylesheet" href="../CSS/team-creation.css">
     <link rel="stylesheet" href="../CSS/index.css">
     <link rel="stylesheet" href="../CSS/profile.css">
-    <title>Create team - PokeBuilding</title>
+    <title><?php echo $_SESSION["user"]; ?> - PokéBuilding</title>
 </head>
 <body class="body light-theme">
 <header>
@@ -32,7 +33,7 @@
             <a href="compareTeams.php" class="create-team">Compare</a>
         </div>
 
-        <div href="" class="profile-picture" onclick="toggleMenu()">
+        <div class="profile-picture" onclick="toggleMenu()">
             <img src="<?php echo "../img/".$_SESSION["user"]."/image.png" ?>" alt="pfp">
         </div>
         <div class="drop-menu-wrap">
@@ -64,8 +65,33 @@
     <div class="main-content">
         <div class="profile-data">
             <img src="<?php echo "../img/".$_SESSION["user"]."/image.png"?>" alt="pfp">
-            <input type="text" name="change-name" value="<?php echo $_SESSION["user"]; ?>">
             <div class="profile-name"><?php echo $_SESSION["user"]; ?></div>
+            <div class="edit-popup" onclick="">Edit profile</div>
+        </div>
+
+        <div id="overlay" class=""></div>
+
+        <div class="profile-edit">
+            <form action="" method="post" enctype="multipart/form-data">
+                <div class="image-edit">
+                    <img src="<?php echo "../img/".$_SESSION["user"]."/image.png"?>" alt="pfp" class="image-edit-profile">
+                    <i class="fa fa-picture-o" aria-hidden="true"></i>
+                </div>
+                <input type="text" name="form-name" value="<?php echo $_SESSION["user"]; ?>">
+                <input type="text" name="form-email" value="<?php 
+                    try{
+                        $database = new User();
+                        if($userEmail=$database->getEmail($_SESSION["user"])){
+                            echo $userEmail;
+                        }
+                    } catch(PDOException $e){
+                        error_log($e->getMessage() . "##Código: " . $e->getCode() . "  " . microtime() . PHP_EOL, 3, "../logBD.txt");
+                        $errores['datos'] = "There was an error <br>";
+                    }
+                ?>">
+                <input type="password" name="form-password" placeholder="Confirm password">
+                <input type="submit" name="form-submit" value="Save">
+            </form>
         </div>
 
         <div class="profile-teams">
@@ -125,3 +151,50 @@
     <script src="../JS/dark-mode.js"></script>
 </body>
 </html>
+
+<?php
+    if(isset($_REQUEST["form-submit"])){
+        $errorEdit = [];
+        $newName = $_REQUEST["form-name"];
+        $newEmail = $_REQUEST["form-email"];
+        $confirmPass = $_REQUEST["form-password"];
+
+        if($newName === "" | !isTrueUsername($newName)) {
+            $errorEdit["NoName"] = "Username cannot be empty";
+        }
+        if($newEmail === "" | !isTrueMail($newEmail)) {
+            $errorEdit["NoEmail"] = "Email address not valid";
+        }
+        if($confirmPass === "") {
+            $errorEdit["NoPassword"] = "Incorrect password, try again";
+        }
+
+        if(count($errorEdit) === 0) {
+            try{
+                $database = new User();
+                if($userId=$database->getIdUser($_SESSION["user"]));
+                if($userGet = $database->checkUsername($newName)){
+                    $errorEdit["NoName"] = "The username is already taken";
+                }else{                   
+                    $cryptPassword = crypt_blowfish($confirmPass);
+                    if($checkPass=$database->checkPassword($_SESSION["user"], $cryptPassword)){
+                        echo "aqui llega 1";
+                        if($updateName=$database->updateUsername($newName, $userId)); //ARREGLAR (NO DETECTA EL CAMBIO DE NOMBRE, Y LUEGO NO GUARDA LA SESION CAMBIADA)
+                        if($updateEmail=$database->updateEmail($newEmail, $userId));
+                        rename("../img/".$_SESSION["user"], "../img/".$newName);
+                        $_SESSION["user"] = $newName;
+                        header("Refresh:0");
+                    } else{
+                        $errorEdit["NoPassword"] = "Password is incorrect";
+                    }
+                }
+
+            } catch(PDOException $e){
+                error_log($e->getMessage() . "##Código: " . $e->getCode() . "  " . microtime() . PHP_EOL, 3, "../logBD.txt");
+                $errores['datos'] = "There was an error <br>";
+            }    
+        } else{
+            echo '<pre>'; print_r($errorEdit); echo '</pre>';
+        }
+    }
+?>

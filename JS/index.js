@@ -625,7 +625,6 @@ submitTeam.addEventListener('click', (e) => {
             document.querySelector('.error-team-name').innerHTML = "Team name cannot be blank";
         } else{
             if(window.location.href.indexOf("edit") > -1){ 
-                console.log("aqui llega"); //LLEGA PERO NO ENTRA
                 window.location.href = `createTeams.php?${hrefName}&n=${teamName}&id=${teamId}&edit=true`;
             } else{
                 window.location.href = `createTeams.php?${hrefName}&n=${teamName}`;
