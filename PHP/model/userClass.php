@@ -110,6 +110,18 @@
             return $email;
         }
 
+        public function getEmailById($userid) {
+            $query = "SELECT * FROM users WHERE id=:id";
+            $result=$this->prepare($query);
+            $result->bindParam(':id', $userid);
+            $result->execute();
+
+            foreach ($result as $row) {
+                $email = $row['mail'];
+            }
+            return $email;
+        }
+
 
         public function getUserWithEmail($email) {
             $query = "SELECT * FROM users WHERE mail=:mail";
