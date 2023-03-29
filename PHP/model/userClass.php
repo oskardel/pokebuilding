@@ -111,6 +111,40 @@
         }
 
 
+        public function getUserWithEmail($email) {
+            $query = "SELECT * FROM users WHERE mail=:mail";
+            $result=$this->prepare($query);
+            $result->bindParam(':mail', $email);
+            $result->execute();
+
+            foreach ($result as $row) {
+                $username = $row['username'];
+            }
+            return $username;
+        }
+
+        public function getIdToken($token) {
+            $query = "SELECT * FROM users WHERE token=:token";
+            $result=$this->prepare($query);
+            $result->bindParam(':token', $token);
+            $result->execute();
+
+            foreach ($result as $row) {
+                $idUser = $row['id'];
+            }
+            return $idUser;
+        }
+
+
+        public function setToken($token, $email) {
+            $query = "UPDATE users SET token=:token WHERE mail=:mail";
+            $result=$this->prepare($query);
+            $result->bindParam(':token', $token);
+            $result->bindParam(':mail', $email);
+            $result->execute();
+        }
+
+
         public function updateUsername($username, $userId) {
             $query = "UPDATE users SET username=:user WHERE id=:id";
             $result=$this->prepare($query);

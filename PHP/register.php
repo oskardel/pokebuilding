@@ -23,6 +23,16 @@
 
     <div class="main-content">
         <div class="register-form">
+        <?php 
+                if(isset($_SESSION["status"])) {
+                    ?>
+                    <div class="alert-message">
+                        <h5><?php echo $_SESSION["status"] ?></h5>
+                    </div>
+                    <?php
+                    unset($_SESSION["status"]);
+                }
+            ?>
             <form action="" method="post">
             <input type="text" class="register-email" name="register-email" placeholder="Email">
             <?php

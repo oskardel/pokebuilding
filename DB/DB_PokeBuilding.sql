@@ -12,7 +12,8 @@ CREATE TABLE `users` (
     `cryptPassword` VARCHAR(72) NOT NULL,
     `mail` VARCHAR(50) NOT NULL,
     `teams` INT,
-    `userLevel` INT
+    `userLevel` INT,
+    `token` VARCHAR(9)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `teams` (

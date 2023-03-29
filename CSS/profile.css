@@ -48,7 +48,7 @@
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) scale(1);
+  transform: translate(-50%, -50%) scale(0);
   background-color: var(--background-color);
   border-radius: 15px;
   z-index: 10;
@@ -59,6 +59,7 @@
   max-width: 80vw;
   max-height: 90vh;
   padding: 50px;
+  transition: 0.2s ease-in-out;
 }
 .profile-edit .image-edit {
   margin-bottom: 50px;
@@ -97,4 +98,27 @@
   top: -5px;
   transition: 0.2s ease all;
   font-size: 10px;
+}
+
+#overlay {
+  display: flex;
+  position: fixed;
+  opacity: 0;
+  transition: 0.3s ease-in-out;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9;
+  pointer-events: none;
+}
+
+#overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+#profile-edit.active {
+  transform: translate(-50%, -50%) scale(1);
 }/*# sourceMappingURL=profile.css.map */

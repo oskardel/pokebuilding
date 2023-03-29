@@ -66,12 +66,18 @@
         <div class="profile-data">
             <img src="<?php echo "../img/".$_SESSION["user"]."/image.png"?>" alt="pfp">
             <div class="profile-name"><?php echo $_SESSION["user"]; ?></div>
-            <div class="edit-popup" onclick="">Edit profile</div>
+            <div class="edit-popup">Edit profile</div>
         </div>
 
-        <div id="overlay" class=""></div>
+        <div id="overlay" class="<?php 
+            if(isset($_GET["edit"])) {
+                echo "active";
+            } ?>"></div>
 
-        <div class="profile-edit">
+        <div class="profile-edit <?php 
+            if(isset($_GET["edit"])) {
+                echo "active";
+            } ?>" id="profile-edit">
             <form action="" method="post" enctype="multipart/form-data">
                 <div class="image-edit">
                     <img src="<?php echo "../img/".$_SESSION["user"]."/image.png"?>" alt="pfp" class="image-edit-profile">
@@ -182,25 +188,34 @@
                 $database = new User();
                 if($userId=$database->getIdUser($_SESSION["user"]));               
                 $cryptPassword = crypt_blowfish($confirmPass);
+                $editPrefix = "";
                 if($checkPass=$database->checkPassword($_SESSION["user"], $cryptPassword)){
                     if(!$userGet = $database->checkUsername($newName)){
                         if($updateName=$database->updateUsername($newName, $userId));
                         rename("../img/".$_SESSION["user"], "../img/".$newName);
                         $_SESSION["user"] = $newName;
+                    } else{
+                        $editPrefix = "?edit=true";
                     }
                     
                     if(!$userEmail = $database->checkEmail($newEmail)){
-                        if($updateEmail=$database->updateEmail($newEmail, $userId)); //ERROR (NO CAMBIA EL MAIL)
+                        if($updateEmail=$database->updateEmail($newEmail, $userId));
+                    } else{
+                        $editPrefix = "?edit=true";
                     }
                     ?>
                         <script type="text/javascript">
-                            window.location.href = 'profile.php';
+                            window.location.href = 'profile.php'.$editPrefix;
                         </script>
                     <?php
                     
-                    
                 } else{
                     $errorEdit["NoPassword"] = "Password is incorrect";
+                    ?>
+                        <script type="text/javascript">
+                            window.location.href = 'profile.php?edit=true';
+                        </script>
+                    <?php
                 }
 
             } catch(PDOException $e){

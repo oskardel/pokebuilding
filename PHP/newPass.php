@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../CSS/styles.css">
-    <title>Sign in - PokéBuilding</title>
+    <title>Forgot password? - PokéBuilding</title>
 </head>
 <body>
 <header>
@@ -22,29 +22,22 @@
     </header>
     
     <div class="main-content">
-        <div class="form-login">
-            <?php 
-                if(isset($_SESSION["status"])) {
-                    ?>
-                    <div class="alert-message">
-                        <h5><?php echo $_SESSION["status"] ?></h5>
-                    </div>
-                    <?php
-                    unset($_SESSION["status"]);
-                }
-            ?>
+        <?php 
+            if(isset($_SESSION["status"])) {
+                ?>
+                <div class="alert-message">
+                    <h5><?php echo $_SESSION["status"] ?></h5>
+                </div>
+                <?php
+                unset($_SESSION["status"]);
+            }
+        ?>
+        <div class="form-forgot">
             <form action="" method="post">
-                <input type="text" class="login-username" name="login-username" placeholder="Username">
-                <?php
-                    echo (isset($errorArray["userEmpty"])) ? "<div class='error-message'>$errorArray[userEmpty]</div>" : "";
-                ?>
-                <input type="password" class="login-password" name="login-password" placeholder="Password">
-                <?php
-                    echo (isset($errorArray["passwordEmpty"])) ? "<div class='error-message'>$errorArray[passwordEmpty]</div>" : "";
-                ?>
-                <input type="submit" class="submit-button" name="login-button" value="Sign in">
+                <input type="password" class="new-password" name="new-password-1" placeholder="New password">
+                <input type="password" class="new-password" name="new-password-2" placeholder="Confirm password">
 
-                <div class="message-login">Don't have an account?<a href="checkRegister.php">Sign up</a></div>
+                <input type="submit" class="submit-button" name="password-button" value="Reset password">
             </form>
         </div>
     </div>
