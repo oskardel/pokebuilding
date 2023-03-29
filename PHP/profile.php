@@ -188,29 +188,38 @@
                 $database = new User();
                 if($userId=$database->getIdUser($_SESSION["user"]));               
                 $cryptPassword = crypt_blowfish($confirmPass);
-                $editPrefix = "";
                 if($checkPass=$database->checkPassword($_SESSION["user"], $cryptPassword)){
+                    $editPrefix = false;
                     if(!$userGet = $database->checkUsername($newName)){
                         if($updateName=$database->updateUsername($newName, $userId));
                         rename("../img/".$_SESSION["user"], "../img/".$newName);
                         $_SESSION["user"] = $newName;
                     } else{
-                        $editPrefix = "?edit=true";
+                        $editPrefix = true; //ADD ERRORS ($_SESSION["status])
                     }
                     
                     if(!$userEmail = $database->checkEmail($newEmail)){
                         if($updateEmail=$database->updateEmail($newEmail, $userId));
                     } else{
-                        $editPrefix = "?edit=true";
+                        $editPrefix = true; //ADD ERRORS ($_SESSION["status])
                     }
-                    ?>
+                    if($editPrefix) {
+                        ?>
                         <script type="text/javascript">
-                            window.location.href = 'profile.php'.$editPrefix;
+                            window.location.href = 'profile.php?edit=true';
                         </script>
                     <?php
+                    } else{
+                        ?>
+                        <script type="text/javascript">
+                            window.location.href = 'profile.php';
+                        </script>
+                    <?php
+                    }
+                    
                     
                 } else{
-                    $errorEdit["NoPassword"] = "Password is incorrect";
+                    $errorEdit["NoPassword"] = "Password is incorrect"; //CHANGE TO $_SESSION["status]
                     ?>
                         <script type="text/javascript">
                             window.location.href = 'profile.php?edit=true';

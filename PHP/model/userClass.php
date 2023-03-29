@@ -178,7 +178,7 @@
             $result=$this->prepare($query);
             $result->bindParam(':pass', $password);
             $result->bindParam(':id', $userId);
-            $result->execute();
+            return $result->execute();
         }
 
 
