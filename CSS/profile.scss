@@ -73,7 +73,35 @@ $darkShadow-box: rgba(255, 255, 255, 0.15) 0px 5px 15px;
     transition: 0.2s ease-in-out;
 
     .image-edit {
+        position: relative;
         margin-bottom: 50px;
+
+        img:hover{
+            cursor: pointer;
+            filter: grayscale(0.5);
+        }
+
+        .select-new-pfp{
+            display: none;
+
+            input{
+                display: none;
+            }
+
+            img{
+                width: 100px;
+                padding: 5px;
+            }
+        }
+
+        .select-new-pfp.active{
+            display: flex;
+            flex-direction: row;
+        }
+
+        #file-upload{
+            display: none;
+        }
     }
     
     form{

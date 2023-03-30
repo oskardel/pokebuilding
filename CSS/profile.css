@@ -62,7 +62,29 @@
   transition: 0.2s ease-in-out;
 }
 .profile-edit .image-edit {
+  position: relative;
   margin-bottom: 50px;
+}
+.profile-edit .image-edit img:hover {
+  cursor: pointer;
+  filter: grayscale(0.5);
+}
+.profile-edit .image-edit .select-new-pfp {
+  display: none;
+}
+.profile-edit .image-edit .select-new-pfp input {
+  display: none;
+}
+.profile-edit .image-edit .select-new-pfp img {
+  width: 100px;
+  padding: 5px;
+}
+.profile-edit .image-edit .select-new-pfp.active {
+  display: flex;
+  flex-direction: row;
+}
+.profile-edit .image-edit #file-upload {
+  display: none;
 }
 .profile-edit form {
   display: flex;

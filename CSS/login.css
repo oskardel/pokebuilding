@@ -1,0 +1,202 @@
+* {
+  font-family: "Montserrat", sans-serif;
+  color: #6b6b6b;
+}
+
+html, body {
+  overflow: visible;
+  margin: 0;
+  padding: 0;
+  background-color: #f6f8fc;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* LOGIN & REGISTER HEADER */
+header {
+  z-index: 2;
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px;
+}
+header .header-options {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  left: 0;
+  padding-left: 15px;
+}
+header .icon-parts {
+  color: #6b6b6b;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-right: 15px;
+  text-decoration: none;
+  height: 100%;
+  border-bottom: 5px solid transparent;
+  transition: 0.2s;
+}
+header .icon-parts:hover {
+  border-bottom: 5px solid #ee1515;
+  color: #ee1515;
+}
+header .icon-parts img {
+  height: 50px;
+  padding-right: 5px;
+}
+header .header-login {
+  display: flex;
+  flex-direction: row;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+header .profile-picture {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding-right: 15px;
+}
+header .sign-in, header .sign-up {
+  margin-right: 15px;
+  text-decoration: none;
+  color: #6b6b6b;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  border-bottom: 5px solid transparent;
+  transition: 0.2s;
+}
+header .sign-in:hover, header .sign-up:hover {
+  border-bottom: 5px solid #ee1515;
+  color: #ee1515;
+}
+
+footer {
+  background-color: rgb(172, 172, 172);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+footer .footer-options {
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+}
+footer .footer-options div {
+  padding: 10px;
+}
+footer .footer-options div a {
+  text-decoration: none;
+  font-size: 12px;
+}
+
+.link-login {
+  text-decoration: none;
+  color: #0074cc;
+}
+.link-login:hover {
+  color: #0091ff;
+}
+
+.form-login {
+  display: flex;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  height: 500px;
+  transform: translate(-50%, -50%);
+}
+
+.form-forgot {
+  display: flex;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.alert-message {
+  margin-bottom: 25px;
+  width: 100%;
+  background-color: #84eb9e;
+  border: 1px solid #5faf73;
+  border-radius: 5px;
+  font-size: 17px;
+  text-align: center;
+}
+
+form {
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px;
+  border-radius: 15px;
+  padding: 50px;
+  width: 100%;
+  background-color: white;
+}
+form input[type=text], form input[type=password] {
+  margin-bottom: 20px;
+  background-color: white;
+  width: 100%;
+  height: 40px;
+  border: 0;
+  border-bottom: 1px solid #6b6b6b;
+  transition: 0.2s ease-in-out;
+}
+form input[type=text]:focus, form input[type=password]:focus {
+  outline: none !important;
+  border-bottom: 1px solid #ee1515;
+}
+form input[type=text]:focus ~ .floating-label, form input[type=password]:focus ~ .floating-label {
+  color: #ee1515;
+}
+form .form-name, form .form-password {
+  position: relative;
+}
+form .form-name .floating-label, form .form-password .floating-label {
+  position: absolute;
+  pointer-events: none;
+  left: 2px;
+  top: -5px;
+  transition: 0.2s ease all;
+  font-size: 10px;
+}
+form .message-login {
+  padding-top: 15px;
+}
+form .forgot-pass {
+  position: relative;
+  left: 70%;
+  font-size: 11px;
+}
+form .submit-button {
+  font-weight: 700;
+  width: 100%;
+  background-color: #ee1515;
+  color: white;
+  height: 35px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  transition: 0.1s ease-in-out;
+}
+form .submit-button:hover {
+  background-color: #ff2121;
+  border: 0;
+  border-bottom: 3px solid black;
+  cursor: pointer;
+  box-shadow: 0 0.5em 0.5em -0.4em #ee1515;
+  transform: translateY(-0.05em);
+}/*# sourceMappingURL=login.css.map */

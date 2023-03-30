@@ -80,8 +80,17 @@
             } ?>" id="profile-edit">
             <form action="" method="post" enctype="multipart/form-data">
                 <div class="image-edit">
-                    <img src="<?php echo "../img/".$_SESSION["user"]."/image.png"?>" alt="pfp" class="image-edit-profile">
-                    <i class="fa fa-picture-o" aria-hidden="true"></i>
+                    <img src="<?php echo "../img/".$_SESSION["user"]."/image.png"?>" alt="pfp" class="image-edit-profile" onclick="openImageMenu()">
+                    <div class="select-new-pfp">
+                        <input type="radio" id="radio-image1" name="radio-image" value="option1">
+                            <label for="radio-image1"><img src="../img/option1.png" alt="option1" class="new-image-pfp"></label>
+                        <input type="radio" id="radio-image2" name="radio-image" value="option2">
+                            <label for="radio-image2"><img src="../img/option2.png" alt="option2" class="new-image-pfp"></label>
+                        <input type="radio" id="radio-image3" name="radio-image" value="option3">
+                            <label for="radio-image3"><img src="../img/option3.png" alt="option3" class="new-image-pfp"></label>
+                        <input type="radio" id="radio-image4" name="radio-image" value="option4">
+                            <label for="radio-image4"><img src="../img/option4.png" alt="option4" class="new-image-pfp"></label>
+                    </div>
                 </div>
                 <div class="new-name-form">
                     <input type="text" name="form-name" value="<?php echo $_SESSION["user"]; ?>">
@@ -189,6 +198,11 @@
                 if($userId=$database->getIdUser($_SESSION["user"]));               
                 $cryptPassword = crypt_blowfish($confirmPass);
                 if($checkPass=$database->checkPassword($_SESSION["user"], $cryptPassword)){
+                    if(isset($_REQUEST["radio-image"])){
+                        unlink("../img/".$_SESSION["user"]."/image.png");
+                        $valueImage = recoge("radio-image");
+                        copy("../img/".$valueImage.".png", "../img/".$_SESSION["user"]."/image.png");
+                    }
                     $editPrefix = false;
                     if(!$userGet = $database->checkUsername($newName)){
                         if($updateName=$database->updateUsername($newName, $userId));

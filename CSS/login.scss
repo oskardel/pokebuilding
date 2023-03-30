@@ -1,0 +1,230 @@
+$brightColor: #f6f8fc;
+$hoverButtonColor: #ee1515;
+$textColorBright: #6b6b6b;
+$brightShadow-box: rgba(0, 0, 0, 0.15) 0px 5px 15px;
+$footerBrightColor: rgb(172, 172, 172);
+
+*{
+    font-family: 'Montserrat', sans-serif;
+    color: $textColorBright
+}
+
+html, body{
+    overflow:visible;
+    margin: 0;
+    padding: 0;
+    background-color: $brightColor;
+
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* LOGIN & REGISTER HEADER */
+header{
+    z-index: 2;
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: white;
+    box-shadow: $brightShadow-box;
+    // border-radius: 0px 0px 15px 15px;
+
+    .header-options{
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        left: 0;
+        padding-left: 15px;
+    }
+
+    .icon-parts{
+        color: $textColorBright;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding-right: 15px;
+        text-decoration: none;
+        height: 100%;
+        border-bottom: 5px solid transparent;
+        transition: 0.2s;
+
+        &:hover{
+            border-bottom: 5px solid $hoverButtonColor;
+            color: $hoverButtonColor;
+        }
+
+        img{
+            height: 50px;
+            padding-right: 5px;
+        }
+    }
+
+    .header-login{
+        display: flex;
+        flex-direction: row;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .profile-picture{
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        padding-right: 15px;
+    }
+
+    .sign-in, .sign-up{
+        margin-right: 15px;
+        text-decoration: none;
+        color: $textColorBright;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: 700;
+        border-bottom: 5px solid transparent;
+        transition: 0.2s;
+
+        &:hover{
+            border-bottom: 5px solid $hoverButtonColor;
+            color: $hoverButtonColor;
+        }
+    }
+}
+
+footer{
+    background-color: $footerBrightColor;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    .footer-options{
+        display: flex;
+        flex-direction: row;
+        padding: 10px;
+    
+        div{
+            padding: 10px;
+
+            a{
+                text-decoration: none;
+                font-size: 12px;
+            }
+        }    
+    }
+}
+
+.link-login{
+    text-decoration: none;
+    color: #0074cc;
+
+    &:hover{
+        color: #0091ff;
+    }
+}
+
+.form-login{
+    display: flex;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 400px;
+    height: 500px;
+    transform: translate(-50%, -50%);
+}
+
+.form-forgot{
+    display: flex;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.alert-message{
+    margin-bottom: 25px;
+    width: 100%;
+    background-color: #84eb9e;
+    border: 1px solid #5faf73;
+    border-radius: 5px;
+    font-size: 17px;
+    text-align: center;
+}
+
+form{
+    box-shadow: $brightShadow-box;
+    border-radius: 15px;
+    padding: 50px;
+    width: 100%;
+    background-color: white;
+
+    input[type="text"], input[type="password"]{
+        margin-bottom: 20px;
+        background-color: white;
+        width: 100%;
+        height: 40px;
+        border: 0;
+        border-bottom: 1px solid $textColorBright;
+        transition: 0.2s ease-in-out;
+    
+        &:focus{
+            outline: none !important;
+            border-bottom: 1px solid $hoverButtonColor;
+        }
+    
+        &:focus ~ .floating-label{
+            color: $hoverButtonColor;
+        }
+    }
+    
+    .form-name, .form-password {
+        position: relative;
+    
+        .floating-label {
+            position: absolute;
+            pointer-events: none;
+            left: 2px;
+            top: -5px;
+            transition: 0.2s ease all;
+            font-size: 10px;
+        }
+    }
+
+    .message-login{
+        padding-top:15px;
+    }
+
+    .forgot-pass{
+        position: relative;
+        left: 70%;
+        font-size: 11px;
+    }
+
+    .submit-button{
+        font-weight: 700;
+        width: 100%;
+        background-color: $hoverButtonColor;
+        color: white;
+        height: 35px;
+        font-size: 16px;
+        border-radius: 5px;
+        border: 0;
+        border-bottom: 3px solid transparent;
+        transition: 0.1s ease-in-out;
+
+        &:hover{
+            background-color: #ff2121;
+            border: 0;
+            border-bottom: 3px solid black;
+            cursor: pointer;
+            box-shadow: 0 0.5em 0.5em -0.4em $hoverButtonColor;
+            transform: translateY(-0.05em);
+        }
+    }
+}

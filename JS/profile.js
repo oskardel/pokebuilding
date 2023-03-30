@@ -5,6 +5,10 @@ const editButton = document.querySelectorAll('.edit-team');
 const overlayButton = document.getElementById('overlay');
 const editDiv = document.getElementById('profile-edit');
 const editToggle = document.querySelector('.edit-popup');
+const imageProfileEdit = document.querySelector('.image-edit-profile');
+const imageDiv = document.querySelector('.select-new-pfp');
+const newImageArray = document.querySelectorAll('.new-image-pfp');
+
 
 function getPokemonName() {
     for(var i = 0; i <=pokemonNames.length; i++){
@@ -49,11 +53,26 @@ editToggle.addEventListener('click', () => {
 })
 
 overlayButton.addEventListener('click', (e) => {
-    console.log("llega aqui");
     if(overlayButton.classList.contains('active')) {
         overlayButton.classList.remove('active');
         editDiv.classList.remove('active');
+        imageDiv.classList.remove('active');
     }
+})
+
+//OPENING IMAGE DIV
+function openImageMenu() {
+    if(imageDiv.classList.contains("active")) {
+        imageDiv.classList.remove("active");
+    }else{
+        imageDiv.classList.add("active");
+    }
+}
+
+newImageArray.forEach(newImage => {
+    newImage.addEventListener("click", () => {
+        imageProfileEdit.src = newImage.src
+    })
 })
 
 /* LOAD FOR THE FIRST TIME */

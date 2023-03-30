@@ -22,8 +22,9 @@
                         if($emailToken=$database->getEmailById($userId));
                         if($token=$database->setToken($randCode, $emailToken)); //ESTILAR (FUNCIONA)
                     }
+                    $_SESSION["status"] = "Your password has been successfully changed";
                     require("newPass.php");
-                    header( "Refresh:5;url=index.php");
+                    header( "Refresh:5;url=checkLogin.php");
                 } else{
                     $_SESSION["status"] = "Password not strong";
                     require("newPass.php");
