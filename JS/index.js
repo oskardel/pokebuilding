@@ -47,7 +47,6 @@ const fetchAllPokemon = async() => {
     for(let i = 1; i <= 1010; i++){
         await loadPokemonInfo(i);
     }
-    listenerCard();
 }
 
 const loadPokemonInfo = async(id) => {
@@ -56,46 +55,69 @@ const loadPokemonInfo = async(id) => {
     createPokemonCard(data);
 }
 
+var cardHTML = "";
 function createPokemonCard(pokemon) {
-    const card = document.createElement('div');
-    card.classList.add('pokemon-block');
-    card.style.display = "flex";
+    // const card = document.createElement('div');
+    // card.classList.add('pokemon-block');
+    // card.style.display = "flex";
 
-    const spriteContainer = document.createElement('div');
-    spriteContainer.classList.add('img-container');
+    // const spriteContainer = document.createElement('div');
+    // spriteContainer.classList.add('img-container');
 
-    const sprite = document.createElement('img');
-    sprite.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`;
-    spriteContainer.appendChild(sprite);
+    // const sprite = document.createElement('img');
+    // sprite.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`;
+    // spriteContainer.appendChild(sprite);
 
-    const pokemonId = document.createElement('p');
-    pokemonId.classList.add('pokemon-id');
-    pokemonId.textContent = `${pokemon.id.toString().padStart(3, 0)}`;
+    // const pokemonId = document.createElement('p');
+    // pokemonId.classList.add('pokemon-id');
+    // pokemonId.textContent = `${pokemon.id.toString().padStart(3, 0)}`;
     
-    const types = document.createElement('div');
-    types.classList.add('types');
-    types.classList.add(`${pokemon.types[0].type.name}`);
-    const imgType1 = document.createElement('img');
-    imgType1.src = `../img/pokemon_types/${pokemon.types[0].type.name}.ico`;
-    types.appendChild(imgType1);
+    // const types = document.createElement('div');
+    // types.classList.add('types');
+    // types.classList.add(`${pokemon.types[0].type.name}`);
+    // const imgType1 = document.createElement('img');
+    // imgType1.src = `../img/pokemon_types/${pokemon.types[0].type.name}.ico`;
+    // types.appendChild(imgType1);
+
     if(pokemon.types[1] != null){
-        types.classList.add(`${pokemon.types[1].type.name}`);
-        const imgType2 = document.createElement('img');
-        imgType2.src = `../img/pokemon_types/${pokemon.types[1].type.name}.ico`;
-        types.appendChild(imgType2);
+        // types.classList.add(`${pokemon.types[1].type.name}`);
+        // const imgType2 = document.createElement('img');
+        // imgType2.src = `../img/pokemon_types/${pokemon.types[1].type.name}.ico`;
+        // types.appendChild(imgType2);
+        cardHTML = `<div class="pokemon-block" style="display">
+        <div class="img-container">
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png">
+        </div>
+        <p class="pokemon-id">${pokemon.id.toString().padStart(3, 0)}</p>
+        <div class="types ${pokemon.types[0].type.name} ${pokemon.types[1].type.name}"><img src="../img/pokemon_types/${pokemon.types[0].type.name}.ico"><img src="../img/pokemon_types/${pokemon.types[1].type.name}.ico"></div>
+        <p class="name">${pokemon.species.name.charAt(0).toUpperCase() + pokemon.species.name.slice(1)}</p>
+        </div>`;
+
+    } else{
+        cardHTML = `<div class="pokemon-block" style="display">
+        <div class="img-container">
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png">
+        </div>
+        <p class="pokemon-id">${pokemon.id.toString().padStart(3, 0)}</p>
+        <div class="types ${pokemon.types[0].type.name}"><img src="../img/pokemon_types/${pokemon.types[0].type.name}.ico"></div>
+        <p class="name">${pokemon.species.name.charAt(0).toUpperCase() + pokemon.species.name.slice(1)}</p>
+        </div>`;
     }
 
-    const name = document.createElement('p');
-    name.classList.add('name');
-    name.textContent = pokemon.species.name.charAt(0).toUpperCase() + pokemon.species.name.slice(1);
+    // const name = document.createElement('p');
+    // name.classList.add('name');
+    // name.textContent = pokemon.species.name.charAt(0).toUpperCase() + pokemon.species.name.slice(1);
     fetchPokemonGeneration(pokemon.id);
     checkLegendaryStatus(pokemon.id);
 
-    card.appendChild(spriteContainer);
-    card.appendChild(pokemonId);
-    card.appendChild(name);
-    card.appendChild(types);
-    pokedexContainer.appendChild(card);
+    // card.appendChild(spriteContainer);
+    // card.appendChild(pokemonId);
+    // card.appendChild(name);
+    // card.appendChild(types);
+    // pokedexContainer.appendChild(card);
+    pokedexContainer.innerHTML += cardHTML;
+    const cardStorage = document.getElementById('pokedex-container').innerHTML;
+    localStorage.setItem("pokemonCards", cardStorage);
 }
 
 function checkLegendaryStatus(id) {
@@ -655,6 +677,13 @@ pokemonItem.forEach(name => {
     }
 })
 
-fetchAllPokemon();
+var savedPokemonData = localStorage.getItem("pokemonCards");
 fetchAllTypes();
 fetchAllGenerations();
+
+if(savedPokemonData) {
+    pokedexContainer.innerHTML = savedPokemonData;
+    listenerCard(); //NO REMPLAZA ESPACIO CON GUIÓN
+} else{
+    fetchAllPokemon();
+}

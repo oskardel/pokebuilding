@@ -26,16 +26,23 @@
             <form action="" method="post">
             <?php 
                 if(isset($_SESSION["status"])) {
-                ?>
+            ?>
                     <div class="alert-message">
                         <h5><?php echo $_SESSION["status"] ?></h5>
                     </div>
-                    <?php
+                <?php
                     unset($_SESSION["status"]);
                 }
             ?>
-                <input type="password" class="new-password" name="new-password-1" placeholder="New password">
-                <input type="password" class="new-password" name="new-password-2" placeholder="Confirm password">
+
+                <div class="form-name">
+                    <input type="password" class="new-password" name="new-password-1"/>
+                    <span class="floating-label">New password</span>
+                </div>
+                <div class="form-name">
+                    <input type="password" class="new-password" name="new-password-2"/>
+                    <span class="floating-label">Confirm password</span>
+                </div>
 
                 <input type="submit" class="submit-button" name="password-button" value="Reset password">
             </form>

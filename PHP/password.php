@@ -34,7 +34,10 @@
                     unset($_SESSION["status"]);
                 }
             ?>
-                <input type="text" class="forgot-email" name="forgot-email" placeholder="Enter your email address">
+                <div class="form-name">
+                    <input type="text" class="forgot-email" name="forgot-email" value="<?php if (isset($_REQUEST['forgot-email'])) echo $_POST['forgot-email']; ?>">
+                    <span class="floating-label">Enter your email address</span>
+                </div>
 
                 <input type="submit" class="submit-button" name="forgot-button" value="Reset password">
 
