@@ -73,32 +73,37 @@
         </div>
     </header>
 
-    <div class="main-content">
+    <div id="loader" class="">
+        <img src="../img/loading.gif" alt="">
+        <p class="pokemon-fetch">0/1008 Pokémon fetched</p>
+        <div class="loader-bar">
+            <div class="loader-progress"></div>
+        </div>
+    </div>
 
+    <div id="loader-overlay" class=""></div>
+
+    <div class="main-content">
         <div class="pokemon-search">
             <div class="pokemon-team">
                 <div class="team-id">
                     <?php
-                        // if(isset($_GET["id"])){
-                        //     echo $_GET["id"];
-                        // } else{
-                            try{
-                                $database = new User();
-                                if(isset($_GET["edit"])){
-                                    $nameTeam = $_GET["n"];
-    
-                                    if($teamId=$database->getTeamId($nameTeam));
-                                    echo $teamId;
-                                } else{
-                                    $teamId = "";
-                                    echo $teamId;
-                                }
-    
-                            } catch(PDOException $e){
-                                error_log($e->getMessage() . "##Código: " . $e->getCode() . "  " . microtime() . PHP_EOL, 3, "../logBD.txt");
-                                $errores['datos'] = "There was an error <br>";
+                        try{
+                            $database = new User();
+                            if(isset($_GET["edit"])){
+                                $nameTeam = $_GET["n"];
+
+                                if($teamId=$database->getTeamId($nameTeam));
+                                echo $teamId;
+                            } else{
+                                $teamId = "";
+                                echo $teamId;
                             }
-                        // }
+
+                        } catch(PDOException $e){
+                            error_log($e->getMessage() . "##Código: " . $e->getCode() . "  " . microtime() . PHP_EOL, 3, "../logBD.txt");
+                            $errores['datos'] = "There was an error <br>";
+                        }
                         
                     ?>
                 </div>

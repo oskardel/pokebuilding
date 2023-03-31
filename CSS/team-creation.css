@@ -513,4 +513,60 @@ header .header-options .create-team {
 }
 .drop-menu-link:hover p {
   font-weight: 600;
+}
+
+/* LOADER */
+#loader {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -60%);
+  z-index: 10;
+  transition: 0.5s ease-in-out;
+  text-align: center;
+}
+#loader img {
+  width: 250px;
+}
+#loader .pokemon-fetch {
+  text-align: center;
+  font-size: 20px;
+  text-transform: uppercase;
+}
+#loader .loader-bar {
+  height: 10px;
+  width: 500px;
+  background-color: #cacaca;
+  border-radius: 15px;
+}
+#loader .loader-bar .loader-progress {
+  height: 10px;
+  background-color: #ee1515;
+  border-radius: 15px;
+  transition: 0.3s ease-in-out;
+}
+
+#loader.hidden {
+  transform: translateY(-100%);
+  display: none;
+}
+
+#loader-overlay {
+  display: block;
+  position: fixed;
+  opacity: 1;
+  transition: 0.5s ease-in-out;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgb(0, 0, 0);
+  z-index: 9;
+  pointer-events: all;
+}
+
+#loader-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-100%);
 }/*# sourceMappingURL=team-creation.css.map */

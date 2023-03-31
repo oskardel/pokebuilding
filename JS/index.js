@@ -15,10 +15,15 @@ const pokemonCardDiv = document.getElementById('pokemon-card');
 const pokemonBlockCards = document.querySelectorAll('.pokemon-block');
 const pokemonItem = document.querySelectorAll('.pokemon-item');
 const pokemonItemName = document.querySelectorAll('.pokemon-name');
+const loader = document.getElementById('loader');
+const overlayLoader = document.getElementById('loader-overlay');
+const fetchCounter = document.querySelector('.pokemon-fetch');
+const progressLaoder = document.querySelector('.loader-progress');
 
 var nameFilter = false;
 var typeFilter = false;
 var genFilter =  false;
+var cardHTML = "";
 
 const typeColours = {
 	normal: '#A8A77A',
@@ -44,57 +49,33 @@ const typeColours = {
 
 /* ADDING ALL POKEMON */
 const fetchAllPokemon = async() => {
-    for(let i = 1; i <= 1010; i++){
+    for(let i = 1; i <= 1008; i++){
         await loadPokemonInfo(i);
+        fetchCounter.innerHTML = Math.floor((100*i)/1008)+"% Pokémon fetched";
+        progressLaoder.style.width = Math.floor((100*i)/1008)+"%";
     }
+    localStorage.setItem("pokemonCards", pokedexContainer.innerHTML);
+    loader.classList.add('hidden');
+    overlayLoader.classList.add('hidden');
+    listenerCard();
 }
 
 const loadPokemonInfo = async(id) => {
     const rest = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
-    const data = await rest.json();
-    createPokemonCard(data);
-}
-
-var cardHTML = "";
-function createPokemonCard(pokemon) {
-    // const card = document.createElement('div');
-    // card.classList.add('pokemon-block');
-    // card.style.display = "flex";
-
-    // const spriteContainer = document.createElement('div');
-    // spriteContainer.classList.add('img-container');
-
-    // const sprite = document.createElement('img');
-    // sprite.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`;
-    // spriteContainer.appendChild(sprite);
-
-    // const pokemonId = document.createElement('p');
-    // pokemonId.classList.add('pokemon-id');
-    // pokemonId.textContent = `${pokemon.id.toString().padStart(3, 0)}`;
-    
-    // const types = document.createElement('div');
-    // types.classList.add('types');
-    // types.classList.add(`${pokemon.types[0].type.name}`);
-    // const imgType1 = document.createElement('img');
-    // imgType1.src = `../img/pokemon_types/${pokemon.types[0].type.name}.ico`;
-    // types.appendChild(imgType1);
+    const pokemon = await rest.json();
 
     if(pokemon.types[1] != null){
-        // types.classList.add(`${pokemon.types[1].type.name}`);
-        // const imgType2 = document.createElement('img');
-        // imgType2.src = `../img/pokemon_types/${pokemon.types[1].type.name}.ico`;
-        // types.appendChild(imgType2);
-        cardHTML = `<div class="pokemon-block" style="display">
+        cardHTML = `<div class="pokemon-block" style="display:flex">
         <div class="img-container">
             <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png">
         </div>
-        <p class="pokemon-id">${pokemon.id.toString().padStart(3, 0)}</p>
+        <p class="pokemon-id" style="text-align:center;">${pokemon.id.toString().padStart(3, 0)}</p>
         <div class="types ${pokemon.types[0].type.name} ${pokemon.types[1].type.name}"><img src="../img/pokemon_types/${pokemon.types[0].type.name}.ico"><img src="../img/pokemon_types/${pokemon.types[1].type.name}.ico"></div>
         <p class="name">${pokemon.species.name.charAt(0).toUpperCase() + pokemon.species.name.slice(1)}</p>
         </div>`;
 
     } else{
-        cardHTML = `<div class="pokemon-block" style="display">
+        cardHTML = `<div class="pokemon-block" style="display:flex">
         <div class="img-container">
             <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png">
         </div>
@@ -104,20 +85,10 @@ function createPokemonCard(pokemon) {
         </div>`;
     }
 
-    // const name = document.createElement('p');
-    // name.classList.add('name');
-    // name.textContent = pokemon.species.name.charAt(0).toUpperCase() + pokemon.species.name.slice(1);
     fetchPokemonGeneration(pokemon.id);
     checkLegendaryStatus(pokemon.id);
 
-    // card.appendChild(spriteContainer);
-    // card.appendChild(pokemonId);
-    // card.appendChild(name);
-    // card.appendChild(types);
-    // pokedexContainer.appendChild(card);
     pokedexContainer.innerHTML += cardHTML;
-    const cardStorage = document.getElementById('pokedex-container').innerHTML;
-    localStorage.setItem("pokemonCards", cardStorage);
 }
 
 function checkLegendaryStatus(id) {
@@ -642,12 +613,11 @@ submitTeam.addEventListener('click', (e) => {
     if(hrefName == ""){
         document.querySelector('.error-team-name').innerHTML = "Add at least one Pokémon";
     } else{
-        var teamId = document.querySelector('.team-id').innerHTML;
         if(teamName === ""){
             document.querySelector('.error-team-name').innerHTML = "Team name cannot be blank";
         } else{
             if(window.location.href.indexOf("edit") > -1){ 
-                window.location.href = `createTeams.php?${hrefName}&n=${teamName}&id=${teamId}&edit=true`;
+                window.location.href = `createTeams.php?${hrefName}&n=${teamName}&edit=true`;
             } else{
                 window.location.href = `createTeams.php?${hrefName}&n=${teamName}`;
             }
@@ -683,7 +653,9 @@ fetchAllGenerations();
 
 if(savedPokemonData) {
     pokedexContainer.innerHTML = savedPokemonData;
-    listenerCard(); //NO REMPLAZA ESPACIO CON GUIÓN
+    loader.classList.add('hidden');
+    overlayLoader.classList.add('hidden');
+    listenerCard();
 } else{
     fetchAllPokemon();
 }
