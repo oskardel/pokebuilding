@@ -7,6 +7,7 @@
     if(!isset($_REQUEST["password-button"])) {
         require("newPass.php");
     } else{
+        session_start();
         $newPass = recoge("new-password-1");
         $confirmPass = recoge("new-password-2");
         $tokenEmail = $_GET["token"];
@@ -23,8 +24,7 @@
                         if($token=$database->setToken($randCode, $emailToken)); //ESTILAR (FUNCIONA)
                     }
                     $_SESSION["status"] = "Your password has been successfully changed";
-                    require("newPass.php");
-                    header( "Refresh:5;url=checkLogin.php");
+                    header( "Location:checkLogin.php");
                 } else{
                     $_SESSION["status"] = "Password not strong";
                     require("newPass.php");

@@ -3,7 +3,7 @@
     require("model/modelClass.php");
     require("model/userClass.php");
     require("../DB/config.php");
-    $errorArray = [];
+    $errorCheck = false;
 
     if(isset($_SESSION["user"])){
         header("Location:index.php");
@@ -15,23 +15,21 @@
         $username = recoge("login-username");
         $password = recoge("login-password");
 
-        if($username === ""){
-            $errorArray["userEmpty"] = "Username cannot be empty";
+        if($username === "" || $password === ""){
+            $_SESSION["status"] = "Invalid username or password";
+            $errorCheck = true;
         }
 
-        if($password === ""){
-            $errorArray["passwordEmpty"] = "Password cannot be empty";
-        }
-
-        if(count($errorArray) === 0){
+        if(!$errorCheck){
             try{
                 $database = new User();
                 if($userBD=$database->checkLoginPassword($username, $password)){
                     session_start();
                     $_SESSION["user"] = $username;
+                    $_SESSION["status"] = "Login successful!";
                     header("Location:index.php?user=".$username."&method=login");
                 } else{
-                    $errorArray["userEmpty"] = "The email or password is incorrect";
+                    $_SESSION["status"] = "The email or password is incorrect";
                     require("login.php");
                 }
             } catch(PDOException $e){
@@ -42,3 +40,4 @@
             require("login.php");
         }
     }
+?>

@@ -195,7 +195,7 @@ form .submit-button {
 form .submit-button:hover {
   background-color: #ff2121;
   border: 0;
-  border-bottom: 3px solid black;
+  border-bottom: 3px solid #d11a1a;
   cursor: pointer;
   box-shadow: 0 0.5em 0.5em -0.4em #ee1515;
   transform: translateY(-0.05em);

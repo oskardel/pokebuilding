@@ -23,18 +23,18 @@
     
     <div class="main-content">
         <div class="form-login">
-            <?php 
-                if(isset($_SESSION["status"])) {
-                    ?>
-                    <div class="alert-message">
-                        <h5><?php echo $_SESSION["status"] ?></h5>
-                    </div>
-                    <?php
-                    unset($_SESSION["status"]);
-                }
-            ?>
             <form action="" method="post">
-                <!-- $_SESSION["status] (*CAMBIAR*) -->
+                <?php 
+                    session_start();
+                    if(isset($_SESSION["status"])) {
+                        ?>
+                        <div class="alert-message">
+                            <h5><?php echo $_SESSION["status"]; ?></h5>
+                        </div>
+                        <?php
+                        unset($_SESSION["status"]);
+                    }
+                ?>
                 <div class="form-name">
                     <input type="text" class="login-username" name="login-username" value="<?php if (isset($_REQUEST['login-username'])) echo $_POST['login-username']; ?>">
                     <span class="floating-label">Username</span>

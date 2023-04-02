@@ -34,11 +34,11 @@
                 }
             ?>
             <form action="" method="post">
-            <input type="text" class="register-email" name="register-email" placeholder="Email">
+            <input type="text" class="register-email" name="register-email" placeholder="Email" value="<?php if (isset($_REQUEST['register-email'])) echo $_POST['register-email']; ?>">
             <?php
                 echo (isset($errorArray["emailEmpty"])) ? "<div class='error-message'>$errorArray[emailEmpty]</div>" : "";
             ?>
-            <input type="text" class="register-username" name="register-username" placeholder="Username">
+            <input type="text" class="register-username" name="register-username" placeholder="Username" value="<?php if (isset($_REQUEST['register-username'])) echo $_POST['register-username']; ?>">
             <?php
                 echo (isset($errorArray["usernameEmpty"])) ? "<div class='error-message'>$errorArray[usernameEmpty]</div>" : "";
             ?>
