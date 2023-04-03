@@ -58,6 +58,7 @@ const fetchAllPokemon = async() => {
     loader.classList.add('hidden');
     overlayLoader.classList.add('hidden');
     listenerCard();
+    showImageHover();
 }
 
 const loadPokemonInfo = async(id) => {
@@ -66,23 +67,25 @@ const loadPokemonInfo = async(id) => {
 
     if(pokemon.types[1] != null){
         cardHTML = `<div class="pokemon-block" style="display:flex">
-        <div class="img-container">
-            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png">
-        </div>
         <p class="pokemon-id" style="text-align:center;">${pokemon.id.toString().padStart(3, 0)}</p>
-        <div class="types ${pokemon.types[0].type.name} ${pokemon.types[1].type.name}"><img src="../img/pokemon_types/${pokemon.types[0].type.name}.ico"><img src="../img/pokemon_types/${pokemon.types[1].type.name}.ico"></div>
+        <div class="img-container">
+            <img src="${pokemon.sprites.front_default}">
+        </div>
+        <div class="types ${pokemon.types[0].type.name} ${pokemon.types[1].type.name}"></div>
         <p class="name">${pokemon.species.name.charAt(0).toUpperCase() + pokemon.species.name.slice(1)}</p>
         </div>`;
+        // <img src="../img/pokemon_types/${pokemon.types[0].type.name}.ico"><img src="../img/pokemon_types/${pokemon.types[1].type.name}.ico">
 
     } else{
         cardHTML = `<div class="pokemon-block" style="display:flex">
-        <div class="img-container">
-            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png">
-        </div>
         <p class="pokemon-id">${pokemon.id.toString().padStart(3, 0)}</p>
-        <div class="types ${pokemon.types[0].type.name}"><img src="../img/pokemon_types/${pokemon.types[0].type.name}.ico"></div>
+        <div class="img-container">
+            <img src="${pokemon.sprites.front_default}">
+        </div>
+        <div class="types ${pokemon.types[0].type.name}"></div>
         <p class="name">${pokemon.species.name.charAt(0).toUpperCase() + pokemon.species.name.slice(1)}</p>
         </div>`;
+        // <img src="../img/pokemon_types/${pokemon.types[0].type.name}.ico">
     }
 
     fetchPokemonGeneration(pokemon.id);
@@ -332,21 +335,21 @@ function getPokemonForms(id) {
     .then(response => response.json())
     .then(data => {
         pokemonForms.options.length = 0;
-        for(let i = 0; i < data.varieties.length; i++){
-            var newForm = document.createElement('option');
-            newForm.value = data.varieties[i].pokemon.name;
-            if(i == 0){
-                newForm.innerHTML = "Default";
-            } else{
-                newForm.innerHTML = (data.varieties[i].pokemon.name.split('-')[1]).charAt(0).toUpperCase() + (data.varieties[i].pokemon.name).substring((data.varieties[i].pokemon.name).indexOf('-') + 1).slice(1);
+        if(data.varieties.length <= 1) {
+            pokemonForms.style.display = "none";
+        } else{
+            pokemonForms.style.display = "flex";
+            for(let i = 0; i < data.varieties.length; i++){
+                var newForm = document.createElement('option');
+                newForm.value = data.varieties[i].pokemon.name;
+                if(i == 0){
+                    newForm.innerHTML = "Default";
+                } else{
+                    newForm.innerHTML = (data.varieties[i].pokemon.name.split('-')[1]).charAt(0).toUpperCase() + (data.varieties[i].pokemon.name).substring((data.varieties[i].pokemon.name).indexOf('-') + 1).slice(1);
+                }
+                pokemonForms.appendChild(newForm);
             }
-            pokemonForms.appendChild(newForm);
         }
-        var shinyForm = document.createElement('option');
-        shinyForm.value = "shiny";
-        shinyForm.innerHTML = "Shiny";
-        shinyForm.classList.add("shiny");
-        pokemonForms.appendChild(shinyForm);
     })
 }
 
@@ -466,7 +469,8 @@ function getPokemonTypes(id) {
 }
 
 function listenerCard() {
-    const pokemonCards = document.querySelectorAll('.pokemon-block'); 
+    const pokemonCards = document.querySelectorAll('.pokemon-block');
+    const imageHover = document.querySelector('.pokemon-image-hover');
     pokemonCards.forEach(card => {
         card.addEventListener('click', () =>{
             var pokemonId = trimZeros(card.querySelector('.pokemon-id').innerHTML);
@@ -647,6 +651,20 @@ pokemonItem.forEach(name => {
     }
 })
 
+function showImageHover() {
+    const pokemonCards = document.querySelectorAll('.pokemon-block');
+    const imageHover = document.querySelector('.pokemon-image-hover');
+    pokemonCards.forEach(card => {
+        card.addEventListener('mouseover', () => {
+            imageHover.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${trimZeros(card.querySelector('.pokemon-id').innerHTML)}.png`;
+        })
+        card.addEventListener('mouseout', () => {
+            imageHover.src = "";
+        })
+    })
+}
+
+
 var savedPokemonData = localStorage.getItem("pokemonCards");
 fetchAllTypes();
 fetchAllGenerations();
@@ -656,6 +674,7 @@ if(savedPokemonData) {
     loader.classList.add('hidden');
     overlayLoader.classList.add('hidden');
     listenerCard();
+    showImageHover();
 } else{
     fetchAllPokemon();
 }

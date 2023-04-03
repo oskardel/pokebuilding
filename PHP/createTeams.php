@@ -73,6 +73,9 @@
         </div>
     </header>
 
+    <div class="background-image"></div>
+    <div class="background-image-2"></div>
+
     <div id="loader" class="">
         <img src="../img/loading.gif" alt="">
         <p class="pokemon-fetch">0/1008 Pokémon fetched</p>
@@ -195,6 +198,8 @@
                     }
                 ?>">
             <div class="error-team-name"><?php $nameError = ""; echo $nameError; ?></div>
+
+            <div class="pokemon-image-div"><img src="" alt="" class="pokemon-image-hover"></div>
         </div>
 
         <div id="overlay" class=""></div>
