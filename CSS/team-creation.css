@@ -46,7 +46,8 @@ html, body {
   overflow: visible;
   margin: 0;
   padding: 0;
-  background-color: #6C38A1;
+  background: rgb(176, 8, 50);
+  background: linear-gradient(90deg, rgb(176, 8, 50) 0%, rgb(108, 56, 161) 100%);
   z-index: -99;
   -webkit-clip-path: polygon(55% 0, 70% 0, 30% 100%, 15% 100%);
           clip-path: polygon(55% 0, 70% 0, 30% 100%, 15% 100%);
@@ -160,6 +161,10 @@ header .header-options .create-team {
 .pokemon-search .pokemon-team .pokemon-item img {
   width: 100px;
 }
+.pokemon-search .pokemon-image-div {
+  display: flex;
+  align-items: center;
+}
 
 .pokemon-item:has(.nopokemon):hover {
   cursor: not-allowed;
@@ -185,11 +190,15 @@ header .header-options .create-team {
   justify-content: space-around;
   padding: 15px;
   margin: 15px;
-  border-radius: 50px;
+  background-color: var(--absolute-color);
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
   border: 5px solid transparent;
   transition: 0.1s ease-in-out;
 }
 #pokedex-container .pokemon-block .name {
+  width: 30%;
+  text-align: right;
   font-weight: 700;
   font-size: larger;
   color: var(--text-color);
@@ -217,14 +226,24 @@ header .header-options .create-team {
   transition: 0.2s ease-in-out;
 }
 #pokedex-container .pokemon-block:hover {
-  border: 5px solid var(--text-color);
+  border: 5px solid #ee1515;
   cursor: pointer;
   box-shadow: var(--shadow-box);
-  -webkit-backdrop-filter: invert(30%);
-          backdrop-filter: invert(30%);
+  background-color: invert(30%);
 }
 #pokedex-container .pokemon-block:hover .img-container img {
   transform: scale(1.1);
+}
+#pokedex-container .pokemon-block:hover .arrow-selection {
+  display: flex;
+}
+#pokedex-container .pokemon-block .arrow-selection {
+  display: none;
+  width: 100px;
+  height: 100%;
+  -webkit-clip-path: polygon(100% 0%, 100% 100%, 31.75% 50%);
+          clip-path: polygon(100% 0%, 100% 100%, 31.75% 50%);
+  background-color: #eb4747;
 }
 
 #pokemon-card {

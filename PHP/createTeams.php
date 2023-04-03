@@ -78,7 +78,7 @@
 
     <div id="loader" class="">
         <img src="../img/loading.gif" alt="">
-        <p class="pokemon-fetch">0/1008 Pokémon fetched</p>
+        <p class="pokemon-fetch">0 Pokémon fetched</p>
         <div class="loader-bar">
             <div class="loader-progress"></div>
         </div>
@@ -316,6 +316,18 @@
 
         <div id="pokedex-container"></div>
     </div>
+
+    <?php
+        if(isset($_SESSION["status"])) {
+        ?>
+            <div class="alert-message">
+                <h5><?php echo $_SESSION["status"]; ?></h5>
+            </div>
+        <?php
+            unset($_SESSION["status"]);
+        }
+    ?>
+
     <script src="../JS/index.js"></script>
     <script src="../JS/dark-mode.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
@@ -324,8 +336,6 @@
 
 
 <?php
-/*  **IDEA** => LLEVAR ESTE CÓDIGO A LA PÁGINA DE TEAMS DEL PERFIL PARA QUE ASÍ NO PUEDA REFRESCAR Y CREAR OTRA VEZ EL MISMO TEAM  */
-
     // IF THERE'S AT LEAST ONE POKEMON ON THE LINK, IT MEANS THAT THE TEAM HAS BEEN SUCCESSFULLY CHECKED AND CAN BE SAVED INTO THE DATABSE
     if(isset($_GET["p1"]) || isset($_GET["p2"]) || isset($_GET["p3"]) || isset($_GET["p4"]) || isset($_GET["p5"]) || isset($_GET["p6"])){
         if(isset($_GET["edit"])){ //If user is editing team = UPDATE TEAM IN DATABASE
@@ -343,7 +353,7 @@
                 try{
                     $database = new User();
                     if($updateTeam=$database->updateTeam($newName, $pokemonArray, $idTeam)){
-                        
+                        $_SESSION["status"] = "Team ". $newName ." has been updated";
                     }
                     
                 } catch(PDOException $e){
@@ -369,6 +379,7 @@
                 } else{
                     if($addTeam=$database->addTeam($teamName, $pokemonName, $userId)){
                         if($plusNumber=$database->addNumberTeam($userId));
+                        $_SESSION["status"] = "New team has been created";
                     }
                 }
             } catch(PDOException $e){

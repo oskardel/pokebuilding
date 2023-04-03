@@ -65,27 +65,25 @@ const loadPokemonInfo = async(id) => {
     const rest = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
     const pokemon = await rest.json();
 
-    if(pokemon.types[1] != null){
+    if(pokemon.types.length > 1){
         cardHTML = `<div class="pokemon-block" style="display:flex">
         <p class="pokemon-id" style="text-align:center;">${pokemon.id.toString().padStart(3, 0)}</p>
+        <p class="name">${pokemon.species.name.toUpperCase()}</p>
         <div class="img-container">
             <img src="${pokemon.sprites.front_default}">
         </div>
-        <div class="types ${pokemon.types[0].type.name} ${pokemon.types[1].type.name}"></div>
-        <p class="name">${pokemon.species.name.charAt(0).toUpperCase() + pokemon.species.name.slice(1)}</p>
+        <div class="types ${pokemon.types[0].type.name} ${pokemon.types[1].type.name}"><img src="../img/pokemon_types/${pokemon.types[0].type.name}.ico"><img src="../img/pokemon_types/${pokemon.types[1].type.name}.ico"></div>
         </div>`;
-        // <img src="../img/pokemon_types/${pokemon.types[0].type.name}.ico"><img src="../img/pokemon_types/${pokemon.types[1].type.name}.ico">
 
     } else{
         cardHTML = `<div class="pokemon-block" style="display:flex">
         <p class="pokemon-id">${pokemon.id.toString().padStart(3, 0)}</p>
+        <p class="name">${pokemon.species.name.toUpperCase()}</p>
         <div class="img-container">
             <img src="${pokemon.sprites.front_default}">
         </div>
-        <div class="types ${pokemon.types[0].type.name}"></div>
-        <p class="name">${pokemon.species.name.charAt(0).toUpperCase() + pokemon.species.name.slice(1)}</p>
+        <div class="types ${pokemon.types[0].type.name}"><img src="../img/pokemon_types/${pokemon.types[0].type.name}.ico"></div>
         </div>`;
-        // <img src="../img/pokemon_types/${pokemon.types[0].type.name}.ico">
     }
 
     fetchPokemonGeneration(pokemon.id);
@@ -656,7 +654,11 @@ function showImageHover() {
     const imageHover = document.querySelector('.pokemon-image-hover');
     pokemonCards.forEach(card => {
         card.addEventListener('mouseover', () => {
-            imageHover.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${trimZeros(card.querySelector('.pokemon-id').innerHTML)}.png`;
+            if(card.querySelector('.pokemon-id').innerHTML > 905){
+                imageHover.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${trimZeros(card.querySelector('.pokemon-id').innerHTML)}.png`;
+            } else{
+                imageHover.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${trimZeros(card.querySelector('.pokemon-id').innerHTML)}.png`;
+            }
         })
         card.addEventListener('mouseout', () => {
             imageHover.src = "";
