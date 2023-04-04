@@ -19,6 +19,26 @@ const loader = document.getElementById('loader');
 const overlayLoader = document.getElementById('loader-overlay');
 const fetchCounter = document.querySelector('.pokemon-fetch');
 const progressLaoder = document.querySelector('.loader-progress');
+const pokemonCardName = document.querySelector('.pokemon-card-name');
+const pokemonCardId = document.querySelector('.pokemon-card-id');
+const pokemonCardGeneration = document.querySelector('.pokemon-card-genera');
+const pokemonCardHeight = document.querySelector('.height-info');
+const pokemonCardWeight = document.querySelector('.weight-info');
+const pokedexEntry = document.querySelector('.pokedex-entry-info');
+const pokemonAbilityName1 = document.querySelector('.ability-1-name');
+const pokemonAbilityName2 = document.querySelector('.ability-2-name');
+const pokemonAbility1 = document.querySelector('.ability-1-info');
+const pokemonAbility2 = document.querySelector('.ability-2-info');
+const pokemonAbility2Div = document.querySelector('.ability-2');
+const pokemonForms = document.getElementById('pokemon-forms');
+const pokemonSprite = document.getElementById('default-sprite');
+const movesTable = document.getElementById('moves-table');
+const pokemonType1 = document.querySelector('.card-type-1');
+const pokemonType2 = document.querySelector('.card-type-2');
+const addButton = document.querySelector('.add-button');
+const pokemonTeamImg = document.querySelectorAll('.pokemon-img');
+const pokemonTeamType = document.querySelectorAll('.pokemon-types');
+const hiddenId = document.getElementById('hidden-id');
 
 var nameFilter = false;
 var typeFilter = false;
@@ -146,22 +166,23 @@ function fetchAllGenerations() {
 function loadPokemonGenerations(id) {
     fetch(`https://pokeapi.co/api/v2/generation/${id}`)
     .then(response => response.json())
-    .then(data => {
-        createGenerationSelector(data);
+    .then(gen => {
+        if(gen.id === 9){
+            var newGeneration = document.createElement('option');
+            newGeneration.value = "Generation-ix";
+            newGeneration.innerHTML = "Paldea";
+            generationSelector.appendChild(newGeneration);
+        }else{
+            var newGeneration = document.createElement('option');
+            newGeneration.value = gen.name.charAt(0).toUpperCase() + gen.name.slice(1);
+            newGeneration.innerHTML = gen.main_region.name.charAt(0).toUpperCase() + gen.main_region.name.slice(1);
+            generationSelector.appendChild(newGeneration);
+        }
     })
 }
 
-function createGenerationSelector(gen) {
-    var newGeneration = document.createElement('option');
-    newGeneration.value = gen.name.charAt(0).toUpperCase() + gen.name.slice(1);
-    let varNeGeneration = gen.name.charAt(0).toUpperCase() + gen.name.slice(1);
-    newGeneration.innerHTML = varNeGeneration.replace('-', ' ');
-    generationSelector.appendChild(newGeneration);
-}
-
-
 /* APPLY ALL THE FILTERS*/
-function trimZeros(num){ //Shiny id function
+function trimZeros(num) {
     let newNumber = parseInt(num, 10);
     return newNumber;
 }
@@ -201,28 +222,6 @@ searchButton.addEventListener('click', (e) => {
 })
 
 /* ADD POKEMON CARD ATTRIBUTES */
-const pokemonCardName = document.querySelector('.pokemon-card-name');
-const pokemonCardId = document.querySelector('.pokemon-card-id');
-const pokemonCardGeneration = document.querySelector('.pokemon-card-genera');
-const pokemonCardHeight = document.querySelector('.height-info');
-const pokemonCardWeight = document.querySelector('.weight-info');
-const pokedexEntry = document.querySelector('.pokedex-entry-info');
-const pokemonAbilityName1 = document.querySelector('.ability-1-name');
-const pokemonAbilityName2 = document.querySelector('.ability-2-name');
-const pokemonAbility1 = document.querySelector('.ability-1-info');
-const pokemonAbility2 = document.querySelector('.ability-2-info');
-const pokemonAbility2Div = document.querySelector('.ability-2');
-const pokemonForms = document.getElementById('pokemon-forms');
-const pokemonSprite = document.getElementById('default-sprite');
-const movesTable = document.getElementById('moves-table');
-const pokemonType1 = document.querySelector('.card-type-1');
-const pokemonType2 = document.querySelector('.card-type-2');
-const addButton = document.querySelector('.add-button');
-const pokemonTeamImg = document.querySelectorAll('.pokemon-img');
-const pokemonTeamType = document.querySelectorAll('.pokemon-types');
-const hiddenId = document.getElementById('hidden-id');
-
-
 function getGenrationPokemon(id) {
     fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`)
     .then(response => response.json())
@@ -468,7 +467,6 @@ function getPokemonTypes(id) {
 
 function listenerCard() {
     const pokemonCards = document.querySelectorAll('.pokemon-block');
-    const imageHover = document.querySelector('.pokemon-image-hover');
     pokemonCards.forEach(card => {
         card.addEventListener('click', () =>{
             var pokemonId = trimZeros(card.querySelector('.pokemon-id').innerHTML);
@@ -538,7 +536,7 @@ addButton.addEventListener('click', () => {
         if(pokemonTeamImg[i].classList.contains('nopokemon')){
             pokemonTeamImg[i].src = cardImage;
             pokemonTeamImg[i].classList.remove('nopokemon');
-            pokemonItemName[i].innerHTML = pokemonCardName.innerHTML;
+            pokemonItemName[i].innerHTML = pokemonCardName.innerHTML.charAt(0) + pokemonCardName.innerHTML.slice(1).toLowerCase();
             pokemonTeamType[i].querySelector('.pokemon-type-1').innerHTML = pokemonType1.innerHTML;
             if(pokemonType2.innerHTML != ""){
                 pokemonTeamType[i].querySelector('.pokemon-type-2').innerHTML = pokemonType2.innerHTML;
@@ -615,11 +613,12 @@ submitTeam.addEventListener('click', (e) => {
     if(hrefName == ""){
         document.querySelector('.error-team-name').innerHTML = "Add at least one Pokémon";
     } else{
+        const teamId = document.querySelector('.team-id');
         if(teamName === ""){
             document.querySelector('.error-team-name').innerHTML = "Team name cannot be blank";
         } else{
             if(window.location.href.indexOf("edit") > -1){ 
-                window.location.href = `createTeams.php?${hrefName}&n=${teamName}&edit=true`;
+                window.location.href = 'createTeams.php?'+hrefName+'&n='+teamName+'&id='+teamId.innerHTML+'&edit=true';
             } else{
                 window.location.href = `createTeams.php?${hrefName}&n=${teamName}`;
             }

@@ -32,7 +32,7 @@ editButton.forEach(button => {
     button.addEventListener('click', () => {
         var divTeam = button.parentElement.querySelectorAll('.team-pokemon-name');
         var divName = button.parentElement.querySelector('.team-name').innerHTML;
-        var idTeam = document.querySelector('.team-id');
+        var idTeam = button.parentElement.querySelector('.team-id');
         var pokemonHREF = "?";
         for(let i = 0; i < 6; i++) {
             if(divTeam[i].innerHTML !== "") {

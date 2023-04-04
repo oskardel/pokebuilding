@@ -2,6 +2,7 @@
     require("model/modelClass.php");
     require("model/userClass.php");
     require("../DB/config.php");
+    require("functions.php");
 
     session_start();
     if(!isset($_SESSION["user"])){
@@ -15,6 +16,7 @@
     }
 
     if(isset($_GET["p1"]) || isset($_GET["p2"]) || isset($_GET["p3"]) || isset($_GET["p4"]) || isset($_GET["p5"]) || isset($_GET["p6"])){
+        $_SESSION["status"] = "New team has been created";
         for($i = 0; $i <= 6; $i++) {
             if(isset($_GET["p".$i])){
                 $pokemonEdit[$i-1] = $_GET["p".$i];
@@ -89,8 +91,7 @@
     <div class="main-content">
         <div class="pokemon-search">
             <div class="pokemon-team">
-                <div class="team-id">
-                    <?php
+                <div class="team-id"><?php
                         try{
                             $database = new User();
                             if(isset($_GET["edit"])){
@@ -297,7 +298,7 @@
                                 </div>
                             </div>
                             <div class="spd-stats">
-                                <div class="spd-tittle">SPD</div>
+                                <div class="spd-tittle">SPE</div>
                                 <div class="spd-info stat">???</div>
                                 <div class="spd-bar bar">
                                     <div class="spd-progress progress"></div>
@@ -319,6 +320,9 @@
 
     <?php
         if(isset($_SESSION["status"])) {
+            if(isset($_GET["edit"])) {
+                unset($_SESSION["status"]);
+            } else{
         ?>
             <div class="alert-message">
                 <h5><?php echo $_SESSION["status"]; ?></h5>
@@ -326,6 +330,7 @@
         <?php
             unset($_SESSION["status"]);
         }
+    }
     ?>
 
     <script src="../JS/index.js"></script>
@@ -353,7 +358,9 @@
                 try{
                     $database = new User();
                     if($updateTeam=$database->updateTeam($newName, $pokemonArray, $idTeam)){
-                        $_SESSION["status"] = "Team ". $newName ." has been updated";
+                        echo "se ha hecho";
+                    } else{
+                        echo "ERROR";
                     }
                     
                 } catch(PDOException $e){
@@ -375,11 +382,10 @@
                 $database = new User();
                 if($userId=$database->getIdUser($_SESSION["user"]));
                 if($nameCheck=$database->checkTeamName($teamName)){
-                    $nameError = "Team name already exists";
+                    $_SESSION["status"] = "Team name already exists";
                 } else{
                     if($addTeam=$database->addTeam($teamName, $pokemonName, $userId)){
                         if($plusNumber=$database->addNumberTeam($userId));
-                        $_SESSION["status"] = "New team has been created";
                     }
                 }
             } catch(PDOException $e){
@@ -387,5 +393,5 @@
                 $errores['datos'] = "There was an error <br>";
             }
         }
-    }   
+    }
 ?>  
