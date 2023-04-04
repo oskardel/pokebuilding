@@ -1,2 +1,0 @@
-SQLSTATE[HY000] [1049] Unknown database 'db_pokebuilding'##Código: 1049  0.73127400 1680609449
-SQLSTATE[HY000] [1049] Unknown database 'db_pokebuilding'##Código: 1049  0.78731800 1680609451

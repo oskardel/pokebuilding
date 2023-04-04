@@ -525,7 +525,7 @@ function getFormSprite(namePokemon) {
         getPokemonStats(formId);
         getPokemonAbility(formId);
         getAttributesPokemon(formId);
-        pokemonCardName.innerHTML = ((pokemonForms.value.charAt(0).toUpperCase()) + (pokemonForms.value).slice(1)).replace('-', ' ');
+        pokemonCardName.innerHTML = ((pokemonForms.value.charAt(0).toUpperCase()) + (pokemonForms.value).slice(1));
     })
 }
 
