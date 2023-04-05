@@ -69,7 +69,9 @@
                         <tr>
                             <td colspan="3">
                                 <p>Choose a Pokémon</p>
-                                <select name="select-pokemon" id="select-pokemon"></select>
+                                <select name="select-pokemon" id="select-pokemon">
+                                    <option value></option>
+                                </select>
                             </td>
                             <td colspan="2">
                                 <p>Level</p>
@@ -77,7 +79,9 @@
                             </td>
                             <td colspan="2">
                                 <p>Nature</p>
-                                <select name="select-nature" id="select-nature"></select>
+                                <select name="select-nature" id="select-nature">
+                                    <option value></option>
+                                </select>
                             </td>
                         </tr>
                         <tr>
@@ -138,5 +142,6 @@
     </footer>
     
     <script src="../JS/stats.js"></script>
+    <script src="../JS/dark-mode.js"></script>
 </body>
 </html>
