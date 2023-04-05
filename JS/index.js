@@ -69,7 +69,7 @@ const typeColours = {
 
 /* ADDING ALL POKEMON */
 const fetchAllPokemon = async() => {
-    for(let i = 1; i <= 1008; i++){
+    for(let i = 1; i <= 915; i++){
         await loadPokemonInfo(i);
         fetchCounter.innerHTML = Math.floor((100*i)/1008)+"% Pokémon fetched";
         progressLaoder.style.width = Math.floor((100*i)/1008)+"%";

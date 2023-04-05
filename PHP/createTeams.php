@@ -44,6 +44,7 @@
             </a>
             <a href="createTeams.php" class="create-team clicked">Create Teams</a>
             <a href="compareTeams.php" class="create-team">Compare</a>
+            <a href="statCalculator.php" class="create-team">Stat Calculator</a>
         </div>
 
         <div href="" class="profile-picture" onclick="toggleMenu()">
