@@ -97,28 +97,28 @@
                             <td>
                                 <p>EVs:</p>
                             </td>
-                            <td><input type="number" name="ev-hp" id="ev-hp" min="0" max="255"/></td>
-                            <td><input type="number" name="ev-atk" id="ev-atk" min="0" max="255"/></td>
-                            <td><input type="number" name="ev-def" id="ev-def" min="0" max="255"/></td>
-                            <td><input type="number" name="ev-spatk" id="ev-spatk" min="0" max="255"/></td>
-                            <td><input type="number" name="ev-spdef" id="ev-spdef" min="0" max="255"/></td>
-                            <td><input type="number" name="ev-spe" id="ev-spe" min="0" max="255"/></td>
+                            <td><input type="number" class="ev-selector" name="ev-hp" id="ev-hp" min="0" max="255"/></td>
+                            <td><input type="number" class="ev-selector" name="ev-atk" id="ev-atk" min="0" max="255"/></td>
+                            <td><input type="number" class="ev-selector" name="ev-def" id="ev-def" min="0" max="255"/></td>
+                            <td><input type="number" class="ev-selector" name="ev-spatk" id="ev-spatk" min="0" max="255"/></td>
+                            <td><input type="number" class="ev-selector" name="ev-spdef" id="ev-spdef" min="0" max="255"/></td>
+                            <td><input type="number" class="ev-selector" name="ev-spe" id="ev-spe" min="0" max="255"/></td>
                         </tr>
                         <tr>
                             <td>
                                 <p>IVs:</p>
                             </td>
-                            <td><input type="number" name="iv-hp" id="iv-hp" min="0" max="31"></td>
-                            <td><input type="number" name="iv-atk" id="iv-atk" min="0" max="31"></td>
-                            <td><input type="number" name="iv-def" id="iv-def" min="0" max="31"></td>
-                            <td><input type="number" name="iv-spatk" id="iv-spatk" min="0" max="31"></td>
-                            <td><input type="number" name="iv-spdef" id="iv-spdef" min="0" max="31"></td>
-                            <td><input type="number" name="iv-spe" id="iv-spe" min="0" max="31"></td>
+                            <td><input type="number" class="iv-selector" name="iv-hp" id="iv-hp" min="0" max="31"></td>
+                            <td><input type="number" class="iv-selector" name="iv-atk" id="iv-atk" min="0" max="31"></td>
+                            <td><input type="number" class="iv-selector" name="iv-def" id="iv-def" min="0" max="31"></td>
+                            <td><input type="number" class="iv-selector" name="iv-spatk" id="iv-spatk" min="0" max="31"></td>
+                            <td><input type="number" class="iv-selector" name="iv-spdef" id="iv-spdef" min="0" max="31"></td>
+                            <td><input type="number" class="iv-selector" name="iv-spe" id="iv-spe" min="0" max="31"></td>
                         </tr>
                     </tbody>
                 </table>
 
-                <input type="submit" onclick="calculateStats()" value="Calculate"/>
+                <input type="submit" onclick="checkFields()" value="Calculate"/>
                 
                 <div id="stat-results"></div>
             </form>

@@ -4,9 +4,23 @@ const statResults = document.getElementById('stat-results');
 const pokemonStat = document.getElementById('select-pokemon');
 const natureStat = document.getElementById('select-nature');
 const levelStat = document.getElementById('level-pokemon');
+const EVSelector = document.querySelectorAll('.ev-selector');
+const IVSelector = document.querySelectorAll('.iv-selector');
+
+function checkFields() {
+    if(pokemonStat.value !== "" && natureStat.value !== "" && levelStat.value !== "") {
+        calculateStats();
+    } else{
+        //ERROR
+    }
+}
 
 function calculateStats() {
-    statResults.innerHTML += "ey";
+    fetch(`https://pokeapi.co/api/v2/pokemon/${(pokemonStat.value)}`)
+    .then(res => res.json())
+    .then(data => {
+        
+    })
 }
 
 function loadAllPokemon() {
@@ -28,7 +42,7 @@ function loadAllPokemon() {
         for(let i = 0; i <= 1008; i++) {
             const newOption = document.createElement('option');
             newOption.innerHTML = (pokemonList[i].name).charAt(0).toUpperCase() + pokemonList[i].name.slice(1);
-            newOption.value = i;
+            newOption.value = data.results[i].name;
             pokemonStat.appendChild(newOption);
         }
     })

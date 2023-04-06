@@ -5,8 +5,6 @@ const pokedexContainer = document.getElementById('pokedex-container');
 const typeSelector = document.getElementById('search-options-type');
 const generationSelector = document.getElementById('search-options-generation');
 const nameSelector = document.getElementById('search-options-name');
-const typeValue = document.getElementById('search-options-type');
-const genValue = document.getElementById('search-options-generation');
 const legendaryValue = document.getElementById('legendary-checkbox');
 const searchButton = document.getElementById('search-button');
 const randomButton = document.getElementById('random-button');
@@ -39,10 +37,6 @@ const addButton = document.querySelector('.add-button');
 const pokemonTeamImg = document.querySelectorAll('.pokemon-img');
 const pokemonTeamType = document.querySelectorAll('.pokemon-types');
 const hiddenId = document.getElementById('hidden-id');
-
-var nameFilter = false;
-var typeFilter = false;
-var genFilter =  false;
 var cardHTML = "";
 
 const typeColours = {
@@ -85,44 +79,27 @@ const loadPokemonInfo = async(id) => {
     const rest = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
     const pokemon = await rest.json();
 
-    if(pokemon.types.length > 1){
-        cardHTML = `<div class="pokemon-block" style="display:flex">
-        <p class="pokemon-id" style="text-align:center;">${pokemon.id.toString().padStart(3, 0)}</p>
-        <p class="name">${pokemon.species.name.toUpperCase()}</p>
-        <div class="img-container">
-            <img src="${pokemon.sprites.front_default}">
-        </div>
-        <div class="types ${pokemon.types[0].type.name} ${pokemon.types[1].type.name}"><img src="../img/pokemon_types/${pokemon.types[0].type.name}.ico"><img src="../img/pokemon_types/${pokemon.types[1].type.name}.ico"></div>
-        </div>`;
+    var typeClass = "";
+    var typeImage = "";
 
-    } else{
-        cardHTML = `<div class="pokemon-block" style="display:flex">
-        <p class="pokemon-id">${pokemon.id.toString().padStart(3, 0)}</p>
-        <p class="name">${pokemon.species.name.toUpperCase()}</p>
-        <div class="img-container">
-            <img src="${pokemon.sprites.front_default}">
-        </div>
-        <div class="types ${pokemon.types[0].type.name}"><img src="../img/pokemon_types/${pokemon.types[0].type.name}.ico"></div>
-        </div>`;
+    for(let i = 0; i < pokemon.types.length; i++) {
+        typeClass += pokemon.types[i].type.name;
+        typeImage += `<img src="../img/pokemon_types/${pokemon.types[i].type.name}.ico">`
     }
+    
+    cardHTML = `<div class="pokemon-block" style="display:flex">
+    <p class="pokemon-id" style="text-align:center;">${pokemon.id.toString().padStart(3, 0)}</p>
+    <p class="name">${pokemon.species.name.toUpperCase()}</p>
+    <div class="img-container">
+        <img src="${pokemon.sprites.front_default}">
+    </div>
+    <div class="types ${typeClass}">${typeImage}</div>
+    </div>`;
 
     fetchPokemonGeneration(pokemon.id);
-    checkLegendaryStatus(pokemon.id);
 
     pokedexContainer.innerHTML += cardHTML;
 }
-
-function checkLegendaryStatus(id) {
-    fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`)
-    .then(response => response.json())
-    .then(data => {
-        const pokemonClass = pokedexContainer.children[id - 1];
-        if(data.is_legendary == true || data.is_mythical == true){
-            pokemonClass.classList.add("legendary");
-        }
-    })
-}
-
 
 /* ADDING ALL TYPES */
 function fetchAllTypes() {
@@ -134,16 +111,12 @@ function fetchAllTypes() {
 function loadPokemonTypes(id) {
     fetch(`https://pokeapi.co/api/v2/type/${id}`)
     .then(response => response.json())
-    .then(data => {
-        createTypeSelector(data);
+    .then(type => {
+        var newType = document.createElement('option');
+        newType.value = type.name.charAt(0).toUpperCase() + type.name.slice(1);
+        newType.innerHTML = type.name.charAt(0).toUpperCase() + type.name.slice(1);
+        typeSelector.appendChild(newType);
     })
-}
-
-function createTypeSelector(type) {
-    var newType = document.createElement('option');
-    newType.value = type.name.charAt(0).toUpperCase() + type.name.slice(1);
-    newType.innerHTML = type.name.charAt(0).toUpperCase() + type.name.slice(1);
-    typeSelector.appendChild(newType);
 }
 
 
@@ -154,6 +127,9 @@ function fetchPokemonGeneration(id) {
     .then(data => {
         const pokemonClass = pokedexContainer.children[id - 1];
         pokemonClass.classList.add(data.generation.name);
+        if(data.is_legendary == true || data.is_mythical == true){
+            pokemonClass.classList.add("legendary");
+        }
     })
 }
 
@@ -192,8 +168,8 @@ searchButton.addEventListener('click', (e) => {
     pokemonCards.forEach(card => {
         let isCardVisible = true;
 
-        if(typeValue.value !== "all"){
-            if(!card.querySelector('.types').classList.contains(typeValue.value.toLowerCase())){
+        if(typeSelector.value !== "all"){
+            if(!card.querySelector('.types').classList.contains(typeSelector.value.toLowerCase())){
                 isCardVisible = false;
             }
         } 
@@ -202,8 +178,8 @@ searchButton.addEventListener('click', (e) => {
                 isCardVisible = false;
             }
         }
-        if(genValue.value !== "all"){
-            if(!card.classList.contains(genValue.value.toLowerCase())){
+        if(generationSelector.value !== "all"){
+            if(!card.classList.contains(generationSelector.value.toLowerCase())){
                 isCardVisible = false;
             }
         }
@@ -226,9 +202,40 @@ function getGenrationPokemon(id) {
     fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`)
     .then(response => response.json())
     .then(data => {
+        pokemonForms.options.length = 0;
+        if(data.varieties.length <= 1) {
+            pokemonForms.style.display = "none";
+        } else{
+            pokemonForms.style.display = "flex";
+            for(let i = 0; i < data.varieties.length; i++){
+                var newForm = document.createElement('option');
+                newForm.value = data.varieties[i].pokemon.name;
+                if(i == 0){
+                    newForm.innerHTML = "Default";
+                } else{
+                    newForm.innerHTML = (data.varieties[i].pokemon.name.split('-')[1]).charAt(0).toUpperCase() + (data.varieties[i].pokemon.name).substring((data.varieties[i].pokemon.name).indexOf('-') + 1).slice(1);
+                }
+                pokemonForms.appendChild(newForm);
+            }
+        }
+
         let genVal = data.generation.name;
         let genValAfter = genVal.slice(genVal.indexOf('-') +1).toUpperCase();
         pokemonCardGeneration.innerHTML = "Generation " + genValAfter;
+
+        let flavor_text;
+        if(data.flavor_text_entries.length !== 0){
+            for(var i = 0; i <= 10; i++){
+                if(data.flavor_text_entries[i].language.name == "en"){
+                    flavor_text = data.flavor_text_entries[i].flavor_text;
+                    pokedexEntry.innerHTML = flavor_text;
+                    return;
+                }
+            }
+        } else{
+            flavor_text = "This Pokémon has no information.";
+            pokedexEntry.innerHTML = flavor_text;
+        }
     })
 }
 
@@ -236,6 +243,27 @@ function getAttributesPokemon(id) {
     fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
     .then(response => response.json())
     .then(data => {
+        pokemonType1.innerHTML = (data.types[0].type.name).toUpperCase();
+        let color1 = data.types[0].type.name;
+        pokemonType1.style.backgroundColor = typeColours[color1];
+        if(data.types.length > 1){
+            pokemonType2.style.display = "block";
+            pokemonType2.innerHTML = (data.types[1].type.name).toUpperCase();
+            let color2 = data.types[1].type.name;
+            pokemonType2.style.backgroundColor = typeColours[color2];
+        } else{
+            pokemonType2.innerHTML = "";
+            pokemonType2.style.display = "none";
+        }
+
+        const statsArray = document.querySelectorAll('.stat');
+        const progressArray = document.querySelectorAll('.progress');
+        
+        for(var i = 0; i < data.stats.length; i++){
+            statsArray[i].innerHTML = data.stats[i].base_stat;
+            progressArray[i].style.width = data.stats[i].base_stat+"px";
+        }
+
         let pokemonHeight = data.height.toString();
         var decimalCommaHeight = pokemonHeight.length - 1;
         let pokemonWeight = data.weight.toString();
@@ -254,37 +282,11 @@ function getAttributesPokemon(id) {
             let pokemonWeightDecimal =  pokemonWeight.slice(0, decimalCommaWeight) + "," + pokemonWeight.slice(decimalCommaWeight);
             pokemonCardWeight.innerHTML = pokemonWeightDecimal + " kg";
         }
-    })
-}
 
-function getPokedexEntry(id) {
-    fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`)
-    .then(response => response.json())
-    .then(data => {
-        let flavor_text;
-        if(data.flavor_text_entries.length !== 0){
-            for(var i = 0; i <= 10; i++){
-                if(data.flavor_text_entries[i].language.name == "en"){
-                    flavor_text = data.flavor_text_entries[i].flavor_text;
-                    pokedexEntry.innerHTML = flavor_text;
-                    return;
-                }
-            }
-        } else{
-            flavor_text = "This Pokémon has no information.";
-            pokedexEntry.innerHTML = flavor_text;
-        }
-    })
-}
-
-function getPokemonAbility(id) { //This function will only get the ability name (not the description)
-    fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
-    .then(response => response.json())
-    .then(data => {
-        getAbilityInfo1(data.abilities[0].ability.name);
+        getAbilityInfo(data.abilities[0].ability.name, pokemonAbility1);
         pokemonAbilityName1.innerHTML = (data.abilities[0].ability.name).charAt(0).toUpperCase() + (data.abilities[0].ability.name).slice(1);
         if(data.abilities.length > 1){
-            getAbilityInfo2(data.abilities[1].ability.name);
+            getAbilityInfo(data.abilities[1].ability.name, pokemonAbility2);
             pokemonAbilityName2.innerHTML = (data.abilities[1].ability.name).charAt(0).toUpperCase() + (data.abilities[1].ability.name).slice(1);
             pokemonAbility2Div.style.display = "block";
         } else{
@@ -293,73 +295,19 @@ function getPokemonAbility(id) { //This function will only get the ability name 
     })
 }
 
-function getAbilityInfo1(ability) {
+function getAbilityInfo(ability, index) {
     fetch(`https://pokeapi.co/api/v2/ability/${ability}`)
     .then(response => response.json())
     .then(data => {
         if(data.effect_entries.length >= 1){
             for(var i = 0; i <= data.effect_entries.length; i++){
                 if(data.effect_entries[i].language.name == "en"){
-                    pokemonAbility1.innerHTML = data.effect_entries[i].short_effect;
+                    index.innerHTML = data.effect_entries[i].short_effect;
                     return;
                 }
             }
         } else{
-            pokemonAbility1.innerHTML = "No effect data";
-        }
-    })
-}
-
-function getAbilityInfo2(ability) {
-    fetch(`https://pokeapi.co/api/v2/ability/${ability}`)
-    .then(response => response.json())
-    .then(data => {
-        if(data.effect_entries.length > 1){
-            for(var i = 0; i <= data.effect_entries.length; i++){
-                if(data.effect_entries[i].language.name == "en"){
-                    pokemonAbility2.innerHTML = data.effect_entries[i].short_effect;
-                    return;
-                }
-            }
-        } else{
-            pokemonAbility2.innerHTML = "No effect data";
-        }
-    })
-}
-
-function getPokemonForms(id) {
-    fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`)
-    .then(response => response.json())
-    .then(data => {
-        pokemonForms.options.length = 0;
-        if(data.varieties.length <= 1) {
-            pokemonForms.style.display = "none";
-        } else{
-            pokemonForms.style.display = "flex";
-            for(let i = 0; i < data.varieties.length; i++){
-                var newForm = document.createElement('option');
-                newForm.value = data.varieties[i].pokemon.name;
-                if(i == 0){
-                    newForm.innerHTML = "Default";
-                } else{
-                    newForm.innerHTML = (data.varieties[i].pokemon.name.split('-')[1]).charAt(0).toUpperCase() + (data.varieties[i].pokemon.name).substring((data.varieties[i].pokemon.name).indexOf('-') + 1).slice(1);
-                }
-                pokemonForms.appendChild(newForm);
-            }
-        }
-    })
-}
-
-function getPokemonStats(id) {
-    fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
-    .then(response => response.json())
-    .then(data => {
-        const statsArray = document.querySelectorAll('.stat');
-        const progressArray = document.querySelectorAll('.progress');
-        
-        for(var i = 0; i < data.stats.length; i++){
-            statsArray[i].innerHTML = data.stats[i].base_stat;
-            progressArray[i].style.width = data.stats[i].base_stat+"px";
+            index.innerHTML = "No effect data";
         }
     })
 }
@@ -446,41 +394,17 @@ function createMove(move) {
     })
 }
 
-function getPokemonTypes(id) {
-    fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
-    .then(response => response.json())
-    .then(data => {
-        pokemonType1.innerHTML = (data.types[0].type.name).toUpperCase();
-        let color1 = data.types[0].type.name;
-        pokemonType1.style.backgroundColor = typeColours[color1];
-        if(data.types.length > 1){
-            pokemonType2.style.display = "block";
-            pokemonType2.innerHTML = (data.types[1].type.name).toUpperCase();
-            let color2 = data.types[1].type.name;
-            pokemonType2.style.backgroundColor = typeColours[color2];
-        } else{
-            pokemonType2.innerHTML = "";
-            pokemonType2.style.display = "none";
-        }
-    })
-}
-
 function listenerCard() {
     const pokemonCards = document.querySelectorAll('.pokemon-block');
     pokemonCards.forEach(card => {
         card.addEventListener('click', () =>{
             var pokemonId = trimZeros(card.querySelector('.pokemon-id').innerHTML);
-            hiddenId.innerHTML = pokemonId;
             pokemonSprite.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonId}.png`;
-            pokemonCardName.innerHTML = card.querySelector('.name').innerHTML; //pokemon card name
-            pokemonCardId.innerHTML = card.querySelector('.pokemon-id').innerHTML; //pokemon card id
-            getPokemonTypes(pokemonId); //changes the starting type
-            getGenrationPokemon(pokemonId); //pokemon card generation
-            getAttributesPokemon(pokemonId); //pokemon card weight & height
-            getPokedexEntry(pokemonId); //card pokdex entry
-            getPokemonAbility(pokemonId); //changes the ability and ability information
-            getPokemonForms(pokemonId); //all the pokemon forms are created
-            getPokemonStats(pokemonId); //puts all the base stats on the card (not counting other forms of the same pokemon)
+            hiddenId.innerHTML = pokemonId;
+            pokemonCardName.innerHTML = card.querySelector('.name').innerHTML;
+            pokemonCardId.innerHTML = card.querySelector('.pokemon-id').innerHTML;
+            getAttributesPokemon(pokemonId); //fetching from /pokemon-species API
+            getGenrationPokemon(pokemonId); //fetching from /pokemon API
             getPokemonMoves(pokemonId); //creates a table with all the moves the pokmeon learns
             
             pokemonCardDiv.classList.add('active');
@@ -500,10 +424,7 @@ pokemonForms.addEventListener('change', () => {
         } else{
             pokemonSprite.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonId}.png`;
         }
-        getPokemonTypes(pokemonId);
         getAttributesPokemon(pokemonId);
-        getPokemonAbility(pokemonId);
-        getPokemonStats(pokemonId);
         getPokemonMoves(pokemonId);
         pokemonCardName.innerHTML = (pokemonForms.options[0].value.charAt(0).toUpperCase()) + (pokemonForms.options[0].value).slice(1);
     } else{
@@ -521,9 +442,6 @@ function getFormSprite(namePokemon) {
         if(data.moves.length > 1){
             getPokemonMoves(formId);
         }
-        getPokemonTypes(formId);
-        getPokemonStats(formId);
-        getPokemonAbility(formId);
         getAttributesPokemon(formId);
         pokemonCardName.innerHTML = ((pokemonForms.value.charAt(0).toUpperCase()) + (pokemonForms.value).slice(1));
     })
@@ -597,7 +515,7 @@ overlayButton.addEventListener('click', (e) => {
 
 /* REDIRECTS YOU TO THE THE SAME PAGE (ADDS TO THE LINK THE POKEMON NAMES) */
 const submitTeam = document.getElementById('save-team');
-submitTeam.addEventListener('click', (e) => {
+submitTeam.addEventListener('click', () => {
     var hrefName = "";
     var teamName = document.querySelector('.save-team-name').value;
     for(var i = 0; i < 6; i++) {
