@@ -7,21 +7,6 @@ const levelStat = document.getElementById('level-pokemon');
 const EVSelector = document.querySelectorAll('.ev-selector');
 const IVSelector = document.querySelectorAll('.iv-selector');
 
-function checkFields() {
-    if(pokemonStat.value !== "" && natureStat.value !== "" && levelStat.value !== "") {
-        calculateStats();
-    } else{
-        //ERROR
-    }
-}
-
-function calculateStats() {
-    fetch(`https://pokeapi.co/api/v2/pokemon/${(pokemonStat.value)}`)
-    .then(res => res.json())
-    .then(data => {
-        
-    })
-}
 
 function loadAllPokemon() {
     fetch('https://pokeapi.co/api/v2/pokemon?limit=1008')
@@ -61,5 +46,62 @@ function loadAllNatures() {
     })
 }
 
+function checkFields() {
+    if(pokemonStat.value !== "" && levelStat.value !== "") {
+        statResults.innerHTML = "";
+        calculateStats();
+        statResults.style.display = "block";
+    } else{
+        //ERROR
+    }
+}
+
+function calculateStats() {
+    fetch(`https://pokeapi.co/api/v2/pokemon/${(pokemonStat.value)}`)
+    .then(res => res.json())
+    .then(data => {
+        const rowTable = document.createElement('tr');
+        const infoTable = document.createElement('td');
+        infoTable.innerHTML = "Lvl." + levelStat.value + " " + pokemonStat.value.charAt(0).toUpperCase()+pokemonStat.value.slice(1);
+        infoTable.colSpan = 7;
+        rowTable.appendChild(infoTable);
+        statResults.appendChild(rowTable);
+
+        const headerStatString = ["HP", "ATK", "DEF", "Sp.ATK", "Sp.DEF", "SPD"];
+        const row2Table = document.createElement('tr');
+
+        for(let j = 0; j < headerStatString.length; j++){
+            const headerStat = document.createElement('th');
+            headerStat.innerHTML = headerStatString[j];
+            row2Table.appendChild(headerStat);
+        }
+        statResults.appendChild(row2Table);
+
+        if(natureStat.value !== "") {
+            console.log("holy shite");
+        }
+
+        const statRow = document.createElement('tr');
+        for(var i = 0; i < data.stats.length; i++){
+            var natureChange = 1;
+            if(IVSelector[i].value === "") IVSelector[i].value = 0;
+            if(EVSelector[i].value === "") EVSelector[i].value = 0;
+
+            if(i === 0){
+                var statArray = Math.floor(0.01 * (2 * data.stats[0].base_stat + parseInt(IVSelector[i].value) + Math.floor(0.25 * parseInt(EVSelector[i].value))) * parseInt(levelStat.value)) + parseInt(levelStat.value) + 10;
+            } else{
+                var statArray = Math.floor(((0.01 * (2 * data.stats[i].base_stat + parseInt(IVSelector[i].value) + Math.floor(0.25 * parseInt(EVSelector[i].value))) * parseInt(levelStat.value)) + 5) * natureChange);
+            }
+
+            const newStat = document.createElement('td');
+            newStat.innerHTML = statArray;
+            statRow.appendChild(newStat);
+        }
+        statResults.appendChild(statRow);
+    })
+}
+
+
+/* LOAD FOR THE FIRST TIME */
 loadAllPokemon();
 loadAllNatures();

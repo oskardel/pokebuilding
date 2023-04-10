@@ -104,7 +104,7 @@
                             <td><input type="number" class="ev-selector" name="ev-spdef" id="ev-spdef" min="0" max="255"/></td>
                             <td><input type="number" class="ev-selector" name="ev-spe" id="ev-spe" min="0" max="255"/></td>
                         </tr>
-                        <tr>
+                        <tr class="iv-row">
                             <td>
                                 <p>IVs:</p>
                             </td>
@@ -119,10 +119,19 @@
                 </table>
 
                 <input type="submit" onclick="checkFields()" value="Calculate"/>
-                
-                <div id="stat-results"></div>
             </form>
         </div>
+        <table id="stat-results" style="display:none;">
+            <tr>
+                <th></th>
+                <th>HP</th>
+                <th>ATK</th>
+                <th>DEF</th>
+                <th>SP.ATK</th>
+                <th>SP.DEF</th>
+                <th>SPD</th>
+            </tr>
+        </table>
     </div>
     
     <footer>
