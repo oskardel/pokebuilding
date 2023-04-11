@@ -8,6 +8,18 @@ const EVSelector = document.querySelectorAll('.ev-selector');
 const IVSelector = document.querySelectorAll('.iv-selector');
 
 
+// const createHeaderStats = async(headerStatString) => {
+//     const row2Table = document.createElement('tr');
+//     row2Table.classList.add("header-stats");
+
+//     for(let j = 0; j < headerStatString.length; j++){
+//         const headerStat = document.createElement('th');
+//         headerStat.innerHTML = headerStatString[j];
+//         row2Table.appendChild(headerStat);
+//     }
+//     statResults.appendChild(row2Table);
+// }
+
 function loadAllPokemon() {
     fetch('https://pokeapi.co/api/v2/pokemon?limit=1008')
     .then(response => response.json())
@@ -46,7 +58,7 @@ function loadAllNatures() {
     })
 }
 
-function checkFields() {
+const checkFields = () => {
     if(pokemonStat.value !== "" && levelStat.value !== "") {
         statResults.innerHTML = "";
         calculateStats();
@@ -56,32 +68,22 @@ function checkFields() {
     }
 }
 
-function calculateStats() {
-    fetch(`https://pokeapi.co/api/v2/pokemon/${(pokemonStat.value)}`)
-    .then(res => res.json())
-    .then(data => {
-        const rowTable = document.createElement('tr');
-        const infoTable = document.createElement('td');
-        infoTable.innerHTML = "Lvl." + levelStat.value + " " + pokemonStat.value.charAt(0).toUpperCase()+pokemonStat.value.slice(1);
-        infoTable.colSpan = 7;
-        rowTable.appendChild(infoTable);
-        statResults.appendChild(rowTable);
+const checkNature = async(nature) => {
+    const rest = await fetch(`https://pokeapi.co/api/v2/nature/${nature}`);
+    const data = await rest.json();
+    
+    var headerStatString = ["HP", "ATK", "DEF", "Sp.ATK", "Sp.DEF", "SPD"];
+    if(data.decreased_stat !== null) {
+        const increasedStat = (data.increased_stat.url.slice(-2)).replace("/", "");
+        const decreasedStat = (data.decreased_stat.url.slice(-2)).replace("/", "");
+        var TDstats = document.querySelector('header-stats').children;
+        TDstats.item(decreasedStat) //CONTINUAR (INDEX PARA CAMBIAR EN EL HTML)
 
-        const headerStatString = ["HP", "ATK", "DEF", "Sp.ATK", "Sp.DEF", "SPD"];
-        const row2Table = document.createElement('tr');
+    }
+}
 
-        for(let j = 0; j < headerStatString.length; j++){
-            const headerStat = document.createElement('th');
-            headerStat.innerHTML = headerStatString[j];
-            row2Table.appendChild(headerStat);
-        }
-        statResults.appendChild(row2Table);
-
-        if(natureStat.value !== "") {
-            console.log("holy shite");
-        }
-
-        const statRow = document.createElement('tr');
+const addStatsPokemon = (data) => {
+    const statRow = document.createElement('tr');
         for(var i = 0; i < data.stats.length; i++){
             var natureChange = 1;
             if(IVSelector[i].value === "") IVSelector[i].value = 0;
@@ -98,6 +100,36 @@ function calculateStats() {
             statRow.appendChild(newStat);
         }
         statResults.appendChild(statRow);
+}
+
+function calculateStats() {
+    fetch(`https://pokeapi.co/api/v2/pokemon/${(pokemonStat.value)}`)
+    .then(res => res.json())
+    .then(data => {
+        const headerStatString = ["HP", "ATK", "DEF", "Sp.ATK", "Sp.DEF", "SPD"];
+
+        const rowTable = document.createElement('tr');
+        const infoTable = document.createElement('td');
+        infoTable.innerHTML = "Lvl." + levelStat.value + " " + pokemonStat.value.charAt(0).toUpperCase()+pokemonStat.value.slice(1);
+        infoTable.colSpan = 7;
+        rowTable.appendChild(infoTable);
+        statResults.appendChild(rowTable);
+
+        const row2Table = document.createElement('tr');
+        row2Table.classList.add("header-stats");
+
+        for(let j = 0; j < headerStatString.length; j++){
+            const headerStat = document.createElement('th');
+            headerStat.innerHTML = headerStatString[j];
+            row2Table.appendChild(headerStat);
+        }
+        statResults.appendChild(row2Table);
+
+        if(natureStat.value != "") {
+            checkNature(parseInt(natureStat.value)+1);
+        }
+        
+        addStatsPokemon(data);
     })
 }
 
