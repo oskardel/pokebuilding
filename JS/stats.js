@@ -8,18 +8,6 @@ const EVSelector = document.querySelectorAll('.ev-selector');
 const IVSelector = document.querySelectorAll('.iv-selector');
 
 
-// const createHeaderStats = async(headerStatString) => {
-//     const row2Table = document.createElement('tr');
-//     row2Table.classList.add("header-stats");
-
-//     for(let j = 0; j < headerStatString.length; j++){
-//         const headerStat = document.createElement('th');
-//         headerStat.innerHTML = headerStatString[j];
-//         row2Table.appendChild(headerStat);
-//     }
-//     statResults.appendChild(row2Table);
-// }
-
 function loadAllPokemon() {
     fetch('https://pokeapi.co/api/v2/pokemon?limit=1008')
     .then(response => response.json())
@@ -72,22 +60,26 @@ const checkNature = async(nature) => {
     const rest = await fetch(`https://pokeapi.co/api/v2/nature/${nature}`);
     const data = await rest.json();
     
-    var headerStatString = ["HP", "ATK", "DEF", "Sp.ATK", "Sp.DEF", "SPD"];
     if(data.decreased_stat !== null) {
+        const TDstats = document.querySelector('.header-stats').children;
         const increasedStat = (data.increased_stat.url.slice(-2)).replace("/", "");
         const decreasedStat = (data.decreased_stat.url.slice(-2)).replace("/", "");
-        var TDstats = document.querySelector('header-stats').children;
-        TDstats.item(decreasedStat) //CONTINUAR (INDEX PARA CAMBIAR EN EL HTML)
-
+        TDstats.item(decreasedStat-1).innerHTML += "-";
+        TDstats.item(decreasedStat-1).classList.add("decrease");
+        TDstats.item(increasedStat-1).innerHTML += "+";
+        TDstats.item(increasedStat-1).classList.add("increase");
     }
 }
 
 const addStatsPokemon = (data) => {
     const statRow = document.createElement('tr');
+    const TDstats = document.querySelector('.header-stats').children;
         for(var i = 0; i < data.stats.length; i++){
-            var natureChange = 1;
+            let natureChange = 1;
             if(IVSelector[i].value === "") IVSelector[i].value = 0;
             if(EVSelector[i].value === "") EVSelector[i].value = 0;
+            if(TDstats.item(i).classList.contains("increase")) natureChange = 1.1;
+            if(TDstats.item(i).classList.contains("decrease")) natureChange = 0.9;
 
             if(i === 0){
                 var statArray = Math.floor(0.01 * (2 * data.stats[0].base_stat + parseInt(IVSelector[i].value) + Math.floor(0.25 * parseInt(EVSelector[i].value))) * parseInt(levelStat.value)) + parseInt(levelStat.value) + 10;
