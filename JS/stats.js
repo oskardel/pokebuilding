@@ -34,10 +34,10 @@ function loadAllPokemon() {
 }
 
 function loadAllNatures() {
-    fetch('https://pokeapi.co/api/v2/nature')
+    fetch('https://pokeapi.co/api/v2/nature/?offset=0&limit=25')
     .then(response => response.json())
     .then(data => {
-        for(let i = 0; i <= 24; i++) {
+        for(let i = 0; i <= data.count; i++) {
             const newOption = document.createElement('option');
             newOption.innerHTML = (data.results[i].name).charAt(0).toUpperCase() + data.results[i].name.slice(1);
             newOption.value = i;
@@ -47,7 +47,7 @@ function loadAllNatures() {
 }
 
 const checkFields = () => {
-    if(pokemonStat.value !== "" && levelStat.value !== "") {
+    if(pokemonStat.value !== "" && levelStat.value !== "" && natureStat.value !== "") {
         statResults.innerHTML = "";
         calculateStats();
         statResults.style.display = "block";
@@ -56,50 +56,80 @@ const checkFields = () => {
     }
 }
 
-const checkNature = async(nature) => {
+const checkNature = async(nature, pokemonStats) => {
     const rest = await fetch(`https://pokeapi.co/api/v2/nature/${nature}`);
     const data = await rest.json();
+
+    const headerStatString = ["HP", "ATK", "DEF", "Sp.ATK", "Sp.DEF", "SPD"];
+    const row2Table = document.querySelector('.header-stats')
     
-    if(data.decreased_stat !== null) {
-        const TDstats = document.querySelector('.header-stats').children;
-        const increasedStat = (data.increased_stat.url.slice(-2)).replace("/", "");
-        const decreasedStat = (data.decreased_stat.url.slice(-2)).replace("/", "");
-        TDstats.item(decreasedStat-1).innerHTML += "-";
-        TDstats.item(decreasedStat-1).classList.add("decrease");
-        TDstats.item(increasedStat-1).innerHTML += "+";
-        TDstats.item(increasedStat-1).classList.add("increase");
+    for(let j = 0; j < headerStatString.length; j++){
+        const headerStat = document.createElement('th');
+        if(data.decreased_stat !== null) {
+            const increasedStat = (data.increased_stat.url.slice(-2)).replace("/", "");
+            const decreasedStat = (data.decreased_stat.url.slice(-2)).replace("/", "");
+            if(j === (increasedStat-1)){
+                headerStat.innerHTML = headerStatString[j] + "+";
+                headerStat.classList.add("increase");
+                headerStat.classList.add(j+1);
+            } else{
+                if(j === (decreasedStat-1)) {
+                    headerStat.innerHTML = headerStatString[j] + "-";
+                    headerStat.classList.add("decrease");
+                    headerStat.classList.add(j+1);
+                }
+                else{
+                    headerStat.innerHTML = headerStatString[j];
+                }
+            }
+        } else{
+            headerStat.innerHTML = headerStatString[j];
+        }
+        
+        row2Table.appendChild(headerStat);
     }
+    statResults.appendChild(row2Table);
+    
+    addStatsPokemon(pokemonStats); //FIX (NOT SHOWING WHEN NATURE DOESN'T CHANGE STATS)
 }
 
 const addStatsPokemon = (data) => {
     const statRow = document.createElement('tr');
-    const TDstats = document.querySelector('.header-stats').children;
-        for(var i = 0; i < data.stats.length; i++){
-            let natureChange = 1;
-            if(IVSelector[i].value === "") IVSelector[i].value = 0;
-            if(EVSelector[i].value === "") EVSelector[i].value = 0;
-            if(TDstats.item(i).classList.contains("increase")) natureChange = 1.1;
-            if(TDstats.item(i).classList.contains("decrease")) natureChange = 0.9;
+    const increaseStat = document.querySelector('.increase');
+    const decreaseStat = document.querySelector('.decrease');
 
-            if(i === 0){
-                var statArray = Math.floor(0.01 * (2 * data.stats[0].base_stat + parseInt(IVSelector[i].value) + Math.floor(0.25 * parseInt(EVSelector[i].value))) * parseInt(levelStat.value)) + parseInt(levelStat.value) + 10;
-            } else{
-                var statArray = Math.floor(((0.01 * (2 * data.stats[i].base_stat + parseInt(IVSelector[i].value) + Math.floor(0.25 * parseInt(EVSelector[i].value))) * parseInt(levelStat.value)) + 5) * natureChange);
+    for(var i = 0; i < data.stats.length; i++){
+        let natureChange = 1;
+        if(IVSelector[i].value === "") IVSelector[i].value = 0;
+        if(EVSelector[i].value === "") EVSelector[i].value = 0;
+
+        if(natureStat.value != 0 && natureStat.value != 6 && natureStat.value != 12 && natureStat.value != 18 && natureStat.value != 24){
+            if(increaseStat.classList.contains(i+1)){
+                natureChange = 1.1;
             }
-
-            const newStat = document.createElement('td');
-            newStat.innerHTML = statArray;
-            statRow.appendChild(newStat);
+            if(decreaseStat.classList.contains(i+1)){
+                natureChange = 0.9;
+            }
         }
-        statResults.appendChild(statRow);
+
+        if(i === 0){
+            var statArray = Math.floor(0.01 * (2 * data.stats[0].base_stat + parseInt(IVSelector[i].value) + Math.floor(0.25 * parseInt(EVSelector[i].value))) * parseInt(levelStat.value)) + parseInt(levelStat.value) + 10;
+        } else{
+            var statArray = Math.floor(((0.01 * (2 * data.stats[i].base_stat + parseInt(IVSelector[i].value) + Math.floor(0.25 * parseInt(EVSelector[i].value))) * parseInt(levelStat.value)) + 5) * natureChange);
+        }
+
+        const newStat = document.createElement('td');
+        newStat.innerHTML = statArray;
+        statRow.appendChild(newStat);
+    }
+
+    statResults.appendChild(statRow);
 }
 
 function calculateStats() {
     fetch(`https://pokeapi.co/api/v2/pokemon/${(pokemonStat.value)}`)
     .then(res => res.json())
     .then(data => {
-        const headerStatString = ["HP", "ATK", "DEF", "Sp.ATK", "Sp.DEF", "SPD"];
-
         const rowTable = document.createElement('tr');
         const infoTable = document.createElement('td');
         infoTable.innerHTML = "Lvl." + levelStat.value + " " + pokemonStat.value.charAt(0).toUpperCase()+pokemonStat.value.slice(1);
@@ -109,19 +139,9 @@ function calculateStats() {
 
         const row2Table = document.createElement('tr');
         row2Table.classList.add("header-stats");
-
-        for(let j = 0; j < headerStatString.length; j++){
-            const headerStat = document.createElement('th');
-            headerStat.innerHTML = headerStatString[j];
-            row2Table.appendChild(headerStat);
-        }
         statResults.appendChild(row2Table);
 
-        if(natureStat.value != "") {
-            checkNature(parseInt(natureStat.value)+1);
-        }
-        
-        addStatsPokemon(data);
+        checkNature(parseInt(natureStat.value)+1, data);
     })
 }
 
