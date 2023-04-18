@@ -44,6 +44,7 @@
             </a>
             <a href="createTeams.php" class="create-team clicked">Create Teams</a>
             <a href="compareTeams.php" class="create-team">Compare</a>
+            <a href="rankings.php" class="create-team">Rankings</a>
             <a href="statCalculator.php" class="create-team">Stat Calculator</a>
         </div>
 
@@ -358,11 +359,7 @@
             if($_GET["edit"] == "true"){
                 try{
                     $database = new User();
-                    if($updateTeam=$database->updateTeam($newName, $pokemonArray, $idTeam)){
-                        echo "se ha hecho";
-                    } else{
-                        echo "ERROR";
-                    }
+                    if($updateTeam=$database->updateTeam($newName, $pokemonArray, $idTeam));
                     
                 } catch(PDOException $e){
                     error_log($e->getMessage() . "##Código: " . $e->getCode() . "  " . microtime() . PHP_EOL, 3, "../logBD.txt");
@@ -374,11 +371,13 @@
         } else{ //If user is creating team = CREATE TEAM IN DATABASE
             $pokemonName = [];
             $teamName = $_GET["n"];
+            
             for($i = 0; $i <= 6; $i++) {
                 if(isset($_GET["p".$i])){
                     $pokemonName[$i] = $_GET["p".$i];
                 }
             }
+
             try{
                 $database = new User();
                 if($userId=$database->getIdUser($_SESSION["user"]));

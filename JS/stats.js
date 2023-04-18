@@ -6,6 +6,7 @@ const natureStat = document.getElementById('select-nature');
 const levelStat = document.getElementById('level-pokemon');
 const EVSelector = document.querySelectorAll('.ev-selector');
 const IVSelector = document.querySelectorAll('.iv-selector');
+const errorMessage = document.getElementById('error-message');
 
 
 function loadAllPokemon() {
@@ -48,11 +49,14 @@ function loadAllNatures() {
 
 const checkFields = () => {
     if(pokemonStat.value !== "" && levelStat.value !== "" && natureStat.value !== "") {
+        errorMessage.innerHTML = "";
         statResults.innerHTML = "";
         calculateStats();
         statResults.style.display = "block";
     } else{
-        //ERROR
+        statResults.innerHTML = "";
+        const errorMessage = document.getElementById('error-message');
+        errorMessage.innerHTML = "Fill all the fields";
     }
 }
 
@@ -90,7 +94,7 @@ const checkNature = async(nature, pokemonStats) => {
     }
     statResults.appendChild(row2Table);
     
-    addStatsPokemon(pokemonStats); //FIX (NOT SHOWING WHEN NATURE DOESN'T CHANGE STATS)
+    addStatsPokemon(pokemonStats);
 }
 
 const addStatsPokemon = (data) => {

@@ -31,9 +31,11 @@
             </a>
             <a href="createTeams.php" class="create-team">Create Teams</a>
             <a href="compareTeams.php" class="create-team">Compare</a>
+            <a href="rankings.php" class="create-team">Rankings</a>
+            <a href="statCalculator.php" class="create-team">Stat Calculator</a>
         </div>
 
-        <div class="profile-picture" onclick="toggleMenu()">
+        <div href="" class="profile-picture" onclick="toggleMenu()">
             <img src="<?php echo "../img/".$_SESSION["user"]."/image.png" ?>" alt="pfp">
         </div>
         <div class="drop-menu-wrap">
@@ -42,7 +44,7 @@
                 <hr>
 
                 <a href="profile.php" class="drop-menu-link">
-                    <i class="fa fa-user"></i>
+                    <i class="fa fa-user" aria-hidden="true"></i>
                     <p>Edit Profile</p>
                     <span>></span>
                 </a>
@@ -54,7 +56,7 @@
                 </div>
 
                 <a href="index.php?so=true" class="drop-menu-link">
-                    <i class="fa fa-sign-out"></i>
+                    <i class="fa fa-sign-out" aria-hidden="true"></i>
                     <p>Sign out</p>
                     <span>></span>
                 </a>
@@ -119,38 +121,39 @@
         </div>
 
         <div class="profile-teams"><?php
-                try{
-                    $database = new User();
-                    $userId=$database->getIdUser($_SESSION["user"]);
-                    $profileTeams=$database->showTeams($userId);
+            try{
+                $database = new User();
+                $userId=$database->getIdUser($_SESSION["user"]);
+                $profileTeams=$database->showTeams($userId);
 
-                    foreach($profileTeams as $teamItem) {
-                        $teamName = $teamItem["teamName"];
-                        $teamId = $teamItem["id"];
-                        $pokemonArray = [];
-                        for($i = 1; $i <= 6; $i++){
-                            $pokemonArray[$i] = $teamItem["pokemon".$i];
-                            $pokemonArray[$i] = ucfirst($pokemonArray[$i]);
-                        }
-
-                        echo '<div class="team-item">';
-                            echo '<div class="team-name">';
-                            echo $teamName;
-                            echo '</div>';
-                            for($j = 1; $j <= 6; $j++){
-                                echo '<div class="team-pokemon">';
-                                    echo '<img src="" alt="" class="team-pokemon-img">';
-                                    echo '<div class="team-pokemon-name">'.$pokemonArray[$j].'</div>';
-                                echo '</div>';
-                            }
-                            echo '<div class="edit-team" id="edit-'.$j.'"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></div>';
-                            echo '<div class="team-id" style="display:none">'.$teamId.'</div>';
-                        echo '</div>';
+                foreach($profileTeams as $teamItem) {
+                    $teamName = $teamItem["teamName"];
+                    $teamId = $teamItem["id"];
+                    $pokemonArray = [];
+                    for($i = 1; $i <= 6; $i++){
+                        $pokemonArray[$i] = $teamItem["pokemon".$i];
+                        $pokemonArray[$i] = ucfirst($pokemonArray[$i]);
                     }
-                } catch(PDOException $e){
-                    error_log($e->getMessage() . "##Código: " . $e->getCode() . "  " . microtime() . PHP_EOL, 3, "../logBD.txt");
-                    $errores['datos'] = "There was an error <br>";
+
+                    echo '<div class="team-item">';
+                        echo '<div class="team-name">';
+                        echo $teamName;
+                        echo '</div>';
+                        for($j = 1; $j <= 6; $j++){
+                            echo '<div class="team-pokemon">';
+                                echo '<img src="" alt="" class="team-pokemon-img">';
+                                echo '<div class="team-pokemon-name">'.$pokemonArray[$j].'</div>';
+                            echo '</div>';
+                        }
+                        echo '<div class="edit-team" id="edit-'.$j.'"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></div>';
+                        echo '<div class="team-id" style="display:none">'.$teamId.'</div>';
+                    echo '</div>';
                 }
+                
+            } catch(PDOException $e){
+                error_log($e->getMessage() . "##Código: " . $e->getCode() . "  " . microtime() . PHP_EOL, 3, "../logBD.txt");
+                $errores['datos'] = "There was an error <br>";
+            }
             ?>
         </div>
     </div>
@@ -209,13 +212,13 @@
                         rename("../img/".$_SESSION["user"], "../img/".$newName);
                         $_SESSION["user"] = $newName;
                     } else{
-                        $editPrefix = true; //ADD ERRORS ($_SESSION["status])
+                        $editPrefix = true;
                     }
                     
                     if(!$userEmail = $database->checkEmail($newEmail)){
                         if($updateEmail=$database->updateEmail($newEmail, $userId));
                     } else{
-                        $editPrefix = true; //ADD ERRORS ($_SESSION["status])
+                        $editPrefix = true;
                     }
                     if($editPrefix) {
                         ?>

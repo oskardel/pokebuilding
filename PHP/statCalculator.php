@@ -29,6 +29,7 @@
             </a>
             <a href="createTeams.php" class="create-team">Create Teams</a>
             <a href="compareTeams.php" class="create-team">Compare</a>
+            <a href="rankings.php" class="create-team">Rankings</a>
             <a href="statCalculator.php" class="create-team clicked">Stat Calculator</a>
         </div>
 
@@ -120,7 +121,9 @@
 
                 <input type="submit" onclick="checkFields()" value="Calculate"/>
             </form>
+            <div id="error-message"></div>
         </div>
+
         <table id="stat-results" style="display:none;">
             <tr>
                 <th></th>

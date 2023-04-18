@@ -183,7 +183,7 @@
 
 
         public function addTeam($name, $arrayPokemon, $userId) {
-            $prueba = null;
+            $nullValue = null;
             $query = "INSERT INTO teams(teamName, pokemon1, pokemon2, pokemon3, pokemon4, pokemon5, pokemon6, userId) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             $result = $this->prepare($query);
 
@@ -192,7 +192,7 @@
                 if(isset($arrayPokemon[$i])){
                     $result->bindParam(($i+1), $arrayPokemon[$i]);
                 } else{
-                    $result->bindParam(($i+1), $prueba);
+                    $result->bindParam(($i+1), $nullValue);
                 }
             }
             $result->bindParam(8, $userId);
@@ -200,9 +200,16 @@
             return $result->execute();
         }
 
+        public function deleteTeam($teamId) {  // NEW FUNCTION (DELETES TEAM FROM TABLE)
+            $query = "DELETE FROM teams WHERE id=:teamId";
+            $result=$this->prepare($query);
+            $result->bindParam(':teamId', $teamId);
+            return $result->execute();
+        }
+
 
         public function updateTeam($name, $arrayPokemon, $teamId) {
-            $prueba = null;
+            $nullValue = null;
             $query = "UPDATE teams SET teamName = ?, pokemon1 = ?, pokemon2 = ?, pokemon3 = ?, pokemon4 = ?, pokemon5 = ?, pokemon6 = ? WHERE id = ?";
             $result = $this->prepare($query);
 
@@ -211,7 +218,7 @@
                 if(isset($arrayPokemon[$i])){
                     $result->bindParam(($i+1), $arrayPokemon[$i]);
                 } else{
-                    $result->bindParam(($i+1), $prueba);
+                    $result->bindParam(($i+1), $nullValue);
                 }
             }
             $result->bindParam(8, $teamId);
@@ -240,6 +247,20 @@
                 } else{
                     return false;
                 }
+            }
+        }
+
+        public function checkExistTeam() {
+            $query = "SELECT * FROM teams";
+            $result = $this->prepare($query);
+            $result->execute();
+
+            foreach($result as $res) { 
+                if($res['teamName'] !== ""){
+                    return true;
+                }else{
+                    return false;
+                } 
             }
         }
 
