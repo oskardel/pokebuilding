@@ -32,6 +32,19 @@
             return $nameUser;
         }
 
+        public function getUserById($idUser) {
+            $query = "SELECT * FROM users WHERE id=:idUser";
+            $result=$this->prepare($query);
+            $result->bindParam(':idUser', $idUser);
+            $result->execute();
+
+            $resultUser = $result;
+            foreach ($resultUser as $row) {
+                $nameUser = $row['username'];
+            }
+            return $nameUser;
+        }
+
 
         //Checks if the username exists or not in the DB
         public function checkUsername($username) {
@@ -184,7 +197,8 @@
 
         public function addTeam($name, $arrayPokemon, $userId) {
             $nullValue = null;
-            $query = "INSERT INTO teams(teamName, pokemon1, pokemon2, pokemon3, pokemon4, pokemon5, pokemon6, userId) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            $zeroValue = 0;
+            $query = "INSERT INTO teams(teamName, pokemon1, pokemon2, pokemon3, pokemon4, pokemon5, pokemon6, votes, userId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $result = $this->prepare($query);
 
             $result->bindParam(1, $name);
@@ -195,7 +209,8 @@
                     $result->bindParam(($i+1), $nullValue);
                 }
             }
-            $result->bindParam(8, $userId);
+            $result->bindParam(8, $zeroValue);
+            $result->bindParam(9, $userId);
 
             return $result->execute();
         }
@@ -278,10 +293,32 @@
         }
 
 
+        public function getUserByTeamId($teamId) {
+            $query = "SELECT * FROM teams WHERE id=:teamId";
+            $result=$this->prepare($query);
+            $result->bindParam(':teamId', $teamId);
+            $result->execute();
+
+            foreach($result as $row) {
+                $userId = $row["userId"];
+            }
+            return $userId;
+        }
+
+
         public function showTeams($idUser) {
             $query = "SELECT * FROM teams WHERE userId=?";
             $result=$this->prepare($query);
             $result->bindParam(1, $idUser);
+            $result->execute();
+
+            $arrayTeams=$result->fetchAll();
+            return $arrayTeams;
+        }
+
+        public function showAllTeams() {
+            $query = "SELECT * FROM teams";
+            $result=$this->prepare($query);
             $result->execute();
 
             $arrayTeams=$result->fetchAll();

@@ -73,6 +73,26 @@
                     <?php
                 } else{
                     //* CONTINUE CODE HERE (ALL TEAMS WILL BE DISPLAYED BY VOTES, WITH FILTERS OF TIME: 24hours, 7 days, 30 month) *
+                    $allTeams=$database->showAllTeams();
+                    for($i = 0; $i < count($allTeams); $i++) {
+                        $teamId=$database->getTeamId($allTeams[$i]["teamName"]);
+                        $userId=$database->getUserByTeamId($teamId);
+                        $userTeam=$database->getUserById($userId);
+                        echo '<div class="team-item '.$teamId.'">'; 
+                            echo '<div class="team-name">';
+                            echo $allTeams[$i]["teamName"];
+                            echo '</div>';
+                            for($j = 1; $j <= 6; $j++){
+                                echo '<div class="team-pokemon">';
+                                    echo '<img src="" alt="" class="team-pokemon-img">';
+                                    echo '<div class="team-pokemon-name">'. ucfirst($allTeams[$i]["pokemon".$j]).'</div>';
+                                echo '</div>';
+                            }
+                            echo '<div class="team-username">'. $userTeam .'</div>';
+                            echo '<div class="votes">'. $allTeams[$i]["votes"] .'</div>';
+                            echo '<button class="vote-button" onclick="addVote('. $teamId .', '. $userId .')">+</button>';
+                        echo '</div>';
+                    }
                 }
             } catch(PDOException $e){
                 error_log($e->getMessage() . "##Código: " . $e->getCode() . "  " . microtime() . PHP_EOL, 3, "../logBD.txt");
@@ -97,5 +117,26 @@
     </footer>
     
     <script src="../JS/dark-mode.js"></script>
+    <script>
+        const teamItem = document.querySelectorAll('.team-item');
+
+        // IDEA: MOVER ESTE CÓDIGO AL PHP DE RANKINGS.PHP PARA ACTUALIZAR LOS VOTOS EN LA BASE DE DATOS
+
+        const addVote = (teamId, userId) => {
+            <?php 
+                try{
+                    $database = new User();
+                    $teamId = ?> teamId; <?php // ACABAR (NO FUNCIONA + FALTA CREAR FUNCIÓN)
+                    $voteArray = $database->searchVotes();
+                    $addVote = $database->addVote()
+
+                } catch(PDOException $e){
+                    error_log($e->getMessage() . "##Código: " . $e->getCode() . "  " . microtime() . PHP_EOL, 3, "../logBD.txt");
+                    $errores['datos'] = "There was an error <br>";
+            }
+            ?>
+            teamItem[teamId-1].querySelector(".votes").innerHTML = parseInt(teamItem[teamId-1].querySelector(".votes").innerHTML) + 1;
+        } 
+    </script>
 </body>
 </html>

@@ -56,7 +56,7 @@ const checkFields = () => {
     } else{
         statResults.innerHTML = "";
         const errorMessage = document.getElementById('error-message');
-        errorMessage.innerHTML = "Fill all the fields";
+        errorMessage.innerHTML = "Please, fill in all the fields";
     }
 }
 

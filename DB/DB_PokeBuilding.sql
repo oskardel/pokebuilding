@@ -25,6 +25,8 @@ CREATE TABLE `teams` (
     `pokemon4` VARCHAR(25),
     `pokemon5` VARCHAR(25),
     `pokemon6` VARCHAR(25),
+    `votes` INT NOT NULL,
+    `votedBy` VARCHAR(20),
     `userId` INT NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
