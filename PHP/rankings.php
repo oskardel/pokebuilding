@@ -65,6 +65,17 @@
 
     <div class="main-content">
         <?php
+            if(isset($_GET["range"])) {
+                //ACABAR (QUE SE SELECCIONE LA OPCIÓN EN EL SELECT UNA VEZ SE PULSE)
+                //CAMBIAR LA FUNCIÓN DE USERCLASS.PHP (SHOWALLTEAMS) PARA QUE CAMBIE EL ORDEN QUE SE VEN LOS EQUIPOS
+            }
+        ?>
+        <select name="team-option" id="team-option">
+            <option value="1">Most recent</option>
+            <option value="2">Oldest</option>
+            <option value="3">Most liked</option>
+        </select>
+        <?php
             try{
                 $database = new User();
                 if(!$teamsCount=$database->checkExistTeam()){
@@ -72,10 +83,10 @@
                 <div class="no-teams-exist">There aren't teams created yet! <a href="createTeams.php">Create your own teams now.</a></div>
                     <?php
                 } else{
-                    //* CONTINUE CODE HERE (ALL TEAMS WILL BE DISPLAYED BY VOTES, WITH FILTERS OF TIME: 24hours, 7 days, 30 month) *
                     $allTeams=$database->showAllTeams();
                     for($i = 0; $i < count($allTeams); $i++) {
                         $teamId=$database->getTeamId($allTeams[$i]["teamName"]);
+                        $sessionUser=$database->getIdUser($_SESSION["user"]);
                         $userId=$database->getUserByTeamId($teamId);
                         $userTeam=$database->getUserById($userId);
                         echo '<div class="team-item '.$teamId.'">'; 
@@ -90,7 +101,7 @@
                             }
                             echo '<div class="team-username">'. $userTeam .'</div>';
                             echo '<div class="votes">'. $allTeams[$i]["votes"] .'</div>';
-                            echo '<button class="vote-button" onclick="addVote('. $teamId .', '. $userId .')">+</button>';
+                            echo '<button class="vote-button" onclick="addVote('. $teamId .', '. $sessionUser .')">+</button>';
                         echo '</div>';
                     }
                 }
@@ -117,26 +128,38 @@
     </footer>
     
     <script src="../JS/dark-mode.js"></script>
-    <script>
-        const teamItem = document.querySelectorAll('.team-item');
-
-        // IDEA: MOVER ESTE CÓDIGO AL PHP DE RANKINGS.PHP PARA ACTUALIZAR LOS VOTOS EN LA BASE DE DATOS
-
-        const addVote = (teamId, userId) => {
-            <?php 
-                try{
-                    $database = new User();
-                    $teamId = ?> teamId; <?php // ACABAR (NO FUNCIONA + FALTA CREAR FUNCIÓN)
-                    $voteArray = $database->searchVotes();
-                    $addVote = $database->addVote()
-
-                } catch(PDOException $e){
-                    error_log($e->getMessage() . "##Código: " . $e->getCode() . "  " . microtime() . PHP_EOL, 3, "../logBD.txt");
-                    $errores['datos'] = "There was an error <br>";
-            }
-            ?>
-            teamItem[teamId-1].querySelector(".votes").innerHTML = parseInt(teamItem[teamId-1].querySelector(".votes").innerHTML) + 1;
-        } 
-    </script>
+    <script src="../JS/rankings.js"></script>
 </body>
 </html>
+
+<?php
+    if(isset($_GET["t"])) {
+        try{
+            $database = new User();
+            $teamId = $_GET["t"];
+            $votedBy = $_GET["v"];
+            $voteArray = $database->searchVotes($teamId);
+            if(!str_contains($voteArray, $votedBy)) {
+                $addVote = $database->addVote($teamId);
+                $addRestriction = $database->addRestrictionVote($teamId, $votedBy);
+                ?>
+                <script>
+                    window.location.href = "rankings.php";
+                </script>
+                <?php
+            } else{
+                $removeVote = $database->removeVote($teamId);
+                $removeRestriction = $database->removeRestrictionVote($teamId, $votedBy);
+                ?>
+                <script>
+                    window.location.href = "rankings.php";
+                </script>
+                <?php
+            }
+            
+        } catch(PDOException $e){
+            error_log($e->getMessage() . "##Código: " . $e->getCode() . "  " . microtime() . PHP_EOL, 3, "../logBD.txt");
+            $errores['datos'] = "There was an error <br>";
+        }
+    }
+?>

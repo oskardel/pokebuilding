@@ -198,7 +198,7 @@
         public function addTeam($name, $arrayPokemon, $userId) {
             $nullValue = null;
             $zeroValue = 0;
-            $query = "INSERT INTO teams(teamName, pokemon1, pokemon2, pokemon3, pokemon4, pokemon5, pokemon6, votes, userId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $query = "INSERT INTO teams(teamName, pokemon1, pokemon2, pokemon3, pokemon4, pokemon5, pokemon6, votes, votedBy, userId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $result = $this->prepare($query);
 
             $result->bindParam(1, $name);
@@ -210,12 +210,13 @@
                 }
             }
             $result->bindParam(8, $zeroValue);
-            $result->bindParam(9, $userId);
+            $result->bindParam(9, $zeroValue);
+            $result->bindParam(10, $userId);
 
             return $result->execute();
         }
 
-        public function deleteTeam($teamId) {  // NEW FUNCTION (DELETES TEAM FROM TABLE)
+        public function deleteTeam($teamId) { 
             $query = "DELETE FROM teams WHERE id=:teamId";
             $result=$this->prepare($query);
             $result->bindParam(':teamId', $teamId);
@@ -317,12 +318,54 @@
         }
 
         public function showAllTeams() {
-            $query = "SELECT * FROM teams";
+            $query = "SELECT * FROM teams ORDER BY id";
             $result=$this->prepare($query);
             $result->execute();
 
             $arrayTeams=$result->fetchAll();
             return $arrayTeams;
+        }
+
+        public function searchVotes($teamId) {
+            $query = "SELECT * FROM teams WHERE id=:teamId";
+            $result=$this->prepare($query);
+            $result->bindParam(':teamId', $teamId);
+            $result->execute();
+
+            foreach ($result as $row) {
+                $votedBy = $row['votedBy'];
+            }
+            return $votedBy;
+        }
+
+        public function addVote($teamId) {
+            $query = "UPDATE teams SET votes = votes + 1 WHERE id=:teamId";
+            $result=$this->prepare($query);
+            $result->bindParam(':teamId', $teamId);
+            return $result->execute();
+        }
+
+        public function addRestrictionVote($teamId, $votedBy) {
+            $query = "UPDATE teams SET votedBy = CONCAT(votedBy, '|', :votedBy) WHERE id=:teamId";
+            $result=$this->prepare($query);
+            $result->bindParam(':votedBy', $votedBy);
+            $result->bindParam(':teamId', $teamId);
+            return $result->execute();
+        }
+
+        public function removeRestrictionVote($teamId, $votedBy) {
+            $query = "UPDATE teams SET votedBy = REPLACE(votedBy, :votedBy,'') WHERE id=:teamId";
+            $result=$this->prepare($query);
+            $result->bindParam(':votedBy', $votedBy);
+            $result->bindParam(':teamId', $teamId);
+            return $result->execute();
+        }
+
+        public function removeVote($teamId) {
+            $query = "UPDATE teams SET votes = votes - 1 WHERE id=:teamId";
+            $result=$this->prepare($query);
+            $result->bindParam(':teamId', $teamId);
+            return $result->execute();
         }
     }
 ?>

@@ -1,7 +1,10 @@
-// const teamItem = document.querySelectorAll('.team-item');
+const teamItem = document.querySelectorAll('.team-item');
+const teamOptions = document.getElementById('team-option');
 
-// // IDEA: MOVER ESTE CÓDIGO AL PHP DE RANKINGS.PHP PARA ACTUALIZAR LOS VOTOS EN LA BASE DE DATOS
+function addVote(teamId, userId) {    
+    window.location.href = "rankings.php?t="+teamId+"&v="+userId;
+}
 
-// const addVote = (teamId, userId) => { 
-//     teamItem[teamId-1].querySelector(".votes").innerHTML = parseInt(teamItem[teamId-1].querySelector(".votes").innerHTML) + 1;
-// } 
+teamOptions.addEventListener('input', () => {
+    window.location.href = "rankings.php?range="+teamOptions.value;
+})
