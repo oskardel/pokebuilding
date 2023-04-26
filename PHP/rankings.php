@@ -65,7 +65,17 @@
 
     <div class="main-content">
         <?php
+            $fieldVariable = "id";
+            $rangeVariable = "ASC";
+
             if(isset($_GET["range"])) {
+                if($_GET["range"] === "2") {
+                    $fieldVariable = "votes";
+                    $rangeVariable = "DESC";
+                } else if($_GET["range"] === "3"){
+                    $fieldVariable = "votes";
+                    $rangeVariable = "DESC";
+                }
                 //ACABAR (QUE SE SELECCIONE LA OPCIÓN EN EL SELECT UNA VEZ SE PULSE)
                 //CAMBIAR LA FUNCIÓN DE USERCLASS.PHP (SHOWALLTEAMS) PARA QUE CAMBIE EL ORDEN QUE SE VEN LOS EQUIPOS
             }
@@ -83,7 +93,7 @@
                 <div class="no-teams-exist">There aren't teams created yet! <a href="createTeams.php">Create your own teams now.</a></div>
                     <?php
                 } else{
-                    $allTeams=$database->showAllTeams();
+                    $allTeams=$database->showAllTeams($fieldVariable, $rangeVariable);
                     for($i = 0; $i < count($allTeams); $i++) {
                         $teamId=$database->getTeamId($allTeams[$i]["teamName"]);
                         $sessionUser=$database->getIdUser($_SESSION["user"]);

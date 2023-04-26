@@ -317,9 +317,11 @@
             return $arrayTeams;
         }
 
-        public function showAllTeams() {
-            $query = "SELECT * FROM teams ORDER BY id";
+        public function showAllTeams($field, $order) {
+            $query = "SELECT * FROM teams ORDER BY :field :order";
             $result=$this->prepare($query);
+            $result->bindParam(':field', $field);
+            $result->bindParam(':order', $order);
             $result->execute();
 
             $arrayTeams=$result->fetchAll();
