@@ -64,27 +64,9 @@
     </header>
 
     <div class="main-content">
-        <?php
-            $fieldVariable = "id";
-            $rangeVariable = "ASC";
+        <button class="option-button" value="1" id="recent-button">Most recent</button>
+        <button class="option-button" value="2" id="liked-button">Most liked</button>
 
-            if(isset($_GET["range"])) {
-                if($_GET["range"] === "2") {
-                    $fieldVariable = "votes";
-                    $rangeVariable = "DESC";
-                } else if($_GET["range"] === "3"){
-                    $fieldVariable = "votes";
-                    $rangeVariable = "DESC";
-                }
-                //ACABAR (QUE SE SELECCIONE LA OPCIÓN EN EL SELECT UNA VEZ SE PULSE)
-                //CAMBIAR LA FUNCIÓN DE USERCLASS.PHP (SHOWALLTEAMS) PARA QUE CAMBIE EL ORDEN QUE SE VEN LOS EQUIPOS
-            }
-        ?>
-        <select name="team-option" id="team-option">
-            <option value="1">Most recent</option>
-            <option value="2">Oldest</option>
-            <option value="3">Most liked</option>
-        </select>
         <?php
             try{
                 $database = new User();
@@ -93,7 +75,16 @@
                 <div class="no-teams-exist">There aren't teams created yet! <a href="createTeams.php">Create your own teams now.</a></div>
                     <?php
                 } else{
-                    $allTeams=$database->showAllTeams($fieldVariable, $rangeVariable);
+                    if(isset($_GET["range"])){
+                        if($_GET["range"] === "2") {
+                            $allTeams=$database->showAllTeamsVotes();
+                        } else{
+                            $allTeams=$database->showAllTeamsRecent();
+                        }
+                    } else{
+                        $allTeams=$database->showAllTeamsRecent();
+                    }
+
                     for($i = 0; $i < count($allTeams); $i++) {
                         $teamId=$database->getTeamId($allTeams[$i]["teamName"]);
                         $sessionUser=$database->getIdUser($_SESSION["user"]);

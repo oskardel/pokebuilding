@@ -1,5 +1,3 @@
-//https://pycosites.com/pkmn/stat.php
-
 const statResults = document.getElementById('stat-results');
 const pokemonStat = document.getElementById('select-pokemon');
 const natureStat = document.getElementById('select-nature');

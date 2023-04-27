@@ -317,11 +317,18 @@
             return $arrayTeams;
         }
 
-        public function showAllTeams($field, $order) {
-            $query = "SELECT * FROM teams ORDER BY :field :order";
+        public function showAllTeamsRecent() {
+            $query = "SELECT * FROM teams ORDER BY id ASC";
             $result=$this->prepare($query);
-            $result->bindParam(':field', $field);
-            $result->bindParam(':order', $order);
+            $result->execute();
+
+            $arrayTeams=$result->fetchAll();
+            return $arrayTeams;
+        }
+
+        public function showAllTeamsVotes() {
+            $query = "SELECT * FROM teams ORDER BY votes DESC";
+            $result=$this->prepare($query);
             $result->execute();
 
             $arrayTeams=$result->fetchAll();
