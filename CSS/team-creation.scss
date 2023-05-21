@@ -1,6 +1,6 @@
 $brightColor: #f6f8fc;
 $hoverButtonColor: #ee1515;
-$textColorBright: #6b6b6b;
+$textColorBright: #8a8a8a;
 $brightShadow-box: rgba(0, 0, 0, 0.15) 0px 5px 15px;
 $darkColor: #212121;
 $textColorDark: #e6e6e6;
@@ -28,8 +28,9 @@ $darkShadow-box: rgba(255, 255, 255, 0.15) 0px 5px 15px;
 }
 
 html, body{
-    overflow:visible;
-    margin: 0;
+    width: auto!important; 
+    overflow-x: hidden!important;
+    margin: 0px 0px 0px 0px;
     padding: 0;
     background-color: var(--background-color);
 }
@@ -37,11 +38,12 @@ html, body{
 .background-image{
     position: fixed;
     width: 100%;
-    height: 100vw;
+    height: 500%;
     overflow:visible;
     margin: 0;
     padding: 0;
-    background-color: #B00832;
+    background: rgb(108,56,161);
+    background: linear-gradient(90deg, rgba(108,56,161,1) 0%, rgba(176,8,50,1) 100%);    
     z-index: -100;
     clip-path: polygon(0 0, 70% 0, 30% 100%, 0% 100%);
 }
@@ -49,19 +51,21 @@ html, body{
 .background-image-2{
     position: fixed;
     width: 100%;
-    height: 100vw;
+    height: 500%;
     overflow:visible;
     margin: 0;
     padding: 0;
     background: rgb(176,8,50);
-    background: linear-gradient(90deg, rgba(176,8,50,1) 0%, rgba(108,56,161,1) 100%);
+    background: linear-gradient(90deg, rgba(176,8,50,1) 0%, rgba(147,28,97,1) 50%, var(--background-color) 100%);
     z-index: -99;
     clip-path: polygon(55% 0, 70% 0, 30% 100%, 15% 100%);
 }
 
 header{
+    width: 100%;
+    margin: 0;
     z-index: 2;
-    position: sticky;
+    position: fixed;
     top: 0;
     display: flex;
     flex-direction: row;
@@ -101,9 +105,6 @@ header{
             text-transform: uppercase;
             letter-spacing: 1px;
             height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             font-weight: 700;
             border-bottom: 5px solid transparent;
             transition: 0.2s;
@@ -137,8 +138,15 @@ header{
         }
 
         .create-team{
+            display: flex;
+            justify-content: center;
+            align-items: center;
             padding-left: 15px;
             padding-right: 15px;
+
+            .fa{
+                color: var(--text-color);
+            }
         }
     }    
 }
@@ -156,43 +164,110 @@ header{
     font-weight: 700;
 }
 
+.main-content{
+    padding-top: 75px;
+    padding-bottom: 75px;
 
-.pokemon-search{
-    padding-top: 10px;
-    height: 100%;
-    position: fixed;
-    z-index: 1;
-    width: 40%;
-    overflow-x: hidden;
+    .pokemon-search{
+        padding-top: 10px;
+        padding-left: 10px;
+        height: 100%;
+        position: fixed;
+        z-index: 1;
+        width: 40%;
+        overflow: hidden;
 
-    .pokemon-team{
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        width: 500px;
-        padding: 25px;
-    
-        .pokemon-item{
-            padding: 15px;
-            img{
-                width: 100px;
+        .pokemon-team{
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            width: 500px;
+            padding: 25px;
+        
+            .pokemon-item{
+                padding: 15px;
+                text-align: center;
+
+                img{
+                    width: 100px;
+                }
+
+                .pokemon-name{
+                    font-weight: bold;
+                }
             }
         }
-    }
 
-    .pokemon-image-div{
-        display: flex;
-        align-items: center;
+        #search-options-name, select{
+            height: 20px;
+            text-align: center;
+            font-weight: bold;
+            background-color: var(--absolute-color);
+            border: 1px solid var(--absolute-color);
+            border-radius: 5px;
+
+            &:focus{
+                border: 1px solid var(--text-color);
+            }
+        }
+
+        #search-options-name{
+            width: 200px;
+        }
+
+        input[type="submit"]{
+            z-index: 5;
+            font-weight: bold;
+            width: 200px;
+            height: 25px;
+            background-color: $hoverButtonColor;
+            border: 1px solid var(--background-color);
+            border-radius: 10px;
+            margin-top: 10px;
+            box-shadow: var(--shadow-box);
+
+            &:hover{
+                background-color: $hoverButtonColor;
+                border: 1px solid var(--text-color);
+                cursor: pointer;
+            }
+        }
+
+        .save-team-name{
+            text-align: center;
+            font-weight: bold;
+            margin-top: 15px;
+            width: 200px;
+            background-color: var(--absolute-color);
+            border: 1px solid var(--absolute-color);
+            border-radius: 5px;
+            height: 20px;
+
+            &:focus{
+                border: 1px solid var(--text-color);
+            }
+        }
+        label{
+            font-weight: bold;
+        }
+
+        .pokemon-image-div{
+            display: flex;
+            height: 512px;
+        }
     }
 }
-
 .pokemon-item:has(.nopokemon):hover{
     cursor:not-allowed;
 }
 
-.pokemon-img:not(.nopokemon):hover{
-    border-bottom: 1px solid $hoverButtonColor;
-    cursor: pointer;
+.pokemon-img:not(.nopokemon){
+    border-bottom: 1px solid transparent;
+
+    &:hover{
+        border-bottom: 1px solid $hoverButtonColor;
+        cursor: pointer;
+    }
 }
 
 #pokedex-container{
@@ -201,6 +276,7 @@ header{
     margin-left: 40%;
     display: flex;
     flex-direction: column;
+    justify-content: right;
 
     .pokemon-block{
         display: flex;
@@ -222,7 +298,6 @@ header{
             font-weight: 700;
             font-size: larger;
             color: var(--text-color);
-            
         }
 
         .pokemon-id{
@@ -324,10 +399,26 @@ header{
                 align-items: center;
                 z-index: 2;
 
+                .pokemon-forms{
+                    background-color: var(--absolute-color);
+                }
+
                 .add-button{
+                    font-size: 30px;
+                    color: black;
+                    width: 50px;
+                    height: 50px;
                     position: absolute;
                     top: 5%;
                     left: 5%;
+                    border: 1px solid var(--text-color);
+                    border-radius: 50%;
+                    background-color: #84eb9e;
+
+                    &:hover{
+                        cursor: pointer;
+                        background-color: #5faf73;
+                    }
                 }
 
                 .pokemon-card-types{
@@ -487,6 +578,22 @@ header{
                 padding-left: 25px;
             }
         }
+    }
+}
+
+.alert-message{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+    background-color: #84eb9e;
+    border: 1px solid #5faf73;
+    border-radius: 5px;
+    font-size: 17px;
+    text-align: center;
+
+    h5{
+        color: black;
     }
 }
 
@@ -680,4 +787,41 @@ header{
     opacity: 0;
     pointer-events: none;
     transform: translateY(-100%);
+}
+
+.error-team-name{
+    font-weight: bold;
+}
+
+@media only screen and (max-width: 650px) {
+    .create-team{
+        font-size: 0;
+
+        .fa{
+            color: var(--text-color);
+            font-size: 30px;
+        }
+    }
+
+    .main-content{
+        display: flex;
+    }
+
+    .icon-text{
+        display: none;
+    }
+
+    header{
+        width: 100vw;
+    }
+}
+
+@media only screen and (max-width: 500px) {    
+    .pokemon-block{
+        width: 100%;
+    }
+
+    header{
+        width: 100vw;
+    }
 }

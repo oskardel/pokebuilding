@@ -63,7 +63,7 @@ const typeColours = {
 
 /* ADDING ALL POKEMON */
 const fetchAllPokemon = async() => {
-    for(let i = 1; i <= 1010; i++){
+    for(let i = 1; i <= 905; i++){
         await loadPokemonInfo(i);
         fetchCounter.innerHTML = Math.floor((100*i)/1008)+"% Pokémon fetched";
         progressLaoder.style.width = Math.floor((100*i)/1008)+"%";
@@ -134,7 +134,7 @@ function fetchPokemonGeneration(id) {
 }
 
 function fetchAllGenerations() {
-    for(let i = 1; i <= 9; i++){
+    for(let i = 1; i <= 8; i++){
         loadPokemonGenerations(i);
     }
 }
@@ -407,10 +407,12 @@ function listenerCard() {
             getGenrationPokemon(pokemonId); //fetching from /pokemon API
             getPokemonMoves(pokemonId); //creates a table with all the moves the pokmeon learns
             
-            pokemonCardDiv.classList.add('active');
-            overlayButton.classList.add('active');
-            pokemonCardDiv.style.display = "block";
-            overlayButton.style.display = "block";
+            setTimeout(function(){
+                pokemonCardDiv.classList.add('active');
+                overlayButton.classList.add('active');
+                pokemonCardDiv.style.display = "block";
+                overlayButton.style.display = "block";
+            },150);
         })
     })
 }
@@ -571,16 +573,18 @@ function showImageHover() {
     const imageHover = document.querySelector('.pokemon-image-hover');
     pokemonCards.forEach(card => {
         card.addEventListener('mouseover', () => {
-            if(card.querySelector('.pokemon-id').innerHTML > 905){
-                imageHover.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${trimZeros(card.querySelector('.pokemon-id').innerHTML)}.png`;
-            } else{
-                imageHover.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${trimZeros(card.querySelector('.pokemon-id').innerHTML)}.png`;
-            }
+            imageHover.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${trimZeros(card.querySelector('.pokemon-id').innerHTML)}.png`;
+
         })
         card.addEventListener('mouseout', () => {
             imageHover.src = "";
         })
     })
+}
+function deleteLoginMessage() {
+    setTimeout(function(){
+        document.querySelector('.alert-message').remove();
+    },3500);
 }
 
 
@@ -594,6 +598,8 @@ if(savedPokemonData) {
     overlayLoader.classList.add('hidden');
     listenerCard();
     showImageHover();
+    deleteLoginMessage();
 } else{
     fetchAllPokemon();
+    deleteLoginMessage();
 }

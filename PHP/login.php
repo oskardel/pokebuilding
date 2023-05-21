@@ -26,10 +26,10 @@
             <form action="" method="post">
                 <?php 
                     session_start();
-                    if(isset($_SESSION["status"])) {
+                    if(isset($_GET["login"])) {
                         ?>
                         <div class="alert-message">
-                            <h5><?php echo $_SESSION["status"]; ?></h5>
+                            <h5><?php echo $_GET["login"]; ?></h5>
                         </div>
                         <?php
                         unset($_SESSION["status"]);

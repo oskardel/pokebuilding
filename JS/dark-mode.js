@@ -1,6 +1,5 @@
 if(localStorage.getItem('darkMode')===null) {
     localStorage.setItem('darkMode', "false");
-    console.log("hola");
 }
 
 const dropMenu = document.querySelector('.drop-menu-wrap');

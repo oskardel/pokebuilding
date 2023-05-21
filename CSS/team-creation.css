@@ -4,7 +4,7 @@
 }
 
 .light-theme {
-  --text-color: #6b6b6b;
+  --text-color: #8a8a8a;
   --background-color: #f6f8fc;
   --shadow-box: rgba(0, 0, 0, 0.15) 0px 5px 15px;
   --absolute-color: white;
@@ -20,8 +20,9 @@
 }
 
 html, body {
-  overflow: visible;
-  margin: 0;
+  width: auto !important;
+  overflow-x: hidden !important;
+  margin: 0px 0px 0px 0px;
   padding: 0;
   background-color: var(--background-color);
 }
@@ -29,11 +30,12 @@ html, body {
 .background-image {
   position: fixed;
   width: 100%;
-  height: 100vw;
+  height: 500%;
   overflow: visible;
   margin: 0;
   padding: 0;
-  background-color: #B00832;
+  background: rgb(108, 56, 161);
+  background: linear-gradient(90deg, rgb(108, 56, 161) 0%, rgb(176, 8, 50) 100%);
   z-index: -100;
   -webkit-clip-path: polygon(0 0, 70% 0, 30% 100%, 0% 100%);
           clip-path: polygon(0 0, 70% 0, 30% 100%, 0% 100%);
@@ -42,20 +44,22 @@ html, body {
 .background-image-2 {
   position: fixed;
   width: 100%;
-  height: 100vw;
+  height: 500%;
   overflow: visible;
   margin: 0;
   padding: 0;
   background: rgb(176, 8, 50);
-  background: linear-gradient(90deg, rgb(176, 8, 50) 0%, rgb(108, 56, 161) 100%);
+  background: linear-gradient(90deg, rgb(176, 8, 50) 0%, rgb(147, 28, 97) 50%, var(--background-color) 100%);
   z-index: -99;
   -webkit-clip-path: polygon(55% 0, 70% 0, 30% 100%, 15% 100%);
           clip-path: polygon(55% 0, 70% 0, 30% 100%, 15% 100%);
 }
 
 header {
+  width: 100%;
+  margin: 0;
   z-index: 2;
-  position: sticky;
+  position: fixed;
   top: 0;
   display: flex;
   flex-direction: row;
@@ -92,9 +96,6 @@ header .header-options .create-team:not(.clicked) {
   text-transform: uppercase;
   letter-spacing: 1px;
   height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   font-weight: 700;
   border-bottom: 5px solid transparent;
   transition: 0.2s;
@@ -123,8 +124,14 @@ header .header-options .icon-parts img {
   padding-right: 5px;
 }
 header .header-options .create-team {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding-left: 15px;
   padding-right: 15px;
+}
+header .header-options .create-team .fa {
+  color: var(--text-color);
 }
 
 .clicked {
@@ -140,36 +147,94 @@ header .header-options .create-team {
   font-weight: 700;
 }
 
-.pokemon-search {
+.main-content {
+  padding-top: 75px;
+  padding-bottom: 75px;
+}
+.main-content .pokemon-search {
   padding-top: 10px;
+  padding-left: 10px;
   height: 100%;
   position: fixed;
   z-index: 1;
   width: 40%;
-  overflow-x: hidden;
+  overflow: hidden;
 }
-.pokemon-search .pokemon-team {
+.main-content .pokemon-search .pokemon-team {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   width: 500px;
   padding: 25px;
 }
-.pokemon-search .pokemon-team .pokemon-item {
+.main-content .pokemon-search .pokemon-team .pokemon-item {
   padding: 15px;
+  text-align: center;
 }
-.pokemon-search .pokemon-team .pokemon-item img {
+.main-content .pokemon-search .pokemon-team .pokemon-item img {
   width: 100px;
 }
-.pokemon-search .pokemon-image-div {
+.main-content .pokemon-search .pokemon-team .pokemon-item .pokemon-name {
+  font-weight: bold;
+}
+.main-content .pokemon-search #search-options-name, .main-content .pokemon-search select {
+  height: 20px;
+  text-align: center;
+  font-weight: bold;
+  background-color: var(--absolute-color);
+  border: 1px solid var(--absolute-color);
+  border-radius: 5px;
+}
+.main-content .pokemon-search #search-options-name:focus, .main-content .pokemon-search select:focus {
+  border: 1px solid var(--text-color);
+}
+.main-content .pokemon-search #search-options-name {
+  width: 200px;
+}
+.main-content .pokemon-search input[type=submit] {
+  z-index: 5;
+  font-weight: bold;
+  width: 200px;
+  height: 25px;
+  background-color: #ee1515;
+  border: 1px solid var(--background-color);
+  border-radius: 10px;
+  margin-top: 10px;
+  box-shadow: var(--shadow-box);
+}
+.main-content .pokemon-search input[type=submit]:hover {
+  background-color: #ee1515;
+  border: 1px solid var(--text-color);
+  cursor: pointer;
+}
+.main-content .pokemon-search .save-team-name {
+  text-align: center;
+  font-weight: bold;
+  margin-top: 15px;
+  width: 200px;
+  background-color: var(--absolute-color);
+  border: 1px solid var(--absolute-color);
+  border-radius: 5px;
+  height: 20px;
+}
+.main-content .pokemon-search .save-team-name:focus {
+  border: 1px solid var(--text-color);
+}
+.main-content .pokemon-search label {
+  font-weight: bold;
+}
+.main-content .pokemon-search .pokemon-image-div {
   display: flex;
-  align-items: center;
+  height: 512px;
 }
 
 .pokemon-item:has(.nopokemon):hover {
   cursor: not-allowed;
 }
 
+.pokemon-img:not(.nopokemon) {
+  border-bottom: 1px solid transparent;
+}
 .pokemon-img:not(.nopokemon):hover {
   border-bottom: 1px solid #ee1515;
   cursor: pointer;
@@ -181,6 +246,7 @@ header .header-options .create-team {
   margin-left: 40%;
   display: flex;
   flex-direction: column;
+  justify-content: right;
 }
 #pokedex-container .pokemon-block {
   display: flex;
@@ -291,10 +357,24 @@ header .header-options .create-team {
   align-items: center;
   z-index: 2;
 }
+#pokemon-card .pokemon-card-info .image-div .image-div-left .pokemon-forms {
+  background-color: var(--absolute-color);
+}
 #pokemon-card .pokemon-card-info .image-div .image-div-left .add-button {
+  font-size: 30px;
+  color: black;
+  width: 50px;
+  height: 50px;
   position: absolute;
   top: 5%;
   left: 5%;
+  border: 1px solid var(--text-color);
+  border-radius: 50%;
+  background-color: #84eb9e;
+}
+#pokemon-card .pokemon-card-info .image-div .image-div-left .add-button:hover {
+  cursor: pointer;
+  background-color: #5faf73;
 }
 #pokemon-card .pokemon-card-info .image-div .image-div-left .pokemon-card-types {
   padding-top: 25px;
@@ -431,6 +511,21 @@ header .header-options .create-team {
 }
 #pokemon-card .pokemon-card-info .pokemon-info .pokemon-weight {
   padding-left: 25px;
+}
+
+.alert-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+  background-color: #84eb9e;
+  border: 1px solid #5faf73;
+  border-radius: 5px;
+  font-size: 17px;
+  text-align: center;
+}
+.alert-message h5 {
+  color: black;
 }
 
 .pokemon-stats {
@@ -609,4 +704,35 @@ header .header-options .create-team {
   opacity: 0;
   pointer-events: none;
   transform: translateY(-100%);
+}
+
+.error-team-name {
+  font-weight: bold;
+}
+
+@media only screen and (max-width: 650px) {
+  .create-team {
+    font-size: 0;
+  }
+  .create-team .fa {
+    color: var(--text-color);
+    font-size: 30px;
+  }
+  .main-content {
+    display: flex;
+  }
+  .icon-text {
+    display: none;
+  }
+  header {
+    width: 100vw;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .pokemon-block {
+    width: 100%;
+  }
+  header {
+    width: 100vw;
+  }
 }/*# sourceMappingURL=team-creation.css.map */

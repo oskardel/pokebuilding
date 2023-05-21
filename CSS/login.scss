@@ -140,6 +140,17 @@ footer{
     transform: translate(-50%, -50%);
 }
 
+.register-form{
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1000px;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
 .form-forgot{
     display: flex;
     position: fixed;

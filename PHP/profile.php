@@ -23,16 +23,15 @@
     <title><?php echo $_SESSION["user"]; ?> - PokéBuilding</title>
 </head>
 <body class="body light-theme">
-<header>
+    <header>
         <div class="header-options">
             <a href="index.php" class="icon-parts">
                 <img src="../img/pokeball_icon.png" alt="pokeball_icon">
                 <h1 class="icon-text">PokéBuilding</h1>
             </a>
-            <a href="createTeams.php" class="create-team">Create Teams</a>
-            <a href="compareTeams.php" class="create-team">Compare</a>
-            <a href="rankings.php" class="create-team">Rankings</a>
-            <a href="statCalculator.php" class="create-team">Stat Calculator</a>
+            <a href="createTeams.php" class="create-team">Create Teams <i class="fa fa-plus-square"></i></a>
+            <a href="rankings.php" class="create-team">Rankings <i class="fa fa fa-line-chart"></i></a>
+            <a href="statCalculator.php" class="create-team">Stat Calculator <i class="fa fa-calculator"></i></a>
         </div>
 
         <div href="" class="profile-picture" onclick="toggleMenu()">
@@ -65,13 +64,7 @@
     </header>
 
     <div class="main-content">
-        <div class="profile-data">
-            <img src="<?php echo "../img/".$_SESSION["user"]."/image.png"?>" alt="pfp">
-            <div class="profile-name"><?php echo $_SESSION["user"]; ?></div>
-            <div class="edit-popup">Edit profile</div>
-        </div>
-
-        <div id="overlay" class="<?php 
+    <div id="overlay" class="<?php 
             if(isset($_GET["edit"])) {
                 echo "active";
             } ?>"></div>
@@ -116,8 +109,14 @@
                     <input type="password" name="form-password">
                     <span class="floating-label">Confirm password</span>
                 </div>
-                <input type="submit" name="form-submit" value="Save">
+                <input type="submit" class="form-submit" name="form-submit" value="Save">
             </form>
+        </div>
+        
+        <div class="profile-data">
+            <img src="<?php echo "../img/".$_SESSION["user"]."/image.png"?>" alt="pfp">
+            <div class="profile-name"><?php echo $_SESSION["user"]; ?></div>
+            <div class="edit-popup">Edit profile</div>
         </div>
 
         <div class="profile-teams"><?php
@@ -134,7 +133,7 @@
                         $pokemonArray[$i] = $teamItem["pokemon".$i];
                         $pokemonArray[$i] = ucfirst($pokemonArray[$i]);
                     }
-
+                    
                     echo '<div class="team-item">';
                         echo '<div class="team-name">';
                         echo $teamName;

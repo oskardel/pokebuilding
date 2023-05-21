@@ -42,10 +42,9 @@
                 <img src="../img/pokeball_icon.png" alt="pokeball_icon">
                 <h1 class="icon-text">PokéBuilding</h1>
             </a>
-            <a href="createTeams.php" class="create-team clicked">Create Teams</a>
-            <a href="compareTeams.php" class="create-team">Compare</a>
-            <a href="rankings.php" class="create-team">Rankings</a>
-            <a href="statCalculator.php" class="create-team">Stat Calculator</a>
+            <a href="createTeams.php" class="create-team clicked">Create Teams <i class="fa fa-plus-square"></i></a>
+            <a href="rankings.php" class="create-team">Rankings <i class="fa fa fa-line-chart"></i></a>
+            <a href="statCalculator.php" class="create-team">Stat Calculator <i class="fa fa-calculator"></i></a>
         </div>
 
         <div href="" class="profile-picture" onclick="toggleMenu()">
@@ -182,13 +181,18 @@
             </div>
             <div class="search-options">
                 <input type="text" id="search-options-name" name="search-options-name" placeholder="Enter a Pokémon">
+                <label>Types:
                 <select name="search-options-type" id="search-options-type">
                     <option value="all">All</option>
                 </select>
+                </label>
+                <label>Regions: 
                 <select name="search-options-generation" id="search-options-generation">
                     <option value="all">All</option>
                 </select>
+                </label>
                 <label><input type="checkbox" class="legendary-checkbox" id="legendary-checkbox">Legendary</label>
+                <br>
                 <input type="submit" class="submit-button" id="search-button" value="Search">
                 <input type="submit" class="random-button" id="random-button" value="Random team">
             </div>
@@ -201,13 +205,26 @@
                     }
                 ?>">
             <div class="error-team-name"><?php $nameError = ""; echo $nameError; ?></div>
+            <?php
+                if(isset($_SESSION["status"])) {
+                    if(isset($_GET["edit"])) {
+                        unset($_SESSION["status"]);
+                    } else{
+                ?>
+                    <div class="alert-message">
+                        <h5><?php echo $_SESSION["status"]; ?></h5>
+                    </div>
+                <?php
+                    unset($_SESSION["status"]);
+                }
+                }
+            ?>
 
             <div class="pokemon-image-div"><img src="" alt="" class="pokemon-image-hover"></div>
         </div>
 
         <div id="overlay" class=""></div>
 
-        <!-- Section to see all the Pokémon -->
         <div id="hidden-id"></div>
         <div class="pokemon-card" id="pokemon-card">
             <div class="pokemon-card-info">
@@ -220,7 +237,7 @@
                             <div class="card-type-1"></div>
                             <div class="card-type-2"></div>
                         </div>
-                        <input type="submit" class="add-button" name="add-pokemon-button" value="ADD">
+                        <input type="submit" class="add-button" name="add-pokemon-button" value="+">
                         <select id="pokemon-forms" class="pokemon-forms"></select>
                     </div>
                     <div class="image-div-right">
@@ -319,21 +336,6 @@
 
         <div id="pokedex-container"></div>
     </div>
-
-    <?php
-        if(isset($_SESSION["status"])) {
-            if(isset($_GET["edit"])) {
-                unset($_SESSION["status"]);
-            } else{
-        ?>
-            <div class="alert-message">
-                <h5><?php echo $_SESSION["status"]; ?></h5>
-            </div>
-        <?php
-            unset($_SESSION["status"]);
-        }
-    }
-    ?>
 
     <script src="../JS/index.js"></script>
     <script src="../JS/dark-mode.js"></script>

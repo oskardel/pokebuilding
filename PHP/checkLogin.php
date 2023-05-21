@@ -30,7 +30,7 @@
                     header("Location:index.php?user=".$username."&method=login");
                 } else{
                     $_SESSION["status"] = "The email or password is incorrect";
-                    require("login.php");
+                    header("Location:checkLogin.php?login=".$_SESSION["status"]);
                 }
             } catch(PDOException $e){
                 error_log($e->getMessage() . "##Código: " . $e->getCode() . "  " . microtime() . PHP_EOL, 3, "../logBD.txt");

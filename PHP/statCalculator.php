@@ -16,21 +16,22 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../CSS/team-creation.css">
     <link rel="stylesheet" href="../CSS/index.css">
+    <link rel="stylesheet" href="../CSS/stat-calculator.css">
     <title>Stat Calculator - PokéBuilding</title>
 </head>
 <body class="body">
-    <header>
+<header>
         <div class="header-options">
             <a href="index.php" class="icon-parts">
                 <img src="../img/pokeball_icon.png" alt="pokeball_icon">
                 <h1 class="icon-text">PokéBuilding</h1>
             </a>
-            <a href="createTeams.php" class="create-team">Create Teams</a>
-            <a href="compareTeams.php" class="create-team">Compare</a>
-            <a href="rankings.php" class="create-team">Rankings</a>
-            <a href="statCalculator.php" class="create-team clicked">Stat Calculator</a>
+            <a href="createTeams.php" class="create-team">Create Teams <i class="fa fa-plus-square"></i></a>
+            <a href="rankings.php" class="create-team">Rankings <i class="fa fa fa-line-chart"></i></a>
+            <a href="statCalculator.php" class="create-team clicked">Stat Calculator <i class="fa fa-calculator"></i></a>
         </div>
 
         <div href="" class="profile-picture" onclick="toggleMenu()">
@@ -142,13 +143,13 @@
             <div class="terms-conditions"><a href="terms_conditions.php">PRIVACY POLICY</a></div>
             <div class="about-us"><a href="about_us.php">ABOUT US</a></div>
             <div class="youtube">
-                <a href="youtube.com">YOUTUBE</a>
+                <a href="https://youtube.com">YOUTUBE</a>
             </div>
             <div class="twitter">
-                <a href="twitter.com">TWITTER</a>
+                <a href="https://twitter.com/">TWITTER</a>
             </div>
             <div class="instagram">
-                <a href="instagram.com">INSTAGRAM</a>
+                <a href="https://www.instagram.com">INSTAGRAM</a>
             </div>
         </div>
     </footer>

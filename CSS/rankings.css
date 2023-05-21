@@ -1,4 +1,146 @@
-.team-item {
+* {
+  font-family: "Montserrat", sans-serif;
+  color: var(--text-color);
+}
+
+.light-theme {
+  --text-color: #6b6b6b;
+  --background-color: #f6f8fc;
+  --shadow-box: rgba(0, 0, 0, 0.15) 0px 5px 15px;
+  --absolute-color: white;
+  --pokeball-background: brightness(3);
+}
+
+.dark-theme {
+  --text-color: #e6e6e6;
+  --background-color: #212121;
+  --shadow-box: rgba(255, 255, 255, 0.15) 0px 5px 15px;
+  --absolute-color: #181818;
+  --pokeball-background: grayscale(-50%);
+}
+
+.teams-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 75px;
+}
+.teams-content .team-chart {
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.teams-content .team-chart .user-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.teams-content .team-chart .user-info .user-picture {
+  padding-bottom: 15px;
+  width: 50%;
+  border-radius: 50%;
+}
+.teams-content .team-chart .user-info .team-username {
+  font-weight: 700;
+  font-size: larger;
+}
+
+.team-item {
+  width: 750px;
+  padding: 25px;
+  margin: 25px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: var(--absolute-color);
+  box-shadow: var(--shadow-box);
+  border-radius: 10px;
+}
+.team-item .team-name {
+  font-weight: bold;
+}
+.team-item .votes {
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+.team-item .team-pokemon {
+  align-items: center;
+  text-align: center;
+}
+
+.order-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  margin-left: 25px;
+  margin-top: 30px;
+}
+.order-button button {
+  font-weight: bold;
+  min-width: 100px;
+  max-width: 300px;
+  height: 30px;
+  color: white;
+  background-color: #ee1515;
+  border: 1px solid var(--absolute-color);
+  border-radius: 10px;
+  margin: 5px;
+}
+.order-button button:hover {
+  border: 1px solid var(--text-color);
+  cursor: pointer;
+}
+
+.button-div {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+.button-div .vote-button {
+  width: 35px;
+  max-height: 35px;
+  height: 100%;
+  border-radius: 50%;
+  background-color: var(--background-color);
+  border: 1px solid var(--background-color);
+}
+.button-div .vote-button:hover {
+  color: #ee1515;
+  border: 1px solid var(--absolute-color);
+  cursor: pointer;
+}
+.button-div .vote-button:disabled {
+  cursor: default;
+  color: var(--text-color);
+  border: 1px solid var(--background-color);
+}
+
+.voted {
+  color: #ee1515;
+}
+
+@media only screen and (max-width: 500px) {
+  .team-item {
+    width: -moz-fit-content;
+    width: fit-content;
+    flex-direction: column;
+  }
+  .team-item .votes {
+    justify-content: center;
+  }
+}
+@media only screen and (max-width: 650px) {
+  .team-item {
+    width: -moz-fit-content;
+    width: fit-content;
+    flex-direction: column;
+  }
+  .team-item .votes {
+    justify-content: center;
+  }
 }/*# sourceMappingURL=rankings.css.map */
