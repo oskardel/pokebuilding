@@ -30,21 +30,6 @@ CREATE TABLE `teams` (
     `userId` INT NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `pokemon` (
-    `id` INT NOT NULL,
-    `name` VARCHAR(15) NOT NULL,
-    `sprite` VARCHAR(120),
-    `type1` VARCHAR(8) NOT NULL,
-    `type2` VARCHAR(8),
-    `hp` INT NOT NULL,
-    `attack` INT NOT NULL,
-    `defense` INT NOT NULL,
-    `spAttack` INT NOT NULL,
-    `spDefense` INT NOT NULL,
-    `speed` INT NOT NULL,
-    `teamId` INT NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 INSERT INTO `users`(`id`, `username`, `cryptPassword`, `mail`, `teams`, `userLevel`) VALUES (1, 'root', '$2a$07$usesomesillystringforehg0dedj7L/iujhXGa/PYA4EZKm/yiEW', 'root@gmail.com', '0', '2');
 
 /*Adding primary keys to the tables*/
@@ -59,6 +44,3 @@ ALTER TABLE `teams`
 
 ALTER TABLE `teams`
     MODIFY `id` int(1) NOT NULL AUTO_INCREMENT;
-
-ALTER TABLE `pokemon`
-    ADD PRIMARY KEY (`id`);

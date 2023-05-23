@@ -216,6 +216,21 @@
             return $result->execute();
         }
 
+        public function checkAdmin($idUser) {
+            $query = "SELECT * FROM users WHERE id=:idUser";
+            $result=$this->prepare($query);
+            $result->bindParam(':idUser', $idUser);
+            $result->execute();
+
+            foreach($result as $res){
+                if($res['userLevel'] == 2){
+                    return true;
+                } else{
+                    return false;
+                }
+            }
+        }
+
         public function deleteTeam($teamId) { 
             $query = "DELETE FROM teams WHERE id=:teamId";
             $result=$this->prepare($query);

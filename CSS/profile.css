@@ -83,6 +83,13 @@
   padding-right: 20px;
   overflow: hidden;
 }
+.profile-teams .team-item .edit-team {
+  cursor: pointer;
+  font-size: 30px;
+}
+.profile-teams .team-item .edit-team .fa:hover {
+  color: #ee1515;
+}
 
 .profile-edit {
   display: flex;

@@ -32,7 +32,6 @@
                             <h5><?php echo $_GET["login"]; ?></h5>
                         </div>
                         <?php
-                        unset($_SESSION["status"]);
                     }
                 ?>
                 <div class="form-name">

@@ -10,6 +10,18 @@
     }
 ?>
 
+<?php
+    if(isset($_GET["del"])){
+        try{
+            $database = new User();
+            $teamDelete = $_GET["teamdel"];
+            if($deleteTeam=$database->deleteTeam($teamDelete));
+
+        }catch(PDOException $e){}
+    }
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -63,12 +75,19 @@
         </div>
     </header>
 
+    <div class="overlay"></div>
+    <div class="delete-box">
+        <p>Are you sure you want to delete this team</p>
+        <button type="button" class="delete-button" id="yes-button">Yes</button>
+        <button type="button" class="delete-button" id="no-button">No</button>
+    </div>
+
     <div class="main-content-rankings">
-        <div class="order-button">
-            <button class="option-button" value="1" id="recent-button">Most recent</button>
-            <button class="option-button" value="2" id="liked-button">Most liked</button>
-        </div>
         <div class="teams-content">
+            <div class="order-button">
+                <button class="option-button" value="1" id="recent-button">Most recent</button>
+                <button class="option-button" value="2" id="liked-button">Most liked</button>
+            </div>
                 <?php
                     try{
                         $database = new User();
@@ -94,6 +113,9 @@
                                 $userTeam=$database->getUserById($userId);
 
                                 echo '<div class="team-chart">';
+                                    if($adminValue=$database->checkAdmin($sessionUser)){
+                                        echo '<button class="admin-button" type="button" onclick="sureDelete('.$teamId.')"><i class="fa fa-trash-o" aria-hidden="true"></i></button>';
+                                    }
                                 echo '<div class="team-item '.$teamId.'">'; 
                                     for($j = 1; $j <= 6; $j++){
                                         echo '<div class="team-pokemon">';

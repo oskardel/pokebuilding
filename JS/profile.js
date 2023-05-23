@@ -9,6 +9,11 @@ const imageProfileEdit = document.querySelector('.image-edit-profile');
 const imageDiv = document.querySelector('.select-new-pfp');
 const newImageArray = document.querySelectorAll('.new-image-pfp');
 
+function deleteLoginMessage() {
+    setTimeout(function(){
+        document.querySelector('.alert-message').remove();
+    },3500);
+}
 
 function getPokemonName() {
     for(var i = 0; i <=pokemonNames.length; i++){
@@ -76,4 +81,5 @@ newImageArray.forEach(newImage => {
 })
 
 /* LOAD FOR THE FIRST TIME */
+deleteLoginMessage();
 getPokemonName();

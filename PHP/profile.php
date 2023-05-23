@@ -110,6 +110,15 @@
                     <span class="floating-label">Confirm password</span>
                 </div>
                 <input type="submit" class="form-submit" name="form-submit" value="Save">
+                <?php
+                if(isset($_GET["login"])) {
+                    ?>
+                    <div class="alert-message">
+                        <h5><?php echo $_GET["login"]; ?></h5>
+                    </div>
+                <?php
+                }
+            ?>
             </form>
         </div>
         
@@ -222,7 +231,8 @@
                     if($editPrefix) {
                         ?>
                         <script type="text/javascript">
-                            window.location.href = 'profile.php?edit=true';
+                            let successMessage = "Changes saved";
+                            window.location.href = 'profile.php?edit=true&login='+successMessage;
                         </script>
                     <?php
                     } else{
@@ -235,10 +245,10 @@
                     
                     
                 } else{
-                    $errorEdit["NoPassword"] = "Password is incorrect"; //CHANGE TO $_SESSION["status]
                     ?>
                         <script type="text/javascript">
-                            window.location.href = 'profile.php?edit=true';
+                            let errorMessage = "Password is incorrect";
+                            window.location.href = 'profile.php?edit=true&login='+errorMessage;
                         </script>
                     <?php
                 }
