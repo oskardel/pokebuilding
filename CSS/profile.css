@@ -19,6 +19,68 @@
   --pokeball-background: grayscale(-50%);
 }
 
+.delete-box {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  background-color: var(--absolute-color);
+  padding: 50px;
+  border: 1px solid var(--text-color);
+  border-radius: 5px;
+  text-align: center;
+  font-weight: bold;
+  z-index: 99;
+  transition: 0.2s;
+}
+.delete-box .delete-button {
+  color: white;
+  font-weight: bold;
+  width: 100px;
+  height: 25px;
+  border: 1px solid var(--background-color);
+  border-radius: 15px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+.delete-box .delete-button:hover {
+  border: 1px solid var(--text-color);
+}
+.delete-box #yes-button {
+  background-color: green;
+}
+.delete-box #yes-button:hover {
+  background-color: rgb(0, 149, 0);
+}
+.delete-box #no-button {
+  background-color: #ee1515;
+}
+.delete-box #no-button:hover {
+  background-color: #ff0000;
+}
+
+.delete-box.active {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+#overlay-delete {
+  position: fixed;
+  opacity: 0;
+  transition: 0.3s ease-in-out;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9;
+  pointer-events: none;
+}
+
+#overlay-delete.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
 .main-content {
   padding: 75px;
 }
@@ -83,11 +145,11 @@
   padding-right: 20px;
   overflow: hidden;
 }
-.profile-teams .team-item .edit-team {
+.profile-teams .team-item .edit-team, .profile-teams .team-item .delete-team {
   cursor: pointer;
   font-size: 30px;
 }
-.profile-teams .team-item .edit-team .fa:hover {
+.profile-teams .team-item .edit-team .fa:hover, .profile-teams .team-item .delete-team .fa:hover {
   color: #ee1515;
 }
 

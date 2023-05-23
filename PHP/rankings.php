@@ -19,7 +19,6 @@
 
         }catch(PDOException $e){}
     }
-
 ?>
 
 <!DOCTYPE html>
@@ -41,9 +40,9 @@
                 <img src="../img/pokeball_icon.png" alt="pokeball_icon">
                 <h1 class="icon-text">PokéBuilding</h1>
             </a>
-            <a href="createTeams.php" class="create-team">Create Teams <i class="fa fa-plus-square"></i></a>
-            <a href="rankings.php" class="create-team clicked">Rankings <i class="fa fa fa-line-chart"></i></a>
-            <a href="statCalculator.php" class="create-team">Stat Calculator <i class="fa fa-calculator"></i></a>
+            <a href="createTeams.php" class="create-team">Create Teams &nbsp;<i class="fa fa-plus-square"></i></a>
+            <a href="rankings.php" class="create-team clicked">Rankings &nbsp;<i class="fa fa fa-line-chart"></i></a>
+            <a href="statCalculator.php" class="create-team">Stat Calculator &nbsp;<i class="fa fa-calculator"></i></a>
         </div>
 
         <div href="" class="profile-picture" onclick="toggleMenu()">
@@ -77,7 +76,7 @@
 
     <div class="overlay"></div>
     <div class="delete-box">
-        <p>Are you sure you want to delete this team</p>
+        <p>Are you sure you want to delete this team?</p>
         <button type="button" class="delete-button" id="yes-button">Yes</button>
         <button type="button" class="delete-button" id="no-button">No</button>
     </div>
@@ -160,8 +159,6 @@
     </div>
     <footer>
         <div class="footer-options">
-            <div class="terms-conditions"><a href="terms_conditions.php">PRIVACY POLICY</a></div>
-            <div class="about-us"><a href="about_us.php">ABOUT US</a></div>
             <div class="youtube">
                 <a href="https://youtube.com">YOUTUBE</a>
             </div>

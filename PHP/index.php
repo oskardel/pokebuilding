@@ -48,8 +48,6 @@ if(isset($_GET["so"])){
     <!-- FOOTER -->
     <footer>
         <div class="footer-options">
-            <div class="terms-conditions"><a href="terms_conditions.php">PRIVACY POLICY</a></div>
-            <div class="about-us"><a href="about_us.php">ABOUT US</a></div>
             <div class="youtube">
                 <a href="youtube.com">YOUTUBE</a>
             </div>

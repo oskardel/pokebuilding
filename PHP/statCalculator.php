@@ -29,9 +29,9 @@
                 <img src="../img/pokeball_icon.png" alt="pokeball_icon">
                 <h1 class="icon-text">PokéBuilding</h1>
             </a>
-            <a href="createTeams.php" class="create-team">Create Teams <i class="fa fa-plus-square"></i></a>
-            <a href="rankings.php" class="create-team">Rankings <i class="fa fa fa-line-chart"></i></a>
-            <a href="statCalculator.php" class="create-team clicked">Stat Calculator <i class="fa fa-calculator"></i></a>
+            <a href="createTeams.php" class="create-team">Create Teams &nbsp;<i class="fa fa-plus-square"></i></a>
+            <a href="rankings.php" class="create-team">Rankings &nbsp;<i class="fa fa fa-line-chart"></i></a>
+            <a href="statCalculator.php" class="create-team clicked">Stat Calculator &nbsp;<i class="fa fa-calculator"></i></a>
         </div>
 
         <div href="" class="profile-picture" onclick="toggleMenu()">
@@ -140,8 +140,6 @@
     
     <footer>
         <div class="footer-options">
-            <div class="terms-conditions"><a href="terms_conditions.php">PRIVACY POLICY</a></div>
-            <div class="about-us"><a href="about_us.php">ABOUT US</a></div>
             <div class="youtube">
                 <a href="https://youtube.com">YOUTUBE</a>
             </div>

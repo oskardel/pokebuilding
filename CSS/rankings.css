@@ -41,6 +41,7 @@
   border: 1px solid var(--background-color);
   border-radius: 15px;
   cursor: pointer;
+  margin-bottom: 10px;
 }
 .delete-box .delete-button:hover {
   border: 1px solid var(--text-color);

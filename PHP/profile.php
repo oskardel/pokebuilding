@@ -10,6 +10,17 @@
     }
 ?>
 
+<?php
+    if(isset($_GET["del"])){
+        try{
+            $database = new User();
+            $teamDelete = $_GET["teamdel"];
+            if($deleteTeam=$database->deleteTeam($teamDelete));
+
+        }catch(PDOException $e){}
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,9 +40,9 @@
                 <img src="../img/pokeball_icon.png" alt="pokeball_icon">
                 <h1 class="icon-text">PokéBuilding</h1>
             </a>
-            <a href="createTeams.php" class="create-team">Create Teams <i class="fa fa-plus-square"></i></a>
-            <a href="rankings.php" class="create-team">Rankings <i class="fa fa fa-line-chart"></i></a>
-            <a href="statCalculator.php" class="create-team">Stat Calculator <i class="fa fa-calculator"></i></a>
+            <a href="createTeams.php" class="create-team">Create Teams &nbsp;<i class="fa fa-plus-square"></i></a>
+            <a href="rankings.php" class="create-team">Rankings &nbsp;<i class="fa fa fa-line-chart"></i></a>
+            <a href="statCalculator.php" class="create-team">Stat Calculator &nbsp;<i class="fa fa-calculator"></i></a>
         </div>
 
         <div href="" class="profile-picture" onclick="toggleMenu()">
@@ -62,6 +73,13 @@
             </div>
         </div>
     </header>
+
+    <div id="overlay-delete"></div>
+    <div class="delete-box">
+        <p>Are you sure you want to delete this team?</p>
+        <button type="button" class="delete-button" id="yes-button">Yes</button>
+        <button type="button" class="delete-button" id="no-button">No</button>
+    </div>
 
     <div class="main-content">
     <div id="overlay" class="<?php 
@@ -154,6 +172,7 @@
                             echo '</div>';
                         }
                         echo '<div class="edit-team" id="edit-'.$j.'"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></div>';
+                        echo '<div class="delete-team" onclick="sureDelete('.$teamId.')"><i class="fa fa-trash-o" aria-hidden="true"></i></div>';
                         echo '<div class="team-id" style="display:none">'.$teamId.'</div>';
                     echo '</div>';
                 }
@@ -168,8 +187,6 @@
 
     <footer>
         <div class="footer-options">
-            <div class="terms-conditions"><a href="terms_conditions.php">PRIVACY POLICY</a></div>
-            <div class="about-us"><a href="about_us.php">ABOUT US</a></div>
             <div class="youtube">
                 <a href="youtube.com">YOUTUBE</a>
             </div>

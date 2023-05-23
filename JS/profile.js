@@ -8,6 +8,10 @@ const editToggle = document.querySelector('.edit-popup');
 const imageProfileEdit = document.querySelector('.image-edit-profile');
 const imageDiv = document.querySelector('.select-new-pfp');
 const newImageArray = document.querySelectorAll('.new-image-pfp');
+const deleteBox = document.querySelector('.delete-box');
+const yesButton = document.getElementById('yes-button');
+const noButton = document.getElementById('no-button');
+const overlayDelete = document.getElementById('overlay-delete');
 
 function deleteLoginMessage() {
     setTimeout(function(){
@@ -78,6 +82,20 @@ newImageArray.forEach(newImage => {
     newImage.addEventListener("click", () => {
         imageProfileEdit.src = newImage.src
     })
+})
+
+function sureDelete(teamDelete) {
+    overlayDelete.classList.add('active');
+    deleteBox.classList.add('active');
+
+    yesButton.addEventListener('click', (e)=> {
+        window.location.href = "profile.php?del=true&teamdel="+teamDelete;
+    })
+}
+
+noButton.addEventListener('click', (e)=> {
+    overlayDelete.classList.remove('active');
+    deleteBox.classList.remove('active');
 })
 
 /* LOAD FOR THE FIRST TIME */
