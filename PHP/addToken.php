@@ -5,8 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../CSS/login.css">
-    <title>Forgot password? - PokéBuilding</title>
-    <link rel="icon" type="image/x-icon" href="../img/pokeball_icon.png">
+    <title>Token - PokéBuilding</title>
 </head>
 <body>
     <header>
@@ -27,22 +26,20 @@
             <form action="" method="post">
             <?php 
                 if(isset($_SESSION["status"])) {
-                ?>
+            ?>
                     <div class="alert-message">
                         <h5><?php echo $_SESSION["status"] ?></h5>
                     </div>
-                    <?php
+                <?php
                     unset($_SESSION["status"]);
                 }
             ?>
+
                 <div class="form-name">
-                    <input type="text" class="forgot-email" name="forgot-email" value="<?php if (isset($_REQUEST['forgot-email'])) echo $_POST['forgot-email']; ?>">
-                    <span class="floating-label">Enter your email address</span>
+                    <input type="text" class="new-password" name="code-text"/>
+                    <span class="floating-label">Enter code</span>
                 </div>
-
-                <input type="submit" class="submit-button" name="forgot-button" value="Reset password">
-
-                <div class="message-login">Already have an account? <a href="checkLogin.php" class="link-login">Sign in</a></div>
+                <input type="submit" class="submit-button" name="code-button" value="Send">
             </form>
         </div>
     </div>

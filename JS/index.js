@@ -587,7 +587,6 @@ function deleteLoginMessage() {
     },3500);
 }
 
-
 var savedPokemonData = localStorage.getItem("pokemonCards");
 fetchAllTypes();
 fetchAllGenerations();

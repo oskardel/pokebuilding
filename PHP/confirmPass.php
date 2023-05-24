@@ -21,7 +21,7 @@
                     if($changePass=$database->updatePassword($cryptPass, $userId)){
                         $randCode = substr(md5(uniqid(mt_rand(), true)) , 0, 8);
                         if($emailToken=$database->getEmailById($userId));
-                        if($token=$database->setToken($randCode, $emailToken)); //ESTILAR (FUNCIONA)
+                        if($token=$database->setToken($randCode, $emailToken));
                     }
                     $_SESSION["status"] = "Your password has been successfully changed";
                     header( "Location:checkLogin.php");

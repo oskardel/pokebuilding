@@ -25,6 +25,7 @@ if(isset($_GET["so"])){
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../CSS/index.css">
     <title>Home - PokeBuilding</title>
+    <link rel="icon" type="image/x-icon" href="../img/pokeball_icon.png">
 </head>
 <body class="index-body">
     <header class="index-header">

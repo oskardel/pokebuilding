@@ -160,6 +160,18 @@
             return $idUser;
         }
 
+        public function getAllToken() {
+            $query = "SELECT * FROM users";
+            $result=$this->prepare($query);
+            $result->execute();
+
+            $tokenArray = array();
+            foreach ($result as $row) {
+                array_push($tokenArray, $row["token"]);
+            }
+            return $tokenArray;
+        }
+
 
         public function setToken($token, $email) {
             $query = "UPDATE users SET token=:token WHERE mail=:mail";

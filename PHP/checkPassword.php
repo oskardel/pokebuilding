@@ -35,7 +35,7 @@
                 <td align='center'>
                 <div class='header' style='background-color: transparent; padding:25px; border-top: 5px solid red;'>
                 <a href=''><h1>PokéBuilding</h1></a> 
-                </div><div style='background-color: white; border-radius: 5px; padding:25px;'><p>Hello, ".$username."<br> We received a request to change your password (".$email.")<br> Change your password here:</p> <br> <a href='http://localhost/TFG/PHP/confirmPass.php?token=".$randCode."' style='text-align:center; background-color: #eceff1; border-radius: 5px; padding: 25px; text-decoration: none; color: black;'>Reset your password</a><br><br> <p>If you did not request this code, it is possible that someone else is trying to access to your account. <strong>Do not share this code to anyone.</strong></p><br><br> <p>Sincerely yours,<br> <strong>The PokéBuilding team.</strong></p></div>
+                </div><div style='background-color: white; border-radius: 5px; padding:25px;'><p>Hello, ".$username."<br> We received a request to change your password (".$email.")<br> This is your code:</p> <br> <p style='text-align:center; background-color: #eceff1; border-radius: 5px; padding: 25px; text-decoration: none; color: black;'>$randCode</p><br><br> <p>If you did not request this code, it is possible that someone else is trying to access to your account. <strong>Do not share this code to anyone.</strong></p><br><br> <p>Sincerely yours,<br> <strong>The PokéBuilding team.</strong></p></div>
                 </td>
                 </tr>
                 </table>";
@@ -66,6 +66,7 @@
                     sendPasswordReset($email, $randCode, $username);
                     if($token=$database->setToken($randCode, $email));
                     require("password.php");
+                    header( "refresh:3;url=confirmToken.php");
                 } else{
                     $_SESSION["status"] = "Something went wrong, try again";
                     require("password.php");

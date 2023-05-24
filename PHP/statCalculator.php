@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="../CSS/index.css">
     <link rel="stylesheet" href="../CSS/stat-calculator.css">
     <title>Stat Calculator - PokéBuilding</title>
+    <link rel="icon" type="image/x-icon" href="../img/pokeball_icon.png">
 </head>
 <body class="body">
 <header>

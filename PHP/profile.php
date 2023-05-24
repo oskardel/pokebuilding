@@ -32,6 +32,7 @@
     <link rel="stylesheet" href="../CSS/index.css">
     <link rel="stylesheet" href="../CSS/profile.css">
     <title><?php echo $_SESSION["user"]; ?> - PokéBuilding</title>
+    <link rel="icon" type="image/x-icon" href="../img/pokeball_icon.png">
 </head>
 <body class="body light-theme">
     <header>

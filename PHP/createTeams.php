@@ -34,6 +34,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../CSS/team-creation.css">
     <title>Create team - PokeBuilding</title>
+    <link rel="icon" type="image/x-icon" href="../img/pokeball_icon.png">
 </head>
 <body class="body">
     <header>
