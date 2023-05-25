@@ -3,6 +3,10 @@
 }
 
 .index-body {
+  background-image: url("../img/pikachu-background.webp");
+  background-repeat: no-repeat;
+  background-position: bottom right;
+  background-color: #f6f8fc;
   height: 100vh;
   padding: 0;
   margin: 0;
@@ -12,7 +16,6 @@
 }
 
 .index-header, .main-content-index {
-  background-color: #f6f8fc;
   height: 100vh;
 }
 
@@ -42,6 +45,7 @@
   flex-direction: column;
 }
 .main-content-index .home-tittle {
+  font-weight: 700;
   position: relative;
   top: -200px;
   font-size: 80px;

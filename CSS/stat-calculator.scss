@@ -35,20 +35,51 @@ $darkShadow-box: rgba(255, 255, 255, 0.15) 0px 5px 15px;
 }
 
 .stat-table{
+    background-color: var(--absolute-color);
+    padding: 10px;
     margin-top: 150px;
     display: flex;
     flex-direction: column;
     text-align: center;
-    justify-content: center;
-    align-items: center;
+    border: 1px solid var(--text-color);
+    box-shadow: var(--shadow-box);
+    border-radius: 15px;
+
+    .fa{
+        font-size: 25px;
+        transition: 0.2s;
+
+        &:hover{
+            color: $hoverButtonColor;
+        }
+    }
 
     select, input[type="number"]{
-        background-color: var(--absolute-color);
+        background-color: var(--background-color);
         border: 1px solid var(--text-color);
     }
 
     p{
         font-weight: bold;
+    }
+}
+
+#stat-results{
+    background-color: var(--absolute-color);
+    margin-top: 15px;
+    text-align: center;
+    font-weight: 15px;
+    border: 1px solid var(--text-color);
+    box-shadow: var(--shadow-box);
+    border-radius: 15px;
+
+    .poke-name{
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    td, tr, th{
+        padding: 5px;
     }
 }
 

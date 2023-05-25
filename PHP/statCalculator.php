@@ -70,6 +70,7 @@
                 <table>
                     <tbody>
                         <tr>
+                            <td></td>
                             <td colspan="3">
                                 <p>Choose a Pokémon</p>
                                 <select name="select-pokemon" id="select-pokemon">
@@ -88,7 +89,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <th></th>
+                            <th colspan="2"></th>
                             <th>HP</th>
                             <th>ATK</th>
                             <th>DEF</th>
@@ -97,6 +98,9 @@
                             <th>SPD</th>
                         </tr>
                         <tr class="ev-row">
+                            <td>
+                                <a href="https://bulbapedia.bulbagarden.net/wiki/Effort_values" target="_blank"><i class="fa fa-question-circle" aria-hidden="true"></i></a>
+                            </td>
                             <td>
                                 <p>EVs:</p>
                             </td>
@@ -108,6 +112,9 @@
                             <td><input type="number" class="ev-selector" name="ev-spe" id="ev-spe" min="0" max="255"/></td>
                         </tr>
                         <tr class="iv-row">
+                            <td>
+                                <a href="https://bulbapedia.bulbagarden.net/wiki/Individual_values" target="_blank"><i class="fa fa-question-circle" aria-hidden="true"></i></a>
+                            </td>
                             <td>
                                 <p>IVs:</p>
                             </td>
@@ -142,13 +149,13 @@
     <footer>
         <div class="footer-options">
             <div class="youtube">
-                <a href="https://youtube.com">YOUTUBE</a>
+                <a href="https://www.youtube.com/@pokemon">YOUTUBE</a>
             </div>
             <div class="twitter">
-                <a href="https://twitter.com/">TWITTER</a>
+                <a href="https://twitter.com/Pokemon">TWITTER</a>
             </div>
             <div class="instagram">
-                <a href="https://www.instagram.com">INSTAGRAM</a>
+                <a href="https://www.instagram.com/pokemon/">INSTAGRAM</a>
             </div>
         </div>
     </footer>

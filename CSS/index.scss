@@ -7,6 +7,10 @@ $footerBrightColor: rgb(172, 172, 172);
 }
 
 .index-body{
+    background-image: url("../img/pikachu-background.webp");
+    background-repeat: no-repeat;
+    background-position: bottom right;
+    background-color: $brightColor;
     height: 100vh;
     padding: 0;
     margin: 0;
@@ -16,7 +20,6 @@ $footerBrightColor: rgb(172, 172, 172);
 }
 
 .index-header, .main-content-index{
-    background-color: $brightColor;
     height: 100vh;
 }
 
@@ -48,6 +51,7 @@ $footerBrightColor: rgb(172, 172, 172);
     flex-direction: column;
 
     .home-tittle{
+        font-weight:700;
         position: relative;
         top: -200px;
         font-size: 80px;

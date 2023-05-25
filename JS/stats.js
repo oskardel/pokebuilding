@@ -136,6 +136,7 @@ function calculateStats() {
         const infoTable = document.createElement('td');
         infoTable.innerHTML = "Lvl." + levelStat.value + " " + pokemonStat.value.charAt(0).toUpperCase()+pokemonStat.value.slice(1);
         infoTable.colSpan = 7;
+        infoTable.classList.add('poke-name');
         rowTable.appendChild(infoTable);
         statResults.appendChild(rowTable);
 

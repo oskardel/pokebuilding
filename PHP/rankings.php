@@ -161,13 +161,13 @@
     <footer>
         <div class="footer-options">
             <div class="youtube">
-                <a href="https://youtube.com">YOUTUBE</a>
+                <a href="https://www.youtube.com/@pokemon">YOUTUBE</a>
             </div>
             <div class="twitter">
-                <a href="https://twitter.com/">TWITTER</a>
+                <a href="https://twitter.com/Pokemon">TWITTER</a>
             </div>
             <div class="instagram">
-                <a href="https://www.instagram.com">INSTAGRAM</a>
+                <a href="https://www.instagram.com/pokemon/">INSTAGRAM</a>
             </div>
         </div>
     </footer>
