@@ -12,5 +12,5 @@
         error_log($e->getMessage() . "## Fichero: " . $e->getFile() . "## Línea: " . $e->getLine() . "##Código: " . $e->getCode() . "##Instante: " . microtime  () . PHP_EOL, 3, "logBD.txt");
         $errores['datos'] = "Error <br>";
     }
-    header("Location:/pokebuilding/PHP/index.php");
+    header("Location:../PHP/index.php");
 ?>
